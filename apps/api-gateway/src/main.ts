@@ -1,10 +1,5 @@
-import express from 'express';
+import { container } from 'tsyringe';
 
-const app = express();
-const port = 3000;
+import { BeServer } from '@distributed-chat-system/be-server';
 
-app.get('/', (_req, res) => res.send('Hello World!'));
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+container.resolve(BeServer).startServer(3000);

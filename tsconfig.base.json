@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@distributed-chat-system/be-server": ["libs/be/server/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
