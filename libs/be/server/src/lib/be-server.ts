@@ -1,5 +1,5 @@
 import { injectable } from 'tsyringe';
-import * as express from 'express';
+import express from 'express';
 
 @injectable()
 export class BeServer {
