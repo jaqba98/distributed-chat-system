@@ -1,9 +1,9 @@
-import { ServersType } from '../type/servers.type';
+import { ServerType } from '../type/server.type';
 
 export interface ServerMetadataModel {
   port: number;
 }
 
 export interface ServersMetadataModel {
-  servers: Record<ServersType, ServerMetadataModel>;
+  servers: Record<ServerType, ServerMetadataModel>;
 }

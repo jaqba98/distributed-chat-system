@@ -1,3 +1,3 @@
-export enum ServersEnum {
+export enum ServerEnum {
   apiGateway = 'apiGateway',
 }

@@ -1,12 +1,12 @@
 import { injectable } from 'tsyringe';
 import express from 'express';
 
-import { ServersType } from '../type/servers.type';
+import { ServerType } from '../type/server.type';
 import { serversMetadata } from '../const/servers-metadata.const';
 
 @injectable()
 export class ServerAppService {
-  runServer(type: ServersType) {
+  runServer(type: ServerType) {
     // TODO: Create the server logic
     const server = serversMetadata.servers[type];
     const app = express();
