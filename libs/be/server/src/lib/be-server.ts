@@ -1,13 +1,9 @@
-import { injectable } from 'tsyringe';
-import express from 'express';
+import 'reflect-metadata';
+import { container } from 'tsyringe';
 
-@injectable()
-export class BeServer {
-  startServer(port: number) {
-    const app = express();
-    app.get('/', (_req, res) => res.send('Hello World!'));
-    app.listen(port, () => {
-      console.log(`Example app listening on port ${port}`);
-    });
-  }
-}
+import { ServerAppService } from './app-service/server-app.service';
+import { ServersType } from './type/servers.type';
+
+const server = container.resolve(ServerAppService);
+
+export const runServer = (type: ServersType) => server.runServer(type);

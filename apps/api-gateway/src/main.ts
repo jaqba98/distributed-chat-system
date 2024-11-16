@@ -1,6 +1,3 @@
-import 'reflect-metadata';
-import { container } from 'tsyringe';
+import { runServer } from '@distributed-chat-system/be-server';
 
-import { BeServer } from '@distributed-chat-system/be-server';
-
-container.resolve(BeServer).startServer(3000);
+runServer('apiGateway');
