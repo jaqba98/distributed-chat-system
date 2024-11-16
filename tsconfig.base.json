@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "esModuleInterop": true,
     "baseUrl": ".",
+    "strict": true,
     "paths": {
       "@distributed-chat-system/be-server": ["libs/be/server/src/index.ts"]
     }

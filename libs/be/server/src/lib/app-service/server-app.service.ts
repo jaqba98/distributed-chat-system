@@ -2,19 +2,29 @@ import { injectable } from 'tsyringe';
 import express from 'express';
 
 import { ServerType } from '../type/server.type';
-import { serversMetadata } from '../const/servers-metadata.const';
+import { serversConfig } from '../const/servers-config.const';
+import { RouteType } from '../type/route.type';
+import { MethodType } from '../type/method.type';
 
 @injectable()
 export class ServerAppService {
   runServer(type: ServerType) {
-    // TODO: Create the server logic
-    const server = serversMetadata.servers[type];
+    const server = serversConfig.servers[type];
     const app = express();
-    app.get('/', (_req, res) => {
-      res.send('Hello World!');
+    app.use((req, res) => {
+      const reqUrl = req.url as RouteType;
+      const reqMethod = req.method as MethodType;
+      const route = server.routes[reqUrl];
+      if (route) {
+        const method = route[reqMethod];
+        if (method) {
+          res.send(method.controller);
+          return;
+        }
+      }
+      res.send('Not found!');
     });
-    app.listen(server.port, () => {
-      console.log(`Example app listening on port ${server.port}`);
-    });
+    const { port } = server;
+    app.listen(port, () => console.log(`The server runs on port ${port}`));
   }
 }

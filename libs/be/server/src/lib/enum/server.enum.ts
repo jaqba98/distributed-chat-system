@@ -1,3 +1,3 @@
 export enum ServerEnum {
-  apiGateway = 'apiGateway',
+  aServer = 'aServer',
 }
