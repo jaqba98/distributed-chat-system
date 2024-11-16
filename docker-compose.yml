@@ -6,3 +6,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - '80:80'
+  api-gateway:
+    build:
+      context: dist/apps/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
