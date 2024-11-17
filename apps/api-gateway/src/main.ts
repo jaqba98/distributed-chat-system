@@ -1,3 +1,3 @@
-import { runServer } from '@distributed-chat-system/be-server';
+// import { runServer } from '@distributed-chat-system/be-server';
 
-runServer('aServer');
+// runServer('aServer');
