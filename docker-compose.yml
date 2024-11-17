@@ -1,17 +1,11 @@
 version: '3.8'
 services:
-  # chat-client:
-  #   build:
-  #     context: dist/apps/chat-client
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - '80:80'
-  # api-gateway:
-  #   build:
-  #     context: dist/apps/api-gateway
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - 3000:3000
+  chat-client:
+    build:
+      context: dist/apps/chat-client
+      dockerfile: Dockerfile
+    ports:
+      - '3333:80'
   server1:
     build:
       context: dist/apps/server1
