@@ -17,7 +17,10 @@
     "baseUrl": ".",
     "strict": true,
     "paths": {
-      "@distributed-chat-system/be-server": ["libs/be/server/src/index.ts"]
+      "@distributed-chat-system/be-server": ["libs/be/server/src/index.ts"],
+      "@distributed-chat-system/shared-server": [
+        "libs/shared/server/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

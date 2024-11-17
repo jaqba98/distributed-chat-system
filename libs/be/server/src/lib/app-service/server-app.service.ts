@@ -1,10 +1,12 @@
 import { injectable } from 'tsyringe';
 import express from 'express';
 
-import { ServerType } from '../type/server.type';
-import { serversConfig } from '../const/servers-config.const';
-import { RouteType } from '../type/route.type';
-import { MethodType } from '../type/method.type';
+import {
+  MethodType,
+  RouteType,
+  serversConfig,
+  ServerType,
+} from '@distributed-chat-system/shared-server';
 
 @injectable()
 export class ServerAppService {
