@@ -1,3 +1,4 @@
 export enum ServerEnum {
-  chatServer = 'chatServer',
+  oneServer = 'oneServer',
+  twoServer = 'twoServer',
 }

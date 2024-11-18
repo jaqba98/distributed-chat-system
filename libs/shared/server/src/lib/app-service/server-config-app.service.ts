@@ -2,7 +2,9 @@ import { ServersConfigService } from '../dom-service/server-config.service';
 import { ServerType } from '../type/server.type';
 
 export class ServersConfigAppService {
-  constructor(private serversConfig: ServersConfigService) {
+  private serversConfig: ServersConfigService;
+
+  constructor() {
     this.serversConfig = new ServersConfigService();
   }
 

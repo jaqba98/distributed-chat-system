@@ -1,5 +1,5 @@
 import { createServer, Server } from 'http';
-import { inject, injectable } from 'tsyringe';
+import { injectable } from 'tsyringe';
 
 import {
   ServersConfigAppService,
@@ -30,9 +30,9 @@ export class ServerService {
     this._server = server;
   }
 
-  constructor(
-    @inject(ServersConfigAppService) private servers: ServersConfigAppService
-  ) {}
+  constructor(private serversConfig: ServersConfigAppService) {
+    this.serversConfig = new ServersConfigAppService();
+  }
 
   register(type: ServerType) {
     this.type = type;
@@ -41,10 +41,10 @@ export class ServerService {
 
   create() {
     this.server = createServer((req, res) => {
-      const route = this.servers.getRoute(this.type, req.url, req.method);
+      const route = this.serversConfig.getRoute(this.type, req.url, req.method);
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       if (route) {
-        res.end(route.controller);
+        res.end(req.socket.localPort?.toString());
       } else {
         res.end('404');
       }
@@ -53,7 +53,7 @@ export class ServerService {
   }
 
   listen() {
-    const port = this.servers.getPort(this.type);
+    const port = this.serversConfig.getPort(this.type);
     this.server.listen(port, () => {
       console.log(`Listening on ${port}`);
     });
