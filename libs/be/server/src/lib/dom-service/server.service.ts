@@ -44,7 +44,7 @@ export class ServerService {
       const route = this.serversConfig.getRoute(this.type, req.url, req.method);
       res.writeHead(200, { 'Content-Type': 'text/plain' });
       if (route) {
-        res.end(req.socket.localPort?.toString());
+        res.end(process.env.APP_PORT);
       } else {
         res.end('404');
       }
