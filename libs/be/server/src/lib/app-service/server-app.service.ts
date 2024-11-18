@@ -1,32 +1,13 @@
-import { injectable } from 'tsyringe';
-import express from 'express';
+import { inject, injectable } from 'tsyringe';
 
-import {
-  MethodType,
-  RouteType,
-  serversConfig,
-  ServerType,
-} from '@distributed-chat-system/shared-server';
+import { ServerType } from '@distributed-chat-system/shared-server';
+import { ServerService } from '../dom-service/server.service';
 
 @injectable()
 export class ServerAppService {
+  constructor(@inject(ServerService) private server: ServerService) {}
+
   runServer(type: ServerType) {
-    const server = serversConfig.servers[type];
-    const app = express();
-    app.use((req, res) => {
-      const reqUrl = req.url as RouteType;
-      const reqMethod = req.method as MethodType;
-      const route = server.routes[reqUrl];
-      if (route) {
-        const method = route[reqMethod];
-        if (method) {
-          res.send(method.controller);
-          return;
-        }
-      }
-      res.send('Not found!');
-    });
-    const { port } = server;
-    app.listen(port, () => console.log(`The server runs on port ${port}`));
+    this.server.register(type).create().listen();
   }
 }

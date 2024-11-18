@@ -1,22 +1,8 @@
-import { ControllerType } from '../type/controller.type';
-import { MethodType } from '../type/method.type';
 import { PortType } from '../type/port.type';
-import { RouteType } from '../type/route.type';
 import { ServerType } from '../type/server.type';
+import { RoutesConfigModel } from './routes-config.model';
 
-export interface RouteServerConfigModel {
-  controller: ControllerType;
-}
-
-export type RouteServerConfigType = Record<MethodType, RouteServerConfigModel>;
-
-export type PartialRouteServerConfigType = Partial<RouteServerConfigType>;
-
-export interface RoutesServerConfigModel {
-  routes: Record<RouteType, PartialRouteServerConfigType>;
-}
-
-export interface ServerConfigModel extends RoutesServerConfigModel {
+export interface ServerConfigModel extends RoutesConfigModel {
   port: PortType;
 }
 

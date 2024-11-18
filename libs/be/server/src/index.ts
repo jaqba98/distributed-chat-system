@@ -1,1 +1,1 @@
-export * from './lib/be-server';
+export * from './lib/server';

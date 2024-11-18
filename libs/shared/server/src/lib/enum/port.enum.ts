@@ -1,4 +1,3 @@
 export const PortEnum = {
-  PORT_3000: 3001,
-  PORT_3002: 3002,
+  port_3000: 3000,
 } as const;
