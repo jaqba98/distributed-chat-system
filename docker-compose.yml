@@ -5,7 +5,7 @@ services:
       context: dist/apps/chat-client
       dockerfile: Dockerfile
     ports:
-      - '3000:80'
+      - 3000:80
   server1:
     build:
       context: dist/apps/server1
@@ -13,7 +13,10 @@ services:
     ports:
       - 3001:3000
     environment:
-      - APP_PORT=3001
+      - SERVER_PORT=3001
+      - SERVER_ROUTES=ROOT
+      - SERVER_ROOT_URL=/
+      - SERVER_ROOT_CONTROLLER=rootController
   server2:
     build:
       context: dist/apps/server1
@@ -21,7 +24,10 @@ services:
     ports:
       - 3002:3000
     environment:
-      - APP_PORT=3002
+      - SERVER_PORT=3002
+      - SERVER_ROUTES=ROOT
+      - SERVER_ROOT_URL=/
+      - SERVER_ROOT_CONTROLLER=rootController
   server3:
     build:
       context: dist/apps/server1
@@ -29,7 +35,10 @@ services:
     ports:
       - 3003:3000
     environment:
-      - APP_PORT=3003
+      - SERVER_PORT=3003
+      - SERVER_ROUTES=ROOT
+      - SERVER_ROOT_URL=/
+      - SERVER_ROOT_CONTROLLER=rootController
   server4:
     build:
       context: dist/apps/server1
@@ -37,7 +46,10 @@ services:
     ports:
       - 3004:3000
     environment:
-      - APP_PORT=3004
+      - SERVER_PORT=3004
+      - SERVER_ROUTES=ROOT
+      - SERVER_ROOT_URL=/
+      - SERVER_ROOT_CONTROLLER=rootController
   nginx:
     image: nginx:latest
     ports:

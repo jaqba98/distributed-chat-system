@@ -1,25 +1,11 @@
 import { createServer, Server } from 'http';
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
-import {
-  ServersConfigAppService,
-  ServerType,
-} from '@distributed-chat-system/shared-server';
+import { ServerEnvService } from './server-env.service';
 
 @injectable()
 export class ServerService {
-  private _type?: ServerType;
-
   private _server?: Server;
-
-  private get type() {
-    if (this._type) return this._type;
-    throw new Error('Server not registered!');
-  }
-
-  private set type(type: ServerType) {
-    this._type = type;
-  }
 
   private get server() {
     if (this._server) return this._server;
@@ -30,32 +16,26 @@ export class ServerService {
     this._server = server;
   }
 
-  constructor(private serversConfig: ServersConfigAppService) {
-    this.serversConfig = new ServersConfigAppService();
-  }
+  constructor(@inject(ServerEnvService) private serverEnv: ServerEnvService) {}
 
-  register(type: ServerType) {
-    this.type = type;
+  init() {
+    this.serverEnv.init();
     return this;
   }
 
   create() {
+    // Refactor the server
     this.server = createServer((req, res) => {
-      const route = this.serversConfig.getRoute(this.type, req.url, req.method);
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      if (route) {
-        res.end(process.env.APP_PORT);
-      } else {
-        res.end('404');
-      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(this.serverEnv.data, null, 2));
     });
     return this;
   }
 
   listen() {
-    const port = this.serversConfig.getPort(this.type);
-    this.server.listen(port, () => {
-      console.log(`Listening on ${port}`);
+    // Use port from env
+    this.server.listen(3000, () => {
+      console.log(`Listening on ${3000}`);
     });
     return this;
   }
