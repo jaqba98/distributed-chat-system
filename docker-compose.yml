@@ -11,45 +11,33 @@ services:
       context: dist/apps/server1
       dockerfile: Dockerfile
     ports:
-      - 3001:3000
+      - 3001:3001
     environment:
       - SERVER_PORT=3001
-      - SERVER_ROUTES=ROOT
-      - SERVER_ROOT_URL=/
-      - SERVER_ROOT_CONTROLLER=rootController
   server2:
     build:
       context: dist/apps/server1
       dockerfile: Dockerfile
     ports:
-      - 3002:3000
+      - 3002:3002
     environment:
       - SERVER_PORT=3002
-      - SERVER_ROUTES=ROOT
-      - SERVER_ROOT_URL=/
-      - SERVER_ROOT_CONTROLLER=rootController
   server3:
     build:
       context: dist/apps/server1
       dockerfile: Dockerfile
     ports:
-      - 3003:3000
+      - 3003:3003
     environment:
       - SERVER_PORT=3003
-      - SERVER_ROUTES=ROOT
-      - SERVER_ROOT_URL=/
-      - SERVER_ROOT_CONTROLLER=rootController
   server4:
     build:
       context: dist/apps/server1
       dockerfile: Dockerfile
     ports:
-      - 3004:3000
+      - 3004:3004
     environment:
       - SERVER_PORT=3004
-      - SERVER_ROUTES=ROOT
-      - SERVER_ROOT_URL=/
-      - SERVER_ROOT_CONTROLLER=rootController
   nginx:
     image: nginx:latest
     ports:
