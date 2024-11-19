@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:80
-  server1:
+  chat1:
     build:
       context: dist/apps/chat
       dockerfile: Dockerfile
@@ -14,7 +14,7 @@ services:
       - 3001:3001
     environment:
       - SERVER_PORT=3001
-  server2:
+  chat2:
     build:
       context: dist/apps/chat
       dockerfile: Dockerfile
@@ -22,7 +22,7 @@ services:
       - 3002:3002
     environment:
       - SERVER_PORT=3002
-  server3:
+  chat3:
     build:
       context: dist/apps/chat
       dockerfile: Dockerfile
@@ -30,7 +30,7 @@ services:
       - 3003:3003
     environment:
       - SERVER_PORT=3003
-  server4:
+  chat4:
     build:
       context: dist/apps/chat
       dockerfile: Dockerfile
