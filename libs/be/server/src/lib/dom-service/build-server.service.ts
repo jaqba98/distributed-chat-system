@@ -29,7 +29,6 @@ export class BuildServerService {
       res.end(this.env.env.port.toString());
     });
     return this;
-    return this;
   }
 
   listen() {
