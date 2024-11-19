@@ -16,6 +16,13 @@
         "bundle": false,
         "main": "apps/chat/src/main.ts",
         "tsConfig": "apps/chat/tsconfig.app.json",
+        "assets": [
+          {
+            "input": "apps/chat/src",
+            "glob": "Dockerfile",
+            "output": "/"
+          }
+        ],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
