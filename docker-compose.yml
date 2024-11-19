@@ -38,15 +38,17 @@ services:
       - 3004:3004
     environment:
       - SERVER_PORT=3004
+  chat5:
+    build:
+      context: dist/apps/chat
+      dockerfile: Dockerfile
+    ports:
+      - 3005:3005
+    environment:
+      - SERVER_PORT=3005
   nginx:
     image: nginx:latest
     ports:
-      - 3005:80
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-  nginx:
-    image: nginx:latest
-    ports:
-      - 3005:80
+      - 3006:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf

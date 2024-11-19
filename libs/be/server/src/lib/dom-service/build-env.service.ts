@@ -1,8 +1,6 @@
 import { singleton } from 'tsyringe';
 
-interface EnvModel {
-  port: number;
-}
+import { EnvModel } from '../model/env.model';
 
 @singleton()
 export class BuildEnvService {
@@ -10,23 +8,21 @@ export class BuildEnvService {
 
   get env() {
     if (this._env) return this._env;
-    throw new Error('c');
+    throw new Error('Env configuratoin was not created!');
   }
 
   build() {
     const port = this.buildPort();
-    this._env = {
-      port: port,
-    };
+    this._env = { port };
   }
 
   private buildPort() {
-    const port = process.env.SERVER_PORT;
-    if (port) {
-      const portNumber = Number(port);
-      if (portNumber) return portNumber;
-      throw new Error('b');
+    const { SERVER_PORT } = process.env;
+    if (SERVER_PORT) {
+      const portNum = Number(SERVER_PORT);
+      if (portNum) return portNum;
+      throw new Error('The port is not a number!');
     }
-    throw new Error('a');
+    throw new Error('The port was not given!');
   }
 }
