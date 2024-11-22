@@ -1,7 +1,7 @@
-import { inject, injectable } from 'tsyringe';
 import { createServer, Server } from 'http';
+import { inject, injectable } from 'tsyringe';
 
-import { BuildEnvService } from './build-env.service';
+import { BuildServerConfigService } from './build-server-config.service';
 
 @injectable()
 export class BuildServerService {
@@ -16,24 +16,26 @@ export class BuildServerService {
     this._server = server;
   }
 
-  constructor(@inject(BuildEnvService) private buildEnv: BuildEnvService) {}
+  constructor(
+    @inject(BuildServerConfigService) private config: BuildServerConfigService
+  ) {}
 
   init() {
-    this.buildEnv.build();
+    this.config.build();
     return this;
   }
 
   create() {
-    this.server = createServer((_req, res) => {
+    this.server = createServer((_res, res) => {
       res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(process.env, null, 2));
+      res.end(JSON.stringify(this.config.serverConfig));
     });
     return this;
   }
 
   listen() {
     this.server.listen(3000, () => {
-      console.log(`Listening on 3000`);
+      console.log('Server is running...');
     });
     return this;
   }
