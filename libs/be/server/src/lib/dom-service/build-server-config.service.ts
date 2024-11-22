@@ -24,7 +24,13 @@ export class BuildServerConfigService {
       .filter((obj) => obj !== undefined)
       .map((obj) => JSON.parse(obj) as RouteConfigModel)
       .forEach((obj) => {
-        this.serverConfig.routes.methods[obj.method].urls[obj.url] = obj;
+        const { method, url } = obj;
+        if (!this.serverConfig.routes.methods[method]) {
+          this.serverConfig.routes.methods[method] = {
+            urls: {},
+          };
+        }
+        this.serverConfig.routes.methods[method].urls[url] = obj;
       });
   }
 }
