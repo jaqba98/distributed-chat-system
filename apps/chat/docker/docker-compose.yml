@@ -4,7 +4,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment:
-      - SERVER_ROUTE_ROOT={'url':'/','method':'GET','controller':'rootController'}
+      - SERVER_ROUTE_ROOT={"url":"/","method":"GET","controller":"rootController"}
   chat1:
     extends:
       service: base_chat
