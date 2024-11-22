@@ -12,17 +12,6 @@ export class BuildEnvService {
   }
 
   build() {
-    const port = this.buildPort();
-    this._env = { port };
-  }
-
-  private buildPort() {
-    const { SERVER_PORT } = process.env;
-    if (SERVER_PORT) {
-      const portNum = Number(SERVER_PORT);
-      if (portNum) return portNum;
-      throw new Error('The port is not a number!');
-    }
-    throw new Error('The port was not given!');
+    this._env = { port: 3000 };
   }
 }

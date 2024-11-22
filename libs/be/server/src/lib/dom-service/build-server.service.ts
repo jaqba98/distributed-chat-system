@@ -25,15 +25,15 @@ export class BuildServerService {
 
   create() {
     this.server = createServer((_req, res) => {
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end(this.buildEnv.env.port.toString());
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(process.env, null, 2));
     });
     return this;
   }
 
   listen() {
-    this.server.listen(this.buildEnv.env.port, () => {
-      console.log(`Listening on ${this.buildEnv.env.port}`);
+    this.server.listen(3000, () => {
+      console.log(`Listening on 3000`);
     });
     return this;
   }
