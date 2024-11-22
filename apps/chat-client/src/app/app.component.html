@@ -1,1 +1,3 @@
-<p>{{ title }}</p>
+<input [(ngModel)]="message" placeholder="Type a message" />
+<button (click)="send()">Send</button>
+<p *ngIf="response">{{ response }}</p>
