@@ -10,36 +10,50 @@ services:
       service: base_chat
     ports:
       - 3001:3000
+    environment:
+      - SERVER_PORT=3001
   chat2:
     extends:
       service: base_chat
     ports:
       - 3002:3000
+    environment:
+      - SERVER_PORT=3002
   chat3:
     extends:
       service: base_chat
     ports:
       - 3003:3000
+    environment:
+      - SERVER_PORT=3003
   chat4:
     extends:
       service: base_chat
     ports:
       - 3004:3000
+    environment:
+      - SERVER_PORT=3004
   chat5:
     extends:
       service: base_chat
     ports:
       - 3005:3000
+    environment:
+      - SERVER_PORT=3004
   chat6:
     extends:
       service: base_chat
     ports:
       - 3006:3000
+    environment:
+      - SERVER_PORT=3006
   chat7:
     extends:
       service: base_chat
     ports:
       - 3007:3000
+    environment:
+      - SERVER_PORT=3007
   nginx:
     image: nginx:1.27.2-alpine-slim
     ports:

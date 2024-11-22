@@ -9,6 +9,6 @@ import {
 export class GetRootController extends BaseController {
   build(_req: IncomingMessage, res: ServerResponse): void {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello world!');
+    res.end(process.env.SERVER_PORT);
   }
 }
