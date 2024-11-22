@@ -8,7 +8,9 @@ import {
 @singleton()
 export class BuildServerConfigService {
   serverConfig: ServerConfigModel = {
-    routes: {},
+    routes: {
+      methods: {},
+    },
   };
 
   build() {
@@ -22,7 +24,7 @@ export class BuildServerConfigService {
       .filter((obj) => obj !== undefined)
       .map((obj) => JSON.parse(obj) as RouteConfigModel)
       .forEach((obj) => {
-        this.serverConfig.routes[obj.url] = obj;
+        this.serverConfig.routes.methods[obj.method].urls[obj.url] = obj;
       });
   }
 }

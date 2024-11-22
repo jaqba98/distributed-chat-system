@@ -28,16 +28,17 @@ export class BuildServerService {
 
   create() {
     this.server = createServer((req, res) => {
-      const { controller } = this.config.serverConfig.routes[req.url ?? '/'];
+      const method = req.method ?? 'GET';
+      const url = req.url ?? '/';
+      const { controller } =
+        this.config.serverConfig.routes.methods[method].urls[url];
       getController(controller).build(req, res);
     });
     return this;
   }
 
   listen() {
-    this.server.listen(3000, () => {
-      console.log('Server is running...');
-    });
+    this.server.listen(3000, () => console.log('Server is running...'));
     return this;
   }
 }

@@ -4,6 +4,14 @@ export interface RouteConfigModel {
   controller: string;
 }
 
+export interface UrlsConfigModel {
+  urls: Record<string, RouteConfigModel>;
+}
+
+export interface RoutesConfigModel {
+  methods: Record<string, UrlsConfigModel>;
+}
+
 export interface ServerConfigModel {
-  routes: Record<string, RouteConfigModel>;
+  routes: RoutesConfigModel;
 }
