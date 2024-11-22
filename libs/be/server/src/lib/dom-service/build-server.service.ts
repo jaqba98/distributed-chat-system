@@ -2,6 +2,7 @@ import { createServer, Server } from 'http';
 import { inject, injectable } from 'tsyringe';
 
 import { BuildServerConfigService } from './build-server-config.service';
+import { getController } from '../service/controller-decorator.service';
 
 @injectable()
 export class BuildServerService {
@@ -26,9 +27,9 @@ export class BuildServerService {
   }
 
   create() {
-    this.server = createServer((_res, res) => {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(this.config.serverConfig));
+    this.server = createServer((req, res) => {
+      const { controller } = this.config.serverConfig.routes[req.url ?? '/'];
+      getController(controller).build(req, res);
     });
     return this;
   }
