@@ -8,7 +8,7 @@ export class BuildServerDtoService {
   build(): ServerDtoModel {
     return {
       routes: this.buildRoutes(),
-      socketIO: process.env.SERVER_SOCKET_IO,
+      socketIO: this.buildSocketIO(),
     };
   }
 
@@ -18,5 +18,9 @@ export class BuildServerDtoService {
       .map((envKey) => process.env[envKey])
       .filter((env) => env !== undefined)
       .map((env) => JSON.parse(env) as RouteDtoModel);
+  }
+
+  private buildSocketIO() {
+    return process.env.SERVER_SOCKET_IO;
   }
 }
