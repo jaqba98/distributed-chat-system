@@ -18,7 +18,7 @@
         "tsConfig": "apps/chat/tsconfig.app.json",
         "assets": [
           {
-            "input": "apps/chat/docker",
+            "input": "apps/chat/config",
             "glob": "*",
             "output": "/"
           }
