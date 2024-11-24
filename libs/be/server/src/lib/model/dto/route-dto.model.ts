@@ -1,5 +1,5 @@
 export interface RouteDtoModel {
-  method: string;
-  url: string;
-  controller: string;
+  method?: string;
+  url?: string;
+  controller?: string;
 }

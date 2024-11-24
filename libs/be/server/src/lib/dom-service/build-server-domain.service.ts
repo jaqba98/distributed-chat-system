@@ -39,14 +39,4 @@ export class BuildServerDomainService {
         }
       );
   }
-
-  private buildSocketIO(): ControllerDomainModel {
-    const { SERVER_SOCKET_IO } = process.env;
-    if (SERVER_SOCKET_IO) {
-      return {
-        controller: SERVER_SOCKET_IO,
-      };
-    }
-    throw new Error(envVariableNotSetMsg('SERVER_SOCKET_IO'));
-  }
 }
