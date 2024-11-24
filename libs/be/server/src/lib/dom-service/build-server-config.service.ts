@@ -11,10 +11,23 @@ export class BuildServerConfigService {
     routes: {
       methods: {},
     },
+    socketIo: {
+      controller: '',
+    },
   };
 
   build() {
+    this.aaa();
     this.buildRoutes();
+  }
+
+  private aaa() {
+    const { SERVER_SOCKET_IO } = process.env;
+    if (SERVER_SOCKET_IO) {
+      this.serverConfig.socketIo = {
+        controller: SERVER_SOCKET_IO,
+      };
+    }
   }
 
   private buildRoutes() {

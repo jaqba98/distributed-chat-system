@@ -14,4 +14,5 @@ export interface RoutesConfigModel {
 
 export interface ServerConfigModel {
   routes: RoutesConfigModel;
+  socketIo: Pick<RouteConfigModel, 'controller'>;
 }

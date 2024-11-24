@@ -1,11 +1,12 @@
 import { createServer, Server } from 'http';
 import { inject, injectable } from 'tsyringe';
-import * as socket from 'socket.io';
+import * as socketIO from 'socket.io';
 
 import { BuildServerConfigService } from './build-server-config.service';
-import { getController } from '../service/controller-decorator.service';
-
-let connectedUsers = 0;
+import {
+  getHttpController,
+  getSocketIoController,
+} from '../service/controller-decorator.service';
 
 @injectable()
 export class BuildServerService {
@@ -31,39 +32,18 @@ export class BuildServerService {
 
   create() {
     this.server = createServer((req, res) => {
-      const method = req.method ?? 'GET';
-      const url = req.url ?? '/';
-      const { controller } =
-        this.config.serverConfig.routes.methods[method].urls[url];
-      getController(controller).build(req, res);
+      const { method, url } = req;
+      if (!method) throw new Error('Not specified request method!');
+      if (!url) throw new Error('Not specified request url!');
+      const { urls } = this.config.serverConfig.routes.methods[method];
+      const { controller } = urls[url];
+      getHttpController(controller).build(req, res);
     });
-
-    // Attach Socket.IO to the server
-    const io = new socket.Server(this.server, {
-      cors: {
-        origin: '*', // Allow all origins, adjust for production
-      },
-    });
-
-    // Handle Socket.IO connections
+    const io = new socketIO.Server(this.server);
     io.on('connection', (socket) => {
-      connectedUsers++;
-      console.log('A user connected:', socket.id);
-
-      socket.on('message', (data) => {
-        console.log('Message received:', data);
-        io.emit(
-          'response',
-          `Hello, ${process.env.SERVER_PORT} you said: ${connectedUsers}`
-        );
-      });
-
-      socket.on('disconnect', () => {
-        connectedUsers--;
-        console.log('User disconnected:', socket.id);
-      });
+      const { socketIo } = this.config.serverConfig;
+      getSocketIoController(socketIo.controller).build(io, socket);
     });
-
     return this;
   }
 

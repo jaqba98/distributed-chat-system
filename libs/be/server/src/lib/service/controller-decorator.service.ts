@@ -1,11 +1,14 @@
 import { container } from 'tsyringe';
-
-import { BaseController } from '../controller/base.controller';
+import { HttpController } from '../controller/http.controller';
+import { SocketIoController } from '../controller/socket-io.controller';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const RegisterController = (key: string) => (target: any) => {
   container.register(key, { useClass: target });
 };
 
-export const getController = (key: string) =>
-  container.resolve<BaseController>(key);
+export const getHttpController = (key: string) =>
+  container.resolve<HttpController>(key);
+
+export const getSocketIoController = (key: string) =>
+  container.resolve<SocketIoController>(key);
