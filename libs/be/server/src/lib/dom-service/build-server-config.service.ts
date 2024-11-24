@@ -2,12 +2,12 @@ import { singleton } from 'tsyringe';
 
 import {
   RouteConfigModel,
-  ServerConfigModel,
-} from '../model/server-config.model';
+  ServerDomainModel,
+} from '../model/domain/server-domain.model';
 
 @singleton()
 export class BuildServerConfigService {
-  serverConfig: ServerConfigModel = {
+  serverConfig: ServerDomainModel = {
     routes: {
       methods: {},
     },
