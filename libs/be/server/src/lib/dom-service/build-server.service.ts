@@ -1,12 +1,12 @@
 import { createServer, Server } from 'http';
 import { inject, injectable } from 'tsyringe';
-import * as socketIO from 'socket.io';
+import { BuildServerDtoService } from '../infrastructure/build-server-dto.service';
+// import * as socketIO from 'socket.io';
 
-import { BuildServerConfigService } from './build-server-domain.service';
-import {
-  getHttpController,
-  getSocketIoController,
-} from '../service/controller-decorator.service';
+// import {
+//   getHttpController,
+//   getSocketIoController,
+// } from '../service/controller-decorator.service';
 
 @injectable()
 export class BuildServerService {
@@ -22,28 +22,29 @@ export class BuildServerService {
   }
 
   constructor(
-    @inject(BuildServerConfigService) private config: BuildServerConfigService
+    @inject(BuildServerDtoService) private config: BuildServerDtoService
   ) {}
 
   init() {
-    this.config.build();
     return this;
   }
 
   create() {
     this.server = createServer((req, res) => {
-      const { method, url } = req;
-      if (!method) throw new Error('Not specified request method!');
-      if (!url) throw new Error('Not specified request url!');
-      const { urls } = this.config.serverConfig.routes.methods[method];
-      const { controller } = urls[url];
-      getHttpController(controller).build(req, res);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(this.config.build(), null, 2));
+      // const { method, url } = req;
+      // if (!method) throw new Error('Not specified request method!');
+      // if (!url) throw new Error('Not specified request url!');
+      // const { urls } = this.config.serverConfig.routes.methods[method];
+      // const { controller } = urls[url];
+      // getHttpController(controller).build(req, res);
     });
-    const io = new socketIO.Server(this.server);
-    io.on('connection', (socket) => {
-      const { socketIo } = this.config.serverConfig;
-      getSocketIoController(socketIo.controller).build(io, socket);
-    });
+    // const io = new socketIO.Server(this.server);
+    // io.on('connection', (socket) => {
+    //   const { socketIo } = this.config.serverConfig;
+    //   getSocketIoController(socketIo.controller).build(io, socket);
+    // });
     return this;
   }
 
