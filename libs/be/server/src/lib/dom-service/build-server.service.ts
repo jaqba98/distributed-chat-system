@@ -2,7 +2,7 @@ import { createServer, Server } from 'http';
 import { inject, injectable } from 'tsyringe';
 import * as socketIO from 'socket.io';
 
-import { BuildServerConfigService } from './build-server-config.service';
+import { BuildServerConfigService } from '../infrastructure/build-server-domain.service';
 import {
   getHttpController,
   getSocketIoController,
