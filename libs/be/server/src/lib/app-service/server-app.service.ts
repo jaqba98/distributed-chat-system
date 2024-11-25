@@ -16,6 +16,6 @@ export class ServerAppService {
     const dto = this.buildDto.build();
     this.checkDto.check(dto);
     const domain = this.domain.build(dto);
-    console.log(domain);
+    console.log(JSON.stringify(domain, null, 2));
   }
 }

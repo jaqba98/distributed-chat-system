@@ -28,11 +28,11 @@ export class BuildServerDomainService {
         throw new Error(buildServerDomainErrorMsg);
       }
       if (!domainRoutes.methods[method]) {
-        domainRoutes.methods[method as string].urls = {};
+        domainRoutes.methods[method] = {
+          urls: {},
+        };
       }
-      domainRoutes.methods[method as string].urls[url as string] = {
-        controller: controller,
-      };
+      domainRoutes.methods[method].urls[url] = { controller };
     }
     return domainRoutes;
   }
