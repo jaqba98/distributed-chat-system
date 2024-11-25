@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
+
 import { BuildServerDtoService } from './build-server-dto.service';
 import { ServerDtoModel } from '../model/dto/server-dto.model';
 
