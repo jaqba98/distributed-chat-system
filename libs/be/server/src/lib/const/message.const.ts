@@ -11,3 +11,5 @@ export const routeNotPropertySetMsg = (id: string, property: string) =>
 
 export const buildServerDomainErrorMsg =
   'An error occurred while building the server domain model.';
+
+export const serverIsRunningMsg = 'Server is running...';
