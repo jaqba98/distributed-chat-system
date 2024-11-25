@@ -2,6 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { ServerDtoModel } from '../model/dto/server-dto.model';
 import { RouteModel } from '../model/dto/route-dto.model';
+import { SERVER_SOCKET_IO } from '../const/env.const';
 
 @injectable()
 export class BuildServerDtoService {
@@ -42,6 +43,6 @@ export class BuildServerDtoService {
   }
 
   private buildSocketIO() {
-    return process.env.SERVER_SOCKET_IO;
+    return process.env[SERVER_SOCKET_IO];
   }
 }

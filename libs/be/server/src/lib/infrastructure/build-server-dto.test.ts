@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 
 import { BuildServerDtoService } from './build-server-dto.service';
 import { ServerDtoModel } from '../model/dto/server-dto.model';
+import { SERVER_SOCKET_IO } from '../const/env.const';
 
 describe('BuildServerDtoService', () => {
   const service = container.resolve(BuildServerDtoService);
@@ -23,7 +24,7 @@ describe('BuildServerDtoService', () => {
   });
 
   test('should correctly set socketIO when SERVER_SOCKET_IO is defined', () => {
-    process.env.SERVER_SOCKET_IO = 'test';
+    process.env[SERVER_SOCKET_IO] = 'test';
     expect(service.build()).toEqual<ServerDtoModel>({
       routes: [],
       socketIO: 'test',
@@ -231,13 +232,13 @@ describe('BuildServerDtoService', () => {
   });
 
   test('should handle an environment variable SERVER_SOCKET_IO with boolean-like strings', () => {
-    process.env.SERVER_SOCKET_IO = 'true';
+    process.env[SERVER_SOCKET_IO] = 'true';
     expect(service.build()).toEqual<ServerDtoModel>({
       routes: [],
       socketIO: 'true',
     });
 
-    process.env.SERVER_SOCKET_IO = 'false';
+    process.env[SERVER_SOCKET_IO] = 'false';
     expect(service.build()).toEqual<ServerDtoModel>({
       routes: [],
       socketIO: 'false',

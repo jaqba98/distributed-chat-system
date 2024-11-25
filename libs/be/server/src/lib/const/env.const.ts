@@ -1,0 +1,1 @@
+export const SERVER_SOCKET_IO = 'SERVER_SOCKET_IO';
