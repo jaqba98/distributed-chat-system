@@ -4,6 +4,7 @@ import { ServerDtoModel } from '../model/dto/server-dto.model';
 import {
   envVarNotSetMsg,
   routeNotPropertySetMsg,
+  routesNotSetMsg,
 } from '../const/message.const';
 import { SERVER_SOCKET_IO } from '../const/env.const';
 
@@ -28,9 +29,7 @@ export class CheckServerDtoService {
       }
     }
     if (errors.length === 0) return;
-    for (const error of errors) {
-      console.error(error);
-    }
+    throw new Error(routesNotSetMsg(errors));
   }
 
   private checkSocketIO(socketIO: ServerDtoModel['socketIO']) {

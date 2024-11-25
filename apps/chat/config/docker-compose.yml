@@ -6,8 +6,6 @@ services:
     environment:
       - SERVER_ROUTE_ROOT={"method":"GET","url":"/","controller":"rootController"}
       - SERVER_ROUTE_ROOT2={"method":"GET","url":"/2","controller":"root2Controller"}
-      - SERVER_ROUTE_ROOT3=qqq
-      - SERVER_ROUTE_ROOT4=sadsdasdas
       - SERVER_SOCKET_IO=chatController
   chat1:
     extends:
