@@ -1,12 +1,15 @@
-import { inject, injectable } from 'tsyringe';
+import { injectable, inject } from 'tsyringe';
 
-import { BuildServerService } from '../dom-service/build-server.service';
+import { BuildServerDtoService } from '../infrastructure/build-server-dto.service';
 
 @injectable()
 export class ServerAppService {
-  constructor(@inject(BuildServerService) private server: BuildServerService) {}
+  constructor(
+    @inject(BuildServerDtoService) private buildServerDto: BuildServerDtoService
+  ) {}
 
   runServer() {
-    this.server.init().create().listen();
+    const dto = this.buildServerDto.build();
+    console.log(dto);
   }
 }
