@@ -8,3 +8,6 @@ export const routesNotSetMsg = (errors: string[]) =>
 
 export const routeNotPropertySetMsg = (id: string, property: string) =>
   `Route ${id} does not have the ${property} property set.`;
+
+export const buildServerDomainErrorMsg =
+  'An error occurred while building the server domain model.';
