@@ -3,13 +3,21 @@ import { createServer } from 'http';
 
 import { ServerDomainModel } from '../model/domain/server-domain.model';
 import { serverIsRunningMsg } from '../const/message.const';
+import { getHttpController } from '../service/controller-decorator.service';
 
 @injectable()
 export class BuildServerService {
   build(domain: ServerDomainModel) {
     const server = createServer((req, res) => {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(domain, null, 2));
+      const method = req.method ?? '';
+      const url = req.url ?? '';
+      const { methods } = domain.routes;
+      if (method in methods && url in methods[method].urls) {
+        const { controller } = methods[method].urls[url];
+        getHttpController(controller).build(req, res);
+      } else {
+        getHttpController('http404Controller').build(req, res);
+      }
     });
     server.listen(3000, () => {
       console.log(serverIsRunningMsg);
@@ -19,16 +27,6 @@ export class BuildServerService {
 
 // export class BuildServerService {
 //   create() {
-//     this.server = createServer((req, res) => {
-//       res.writeHead(200, { 'Content-Type': 'application/json' });
-//       res.end(JSON.stringify(this.config.build(), null, 2));
-//       // const { method, url } = req;
-//       // if (!method) throw new Error('Not specified request method!');
-//       // if (!url) throw new Error('Not specified request url!');
-//       // const { urls } = this.config.serverConfig.routes.methods[method];
-//       // const { controller } = urls[url];
-//       // getHttpController(controller).build(req, res);
-//     });
 //     // const io = new socketIO.Server(this.server);
 //     // io.on('connection', (socket) => {
 //     //   const { socketIo } = this.config.serverConfig;
