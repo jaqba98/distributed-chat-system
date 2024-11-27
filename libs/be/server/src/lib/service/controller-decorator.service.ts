@@ -1,4 +1,5 @@
 import { container } from 'tsyringe';
+
 import { HttpController } from '../controller/http.controller';
 import { SocketIoController } from '../controller/socket-io.controller';
 

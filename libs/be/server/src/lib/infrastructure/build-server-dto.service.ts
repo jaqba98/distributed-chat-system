@@ -2,7 +2,7 @@ import { injectable } from 'tsyringe';
 
 import { ServerDtoModel } from '../model/dto/server-dto.model';
 import { RouteModel } from '../model/dto/route-dto.model';
-import { SERVER_SOCKET_IO } from '../const/env.const';
+import { SERVER_ROUTE, SERVER_SOCKET_IO } from '../const/env.const';
 
 @injectable()
 export class BuildServerDtoService {
@@ -15,7 +15,7 @@ export class BuildServerDtoService {
 
   private buildRoutes(): ServerDtoModel['routes'] {
     return Object.keys(process.env)
-      .filter((envKey) => envKey.startsWith('SERVER_ROUTE_'))
+      .filter((envKey) => envKey.startsWith(SERVER_ROUTE))
       .map((envKey) => {
         const envVal = process.env[envKey];
         if (envVal) return { envKey, envVal };

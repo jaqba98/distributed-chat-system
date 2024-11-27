@@ -1,1 +1,3 @@
 export const SERVER_SOCKET_IO = 'SERVER_SOCKET_IO';
+
+export const SERVER_ROUTE = 'SERVER_ROUTE_';

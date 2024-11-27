@@ -1,9 +1,13 @@
 import { injectable } from 'tsyringe';
 import { createServer } from 'http';
+import { Server } from 'socket.io';
 
 import { ServerDomainModel } from '../model/domain/server-domain.model';
 import { serverIsRunningMsg } from '../const/message.const';
-import { getHttpController } from '../service/controller-decorator.service';
+import {
+  getHttpController,
+  getSocketIoController,
+} from '../service/controller-decorator.service';
 
 @injectable()
 export class BuildServerService {
@@ -19,19 +23,12 @@ export class BuildServerService {
         getHttpController('http404Controller').build(req, res);
       }
     });
+    const io = new Server(server);
+    io.on('connection', (socket) => {
+      getSocketIoController(domain.socketIO.controller).build(io, socket);
+    });
     server.listen(3000, () => {
       console.log(serverIsRunningMsg);
     });
   }
 }
-
-// export class BuildServerService {
-//   create() {
-//     // const io = new socketIO.Server(this.server);
-//     // io.on('connection', (socket) => {
-//     //   const { socketIo } = this.config.serverConfig;
-//     //   getSocketIoController(socketIo.controller).build(io, socket);
-//     // });
-//     return this;
-//   }
-// }
