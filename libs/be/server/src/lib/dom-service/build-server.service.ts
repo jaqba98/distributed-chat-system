@@ -1,9 +1,10 @@
 import { injectable } from 'tsyringe';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { createAdapter } from '@socket.io/redis-adapter';
+import { createClient } from 'redis';
 
 import { ServerDomainModel } from '../model/domain/server-domain.model';
-import { serverIsRunningMsg } from '../const/message.const';
 import {
   getHttpController,
   getSocketIoController,
@@ -11,7 +12,7 @@ import {
 
 @injectable()
 export class BuildServerService {
-  build(domain: ServerDomainModel) {
+  async build(domain: ServerDomainModel) {
     const server = createServer((req, res) => {
       const method = req.method ?? '';
       const url = req.url ?? '';
@@ -23,12 +24,18 @@ export class BuildServerService {
         getHttpController('http404Controller').build(req, res);
       }
     });
-    const io = new Server(server);
+    const pubClient = createClient({ url: 'redis://redis:6379' });
+    const subClient = pubClient.duplicate();
+    await Promise.all([pubClient.connect(), subClient.connect()]);
+    const io = new Server({
+      adapter: createAdapter(pubClient, subClient),
+    });
     io.on('connection', (socket) => {
       getSocketIoController(domain.socketIO.controller).build(io, socket);
     });
-    server.listen(3000, () => {
-      console.log(serverIsRunningMsg);
-    });
+    io.listen(3000);
+    // server.listen(3000, () => {
+    //   console.log(serverIsRunningMsg);
+    // });
   }
 }
