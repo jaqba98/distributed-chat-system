@@ -9,6 +9,7 @@ import {
   getHttpController,
   getSocketIoController,
 } from '../service/controller-decorator.service';
+import { serverIsRunningMsg } from '../const/message.const';
 
 @injectable()
 export class BuildServerService {
@@ -33,9 +34,9 @@ export class BuildServerService {
     io.on('connection', (socket) => {
       getSocketIoController(domain.socketIO.controller).build(io, socket);
     });
-    io.listen(3000);
-    // server.listen(3000, () => {
-    //   console.log(serverIsRunningMsg);
-    // });
+    // io.listen(3000);
+    server.listen(3000, () => {
+      console.log(serverIsRunningMsg);
+    });
   }
 }
