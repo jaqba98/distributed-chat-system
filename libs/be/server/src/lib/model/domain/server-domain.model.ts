@@ -4,6 +4,7 @@ import {
 } from './routes-domain.model';
 
 export interface ServerDomainModel {
-  routes: RoutesDomainModel;
-  socketIO: ControllerDomainModel;
+  serverType: string;
+  serverRoutes: RoutesDomainModel;
+  serverSocketIO: ControllerDomainModel;
 }

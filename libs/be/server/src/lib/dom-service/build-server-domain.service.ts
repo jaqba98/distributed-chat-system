@@ -1,32 +1,37 @@
 import { injectable } from 'tsyringe';
 
 import { ServerDomainModel } from '../model/domain/server-domain.model';
-import {
-  ServerDtoModel,
-  ServerDtoPartialType,
-} from '../model/dto/server-dto.model';
+import { ServerDtoPartialType } from '../model/dto/server-dto.model';
 import {
   ControllerDomainModel,
   RoutesDomainModel,
 } from '../model/domain/routes-domain.model';
-import { RouteDtoModel } from '../model/dto/server-route-dto.model';
 import { buildServerDomainErrorMsg } from '../const/message.const';
 
 @injectable()
 export class BuildServerDomainService {
   build(dto: ServerDtoPartialType): ServerDomainModel {
     return {
-      routes: this.buildRoutes(dto.routes),
-      socketIO: this.buildSocketIO(dto.socketIO),
+      serverType: this.buildServerTypeDomain(dto.serverType),
+      serverRoutes: this.buildServerRoutes(dto.serverRoutes),
+      serverSocketIO: this.buildSocketIO(dto.serverSocketIO),
     };
   }
 
-  private buildRoutes(routes: RouteDtoModel[]) {
-    const domainRoutes: RoutesDomainModel = {
-      methods: {},
-    };
-    for (const route of routes) {
-      const { method, url, controller } = route;
+  private buildServerTypeDomain(
+    serverType: ServerDtoPartialType['serverType']
+  ) {
+    if (!serverType) throw new Error(buildServerDomainErrorMsg);
+    return serverType;
+  }
+
+  private buildServerRoutes(
+    serverRoutes: ServerDtoPartialType['serverRoutes']
+  ) {
+    const domainRoutes: RoutesDomainModel = { methods: {} };
+    if (!serverRoutes) return domainRoutes;
+    for (const serverRoute of serverRoutes) {
+      const { method, url, controller } = serverRoute;
       if (!method || !url || !controller) {
         throw new Error(buildServerDomainErrorMsg);
       }
@@ -40,12 +45,11 @@ export class BuildServerDomainService {
     return domainRoutes;
   }
 
-  private buildSocketIO(socketIO?: string): ControllerDomainModel {
-    if (socketIO) {
-      return {
-        controller: socketIO,
-      };
-    }
-    throw new Error(buildServerDomainErrorMsg);
+  private buildSocketIO(
+    serverSocketIO: ServerDtoPartialType['serverSocketIO']
+  ): ControllerDomainModel {
+    if (!serverSocketIO || !serverSocketIO.controller)
+      throw new Error(buildServerDomainErrorMsg);
+    return { controller: serverSocketIO.controller };
   }
 }
