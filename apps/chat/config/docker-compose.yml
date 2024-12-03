@@ -46,6 +46,11 @@ services:
       service: base_chat
     ports:
       - 3007:3000
+  chat8:
+    extends:
+      service: base_chat
+    ports:
+      - 3008:3000
   nginx:
     image: nginx:1.27.2-alpine-slim
     ports:
