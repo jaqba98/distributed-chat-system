@@ -1,6 +1,12 @@
-import { RouteDtoModel } from './route-dto.model';
+import {
+  ControllerModel,
+  ServerRouteDtoPartialType,
+} from './server-route-dto.model';
 
 export interface ServerDtoModel {
-  routes: RouteDtoModel[];
-  socketIO?: string;
+  serverType: string;
+  serverRoutes: ServerRouteDtoPartialType[];
+  serverSocketIO: ControllerModel;
 }
+
+export type ServerDtoPartialType = Partial<ServerDtoModel>;

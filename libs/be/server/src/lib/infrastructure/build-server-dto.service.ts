@@ -1,48 +1,76 @@
 import { injectable } from 'tsyringe';
 
-import { ServerDtoModel } from '../model/dto/server-dto.model';
-import { RouteModel } from '../model/dto/route-dto.model';
-import { SERVER_ROUTE, SERVER_SOCKET_IO } from '../const/env.const';
+import { ServerDtoPartialType } from '../model/dto/server-dto.model';
+import {
+  SERVER_ROUTE,
+  SERVER_SOCKET_IO,
+  SERVER_TYPE,
+} from '../const/env.const';
+import {
+  ControllerModel,
+  RouteModel,
+} from '../model/dto/server-route-dto.model';
 
 @injectable()
 export class BuildServerDtoService {
-  build(): ServerDtoModel {
+  build(): ServerDtoPartialType {
     return {
-      routes: this.buildRoutes(),
-      socketIO: this.buildSocketIO(),
+      serverType: this.buildServerTypeDto(),
+      serverRoutes: this.buildServerRoutes(),
+      serverSocketIO: this.buildServerSocketIO(),
     };
   }
 
-  private buildRoutes(): ServerDtoModel['routes'] {
-    return Object.keys(process.env)
-      .filter((envKey) => envKey.startsWith(SERVER_ROUTE))
-      .map((envKey) => {
-        const envVal = process.env[envKey];
-        if (envVal) return { envKey, envVal };
-        return undefined;
-      })
-      .filter((env) => env !== undefined)
-      .map((env) => {
-        try {
-          return {
-            envKey: env.envKey,
-            envVal: JSON.parse(env.envVal) as RouteModel,
-          };
-        } catch {
-          return {
-            envKey: env.envKey,
-            envVal: {
-              method: undefined,
-              url: undefined,
-              controller: undefined,
-            } as RouteModel,
-          };
-        }
-      })
-      .map((env) => ({ id: env.envKey, ...env.envVal }));
+  private buildServerTypeDto() {
+    try {
+      return process.env[SERVER_TYPE];
+    } catch {
+      return undefined;
+    }
   }
 
-  private buildSocketIO() {
-    return process.env[SERVER_SOCKET_IO];
+  private buildServerRoutes(): ServerDtoPartialType['serverRoutes'] {
+    try {
+      const routes = Object.keys(process.env)
+        .filter((key) => key.startsWith(SERVER_ROUTE))
+        .map((key) => {
+          const val = process.env[key];
+          if (val) return { key, val };
+          return undefined;
+        })
+        .filter((env) => env !== undefined)
+        .map((env) => {
+          try {
+            return {
+              ...env,
+              val: JSON.parse(env.val) as Partial<RouteModel>,
+            };
+          } catch {
+            return {
+              ...env,
+              val: {
+                method: undefined,
+                url: undefined,
+                controller: undefined,
+              } as Partial<RouteModel>,
+            };
+          }
+        })
+        .map((env) => ({ id: env.key, ...env.val }));
+      return routes.length > 0 ? routes : undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  private buildServerSocketIO() {
+    try {
+      const serverSocketIO = process.env[SERVER_SOCKET_IO];
+      return serverSocketIO
+        ? <ControllerModel>JSON.parse(serverSocketIO)
+        : undefined;
+    } catch {
+      return undefined;
+    }
   }
 }

@@ -6,7 +6,7 @@ import {
   ControllerDomainModel,
   RoutesDomainModel,
 } from '../model/domain/routes-domain.model';
-import { RouteDtoModel } from '../model/dto/route-dto.model';
+import { RouteDtoModel } from '../model/dto/server-route-dto.model';
 import { buildServerDomainErrorMsg } from '../const/message.const';
 
 @injectable()

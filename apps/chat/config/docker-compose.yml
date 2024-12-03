@@ -4,9 +4,10 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment:
+      - SERVER_TYPE=http
       - SERVER_ROUTE_ROOT={"method":"GET","url":"/","controller":"rootController"}
-      - SERVER_ROUTE_ROOT2={"method":"GET","url":"/2","controller":"root2Controller"}
-      - SERVER_SOCKET_IO=chatController
+      - SERVER_ROUTE_HELLO={"method":"GET","url":"/hello","controller":"helloController"}
+      - SERVER_SOCKET_IO={"controller":"socketIOController"}
     depends_on:
       - nginx
       - redis
