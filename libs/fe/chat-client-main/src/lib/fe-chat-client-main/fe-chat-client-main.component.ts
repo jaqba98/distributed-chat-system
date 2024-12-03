@@ -5,13 +5,13 @@ import { RouterModule } from '@angular/router';
 import { io, Socket } from 'socket.io-client';
 
 @Component({
+  selector: 'lib-fe-chat-client-main',
   standalone: true,
   imports: [RouterModule, FormsModule, CommonModule],
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+  templateUrl: './fe-chat-client-main.component.html',
+  styleUrl: './fe-chat-client-main.component.scss',
 })
-export class AppComponent {
+export class FeChatClientMainComponent {
   title = 'chat-client';
 
   private socket: Socket;

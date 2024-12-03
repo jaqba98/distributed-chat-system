@@ -18,7 +18,10 @@
     "strict": true,
     "paths": {
       "@distributed-chat-system/be-chat": ["libs/be/chat/src/index.ts"],
-      "@distributed-chat-system/be-server": ["libs/be/server/src/index.ts"]
+      "@distributed-chat-system/be-server": ["libs/be/server/src/index.ts"],
+      "@distributed-chat-system/fe-chat-client-main": [
+        "libs/fe/chat-client-main/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

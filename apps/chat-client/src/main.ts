@@ -1,7 +1,8 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
 
-bootstrapApplication(AppComponent, appConfig).catch((err) =>
+import { FeChatClientMainComponent } from '@distributed-chat-system/fe-chat-client-main';
+import { appConfig } from './app/app.config';
+
+bootstrapApplication(FeChatClientMainComponent, appConfig).catch((err) =>
   console.error(err)
 );
