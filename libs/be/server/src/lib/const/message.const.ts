@@ -13,3 +13,6 @@ export const buildServerDomainErrorMsg =
   'An error occurred while building the server domain model.';
 
 export const serverIsRunningMsg = 'Server is running...';
+
+export const notSupportedServerType = (serverType: string) =>
+  `Not supported server type: ${serverType}`;

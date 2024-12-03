@@ -6,18 +6,35 @@ import { createClient } from 'redis';
 
 import { ServerDomainModel } from '../model/domain/server-domain.model';
 import {
+  notSupportedServerType,
+  serverIsRunningMsg,
+} from '../const/message.const';
+import {
   getHttpController,
   getSocketIoController,
 } from '../service/controller-decorator.service';
-import { serverIsRunningMsg } from '../const/message.const';
 
 @injectable()
 export class BuildServerService {
-  async build(domain: ServerDomainModel) {
+  build(domain: ServerDomainModel) {
+    const { serverType } = domain;
+    switch (serverType) {
+      case 'http':
+        this.buildHttp(domain.serverRoutes);
+        break;
+      case 'socketIO':
+        this.buildSocketIO(domain.serverSocketIO);
+        break;
+      default:
+        throw new Error(notSupportedServerType(serverType));
+    }
+  }
+
+  private buildHttp(serverRoutes: ServerDomainModel['serverRoutes']) {
     const server = createServer((req, res) => {
       const method = req.method ?? '';
       const url = req.url ?? '';
-      const { methods } = domain.routes;
+      const { methods } = serverRoutes;
       if (method in methods && url in methods[method].urls) {
         const { controller } = methods[method].urls[url];
         getHttpController(controller).build(req, res);
@@ -25,6 +42,14 @@ export class BuildServerService {
         getHttpController('http404Controller').build(req, res);
       }
     });
+    server.listen(3000, () => {
+      console.log(serverIsRunningMsg);
+    });
+  }
+
+  private async buildSocketIO(
+    serverSocketIO: ServerDomainModel['serverSocketIO']
+  ) {
     const pubClient = createClient({ url: 'redis://redis:6379' });
     const subClient = pubClient.duplicate();
     await Promise.all([pubClient.connect(), subClient.connect()]);
@@ -32,11 +57,8 @@ export class BuildServerService {
       adapter: createAdapter(pubClient, subClient),
     });
     io.on('connection', (socket) => {
-      getSocketIoController(domain.socketIO.controller).build(io, socket);
+      getSocketIoController(serverSocketIO.controller).build(io, socket);
     });
-    // io.listen(3000);
-    server.listen(3000, () => {
-      console.log(serverIsRunningMsg);
-    });
+    io.listen(3000);
   }
 }
