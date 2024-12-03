@@ -1,16 +1,16 @@
-import 'reflect-metadata'; // Required for tsyringe
+import 'reflect-metadata';
 import { BuildServerDtoService } from './build-server-dto.service';
 
 describe('BuildServerDtoService - build', () => {
   let service: BuildServerDtoService;
-  const originalEnv = { ...process.env }; // Preserve original environment variables
+  const originalEnv = { ...process.env };
 
   beforeEach(() => {
     service = new BuildServerDtoService();
   });
 
   afterEach(() => {
-    process.env = { ...originalEnv }; // Restore environment variables to their original state
+    process.env = { ...originalEnv };
   });
 
   it('should return a complete server DTO when all environment variables are set correctly', () => {
@@ -120,7 +120,7 @@ describe('BuildServerDtoService - build', () => {
 
   it('should handle invalid JSON in SERVER_ROUTE_* variables gracefully', () => {
     process.env['SERVER_TYPE'] = 'http';
-    process.env['SERVER_ROUTE_INVALID'] = '{"method":"GET","url":"/invalid"'; // Malformed JSON
+    process.env['SERVER_ROUTE_INVALID'] = '{"method":"GET","url":"/invalid"';
     process.env['SERVER_SOCKET_IO'] = '{"controller":"socketIOController"}';
 
     const result = service.build();
@@ -145,7 +145,7 @@ describe('BuildServerDtoService - build', () => {
       '{"method":"GET","url":"/","controller":"rootController"}';
     process.env['SERVER_ROUTE_HELLO'] =
       '{"method":"GET","url":"/hello","controller":"helloController"}';
-    process.env['SERVER_SOCKET_IO'] = '{"controller":"socketIOController"'; // Malformed JSON
+    process.env['SERVER_SOCKET_IO'] = '{"controller":"socketIOController"';
 
     const result = service.build();
 
