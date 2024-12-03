@@ -1,39 +1,57 @@
 import { injectable } from 'tsyringe';
 
-import { ServerDtoModel } from '../model/dto/server-dto.model';
+import { ServerDtoPartialType } from '../model/dto/server-dto.model';
 import {
   envVarNotSetMsg,
   routeNotPropertySetMsg,
   routesNotSetMsg,
 } from '../const/message.const';
-import { SERVER_SOCKET_IO } from '../const/env.const';
+import {
+  SERVER_SOCKET_IO,
+  SERVER_SOCKET_IO_CONTROLLER,
+  SERVER_TYPE,
+} from '../const/env.const';
 
 @injectable()
 export class CheckServerDtoService {
-  check(dto: ServerDtoModel) {
-    this.checkRoutes(dto.routes);
-    this.checkSocketIO(dto.socketIO);
+  check(dto: ServerDtoPartialType) {
+    this.checkServerTypeDto(dto.serverType);
+    this.checkServerRoutes(dto.serverRoutes);
+    this.checkServerSocketIO(dto.serverSocketIO);
   }
 
-  private checkRoutes(routes: ServerDtoModel['routes']) {
+  private checkServerTypeDto(serverType: ServerDtoPartialType['serverType']) {
+    if (!serverType) throw new Error(envVarNotSetMsg(SERVER_TYPE));
+  }
+
+  private checkServerRoutes(
+    serverRoutes: ServerDtoPartialType['serverRoutes']
+  ) {
+    if (!serverRoutes) return;
     const errors: string[] = [];
-    for (const route of routes) {
-      if (!route.method) {
-        errors.push(routeNotPropertySetMsg(route.id, 'method'));
+    for (const serverRoute of serverRoutes) {
+      if (!serverRoute.method) {
+        errors.push(routeNotPropertySetMsg(serverRoute.id, 'method'));
       }
-      if (!route.url) {
-        errors.push(routeNotPropertySetMsg(route.id, 'url'));
+      if (!serverRoute.url) {
+        errors.push(routeNotPropertySetMsg(serverRoute.id, 'url'));
       }
-      if (!route.controller) {
-        errors.push(routeNotPropertySetMsg(route.id, 'controller'));
+      if (!serverRoute.controller) {
+        errors.push(routeNotPropertySetMsg(serverRoute.id, 'controller'));
       }
     }
     if (errors.length === 0) return;
     throw new Error(routesNotSetMsg(errors));
   }
 
-  private checkSocketIO(socketIO: ServerDtoModel['socketIO']) {
-    if (socketIO) return;
-    throw new Error(envVarNotSetMsg(SERVER_SOCKET_IO));
+  private checkServerSocketIO(
+    serverSocketIO: ServerDtoPartialType['serverSocketIO']
+  ) {
+    if (!serverSocketIO) {
+      throw new Error(envVarNotSetMsg(SERVER_SOCKET_IO));
+    }
+    if (!serverSocketIO.controller) {
+      throw new Error(envVarNotSetMsg(SERVER_SOCKET_IO_CONTROLLER));
+    }
   }
 }

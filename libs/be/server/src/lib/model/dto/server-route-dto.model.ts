@@ -7,8 +7,8 @@ export interface RouteModel extends ControllerModel {
   url: string;
 }
 
-export interface ServerRouteDtoModel extends RouteModel {
+export interface ServerRouteDtoModel extends Partial<RouteModel> {
   id: string;
 }
 
-export type ServerRouteDtoPartialType = Partial<ServerRouteDtoModel>;
+export type ServerRouteDtoPartialType = ServerRouteDtoModel;

@@ -1,7 +1,10 @@
 import { injectable } from 'tsyringe';
 
 import { ServerDomainModel } from '../model/domain/server-domain.model';
-import { ServerDtoModel } from '../model/dto/server-dto.model';
+import {
+  ServerDtoModel,
+  ServerDtoPartialType,
+} from '../model/dto/server-dto.model';
 import {
   ControllerDomainModel,
   RoutesDomainModel,
@@ -11,7 +14,7 @@ import { buildServerDomainErrorMsg } from '../const/message.const';
 
 @injectable()
 export class BuildServerDomainService {
-  build(dto: ServerDtoModel): ServerDomainModel {
+  build(dto: ServerDtoPartialType): ServerDomainModel {
     return {
       routes: this.buildRoutes(dto.routes),
       socketIO: this.buildSocketIO(dto.socketIO),

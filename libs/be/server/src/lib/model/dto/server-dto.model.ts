@@ -6,7 +6,7 @@ import {
 export interface ServerDtoModel {
   serverType: string;
   serverRoutes: ServerRouteDtoPartialType[];
-  serverSocketIO: ControllerModel;
+  serverSocketIO: Partial<ControllerModel>;
 }
 
 export type ServerDtoPartialType = Partial<ServerDtoModel>;
