@@ -1,3 +1,4 @@
 include:
+  - dist/apps/accounts/docker-compose.yml
   - dist/apps/chat-client/docker-compose.yml
   - dist/apps/chat/docker-compose.yml

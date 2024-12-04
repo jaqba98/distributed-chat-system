@@ -1,3 +1,1 @@
-import { beAccounts } from '@distributed-chat-system/be-accounts';
-
-console.log(beAccounts());
+import '@distributed-chat-system/be-accounts';
