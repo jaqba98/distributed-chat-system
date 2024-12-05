@@ -6,6 +6,7 @@ import { getServer } from './service/server-decorator.service';
 
 import './app-service/http-app.service';
 import './app-service/socket-app.service';
+import './controller/http-404.controller';
 
 @injectable()
 class ServerAppService {

@@ -1,7 +1,7 @@
 import { container } from 'tsyringe';
 
 import { ServerTypeEnum } from '../enum/server-type.enum';
-import { ServerDecoratorModel } from '../model/decorator/server-decorator.model';
+import { ServerControllerModel } from '../model/controller/server-controller.model';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const RegisterServer = (key: ServerTypeEnum) => (target: any) => {
@@ -9,5 +9,5 @@ export const RegisterServer = (key: ServerTypeEnum) => (target: any) => {
 };
 
 export const getServer = (key: ServerTypeEnum) => {
-  return container.resolve<ServerDecoratorModel>(key);
+  return container.resolve<ServerControllerModel>(key);
 };

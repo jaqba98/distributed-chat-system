@@ -1,13 +1,13 @@
 import { injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
 
-import { RegisterController } from '../service/controller-decorator.service';
-import { HttpController } from './http.controller';
+import { RegisterHttp } from '../service/http-decorator.service';
+import { HttpControllerModel } from '../model/controller/http-controller.model';
 
 @injectable()
-@RegisterController('http404Controller')
-export class RootController implements HttpController {
-  build(_req: IncomingMessage, res: ServerResponse): void {
+@RegisterHttp('http404Controller')
+export class RootController implements HttpControllerModel {
+  build(_req: IncomingMessage, res: ServerResponse) {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('HTTP 404');
   }

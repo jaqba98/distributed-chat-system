@@ -12,7 +12,7 @@ import {
 import {
   getHttpController,
   getSocketIoController,
-} from '../service/controller-decorator.service';
+} from '../service/http-decorator.service';
 
 @injectable()
 export class BuildServerService {
