@@ -1,6 +1,6 @@
 import { injectable } from 'tsyringe';
 
-import { ServerDtoPartialType } from '../model/dto/server-dto.model';
+import { ServerDtoPartialType } from '../model/dto/http-dto.model';
 import {
   envVarNotSetMsg,
   routeNotPropertySetMsg,

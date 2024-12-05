@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { ServerDomainModel } from '../model/domain/server-domain.model';
-import { ServerDtoPartialType } from '../model/dto/server-dto.model';
+import { ServerDtoPartialType } from '../model/dto/http-dto.model';
 import {
   ControllerDomainModel,
   RoutesDomainModel,
