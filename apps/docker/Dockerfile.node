@@ -2,6 +2,8 @@ FROM node:lts-slim
 
 WORKDIR /app
 
+RUN npm install -g pnpm
+
 COPY package.json /app
 
 RUN pnpm install
