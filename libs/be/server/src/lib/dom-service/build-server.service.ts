@@ -4,7 +4,7 @@ import { Server } from 'socket.io';
 import { createAdapter } from '@socket.io/redis-adapter';
 import { createClient } from 'redis';
 
-import { ServerDomainModel } from '../model/domain/server-domain.model';
+import { ServerDomainModel } from '../model/domain/http-domain.model';
 import {
   notSupportedServerType,
   serverIsRunningMsg,
