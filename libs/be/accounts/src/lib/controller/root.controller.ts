@@ -8,9 +8,9 @@ import {
 
 @injectable()
 @RegisterController('rootController')
-export class RootController implements HttpController {
-  build(req: IncomingMessage, res: ServerResponse): void {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('accounts');
+export class RootController extends HttpController {
+  override build(req: IncomingMessage, res: ServerResponse) {
+    res.writeHead(200, { 'Context-Type': 'text/plain' });
+    res.end('accounts works!');
   }
 }
