@@ -1,9 +1,15 @@
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
+import { GetServerTypeService } from '../infrastructure/get-server-type.service';
 
 @injectable()
 export class ServerAppService {
+  constructor(
+    @inject(GetServerTypeService) private getServerType: GetServerTypeService
+  ) {}
+
   runServer() {
-    console.log('hello');
+    const serverType = this.getServerType.get();
+    console.log(serverType);
   }
 }
 

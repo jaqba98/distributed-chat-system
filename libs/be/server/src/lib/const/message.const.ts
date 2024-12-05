@@ -1,7 +1,13 @@
-export const methodNotImplementedMsg = 'The method is not implemented!';
+export const envNotSetMsg = (env: string) =>
+  `You did not set the ${env} environment variable`;
+
+export const envNotCorrectValueMsg = (env: string, val: string) =>
+  `The ${env} environment variable has not supported value ${val}`;
 
 export const envVarNotSetMsg = (env: string) =>
   `The ${env} environment variable not set!`;
+
+export const methodNotImplementedMsg = 'The method is not implemented!';
 
 export const routesNotSetMsg = (errors: string[]) =>
   `Routes not set:\n${errors.join('\n')}`;
