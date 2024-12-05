@@ -1,6 +1,4 @@
 interface ControllerDomainModel {
-  method: string;
-  url: string;
   controller: string;
 }
 
@@ -13,5 +11,5 @@ interface RoutesDomainModel {
 }
 
 export interface HttpDomainModel {
-  routes: Record<string, RoutesDomainModel>;
+  routes: RoutesDomainModel;
 }

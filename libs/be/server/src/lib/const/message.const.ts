@@ -8,6 +8,9 @@ export const envNotCorrectValueMsg = (
 ) =>
   `The ${env} environment variable has not supported value ${val}, possible values: ${possible}`;
 
+export const httpRouteNotPropertySetMsg = (id: string, property: string) =>
+  `Route ${id} does not have the ${property} property set!`;
+
 export const envVarNotSetMsg = (env: string) =>
   `The ${env} environment variable not set!`;
 
@@ -15,9 +18,6 @@ export const methodNotImplementedMsg = 'The method is not implemented!';
 
 export const routesNotSetMsg = (errors: string[]) =>
   `Routes not set:\n${errors.join('\n')}`;
-
-export const routeNotPropertySetMsg = (id: string, property: string) =>
-  `Route ${id} does not have the ${property} property set.`;
 
 export const buildServerDomainErrorMsg =
   'An error occurred while building the server domain model.';
