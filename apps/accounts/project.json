@@ -19,7 +19,12 @@
         "assets": [
           {
             "input": "apps/accounts/config",
-            "glob": "*",
+            "glob": "docker-compose.yml",
+            "output": "/"
+          },
+          {
+            "input": "apps/docker",
+            "glob": "Dockerfile.node",
             "output": "/"
           }
         ],

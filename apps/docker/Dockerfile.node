@@ -1,10 +1,10 @@
-FROM node:23.3.0-slim
+FROM node:lts-slim
 
 WORKDIR /app
 
 COPY package.json /app
 
-RUN npm install
+RUN pnpm install
 
 COPY . /app
 

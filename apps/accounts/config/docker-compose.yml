@@ -2,11 +2,10 @@ services:
   base_accounts:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.node
     environment:
       - SERVER_TYPE=http
       - SERVER_ROUTE_ROOT={"method":"GET","url":"/","controller":"rootController"}
-      - SERVER_SOCKET_IO={"controller":"socketIOController"}
   accounts1:
     extends:
       service: base_accounts
