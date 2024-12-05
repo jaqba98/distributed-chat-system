@@ -4,6 +4,9 @@ import { container, inject, injectable } from 'tsyringe';
 import { GetServerTypeService } from './infrastructure/get-server-type.service';
 import { getServer } from './service/server-decorator.service';
 
+import './app-service/http-app.service';
+import './app-service/socket-app.service';
+
 @injectable()
 class ServerAppService {
   constructor(
