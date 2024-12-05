@@ -6,8 +6,25 @@ services:
     environment:
       - SERVER_TYPE=http
       - HTTP_ROUTE_ROOT={"method":"GET","url":"/","controller":"rootController"}
-  accounts1:
+  accounts:
     extends:
       service: base_accounts
+    container_name: accounts
     ports:
       - 4001:3000
+  accounts_db:
+    image: mysql:9.1
+    container_name: accounts_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: accounts
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - 5001:3306
+    volumes:
+      - accounts_db_data:/bar/lib/mysql
+volumes:
+  accounts_db_data:
+    driver: local
