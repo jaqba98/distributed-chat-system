@@ -10,6 +10,12 @@ export class GetServerTypeService {
     const serverType = process.env[SERVER_TYPE];
     if (!serverType) throw new Error(envNotSetMsg(SERVER_TYPE));
     if (serverType in ServerTypeEnum) return serverType as ServerTypeEnum;
-    throw new Error(envNotCorrectValueMsg(SERVER_TYPE, serverType));
+    throw new Error(
+      envNotCorrectValueMsg(
+        SERVER_TYPE,
+        serverType,
+        Object.keys(ServerTypeEnum).join(',')
+      )
+    );
   }
 }

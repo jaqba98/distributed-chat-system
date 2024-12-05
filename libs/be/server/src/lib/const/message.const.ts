@@ -1,8 +1,12 @@
 export const envNotSetMsg = (env: string) =>
   `You did not set the ${env} environment variable`;
 
-export const envNotCorrectValueMsg = (env: string, val: string) =>
-  `The ${env} environment variable has not supported value ${val}`;
+export const envNotCorrectValueMsg = (
+  env: string,
+  val: string,
+  possible: string
+) =>
+  `The ${env} environment variable has not supported value ${val}, possible values: ${possible}`;
 
 export const envVarNotSetMsg = (env: string) =>
   `The ${env} environment variable not set!`;
