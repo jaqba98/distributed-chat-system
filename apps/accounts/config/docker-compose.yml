@@ -4,7 +4,7 @@ services:
       context: ./
       dockerfile: Dockerfile.node
     environment:
-      - SERVER_TYPE=HTTP
+      - SERVER_TYPE=http
       - HTTP_ROUTE_ROOT={"method":"GET","url":"/","controller":"rootController"}
   accounts1:
     extends:
