@@ -2,13 +2,18 @@ import { injectable } from 'tsyringe';
 
 import { HttpDomainModel } from '../model/domain/http-domain.model';
 import { HttpDtoType } from '../model/dto/http-dto.model';
-import { httpRouteNotPropertySetMsg } from '../const/message.const';
+import {
+  envNotSetMsg,
+  httpRouteNotPropertySetMsg,
+} from '../const/message.const';
+import { MYSQL_DATABASE, MYSQL_HOST } from '../const/env.const';
 
 @injectable()
 export class BuildHttpDomainService {
   build(dto: HttpDtoType): HttpDomainModel {
     return {
       routes: this.buildRoutes(dto.routes),
+      mysql: this.buildMysql(dto.mysql),
     };
   }
 
@@ -34,5 +39,13 @@ export class BuildHttpDomainService {
       domainRoutes.methods[method].urls[url] = { controller };
     }
     return domainRoutes;
+  }
+
+  private buildMysql(mysql: HttpDtoType['mysql']): HttpDomainModel['mysql'] {
+    if (!mysql) throw new Error(envNotSetMsg('mysql'));
+    const { host, database } = mysql;
+    if (!host) throw new Error(envNotSetMsg(MYSQL_HOST));
+    if (!database) throw new Error(envNotSetMsg(MYSQL_DATABASE));
+    return { host, database };
   }
 }

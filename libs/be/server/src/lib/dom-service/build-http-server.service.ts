@@ -10,10 +10,10 @@ import { getHttp } from '../service/http-decorator.service';
 export class BuildHttpServerService {
   build(domain: HttpDomainModel) {
     const pool = mysql.createPool({
-      host: 'accounts_db',
+      host: domain.mysql.host,
       user: 'admin',
       password: 'admin',
-      database: 'accounts',
+      database: domain.mysql.database,
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,

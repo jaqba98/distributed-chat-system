@@ -1,13 +1,14 @@
 import { injectable } from 'tsyringe';
 
 import { HttpDtoType, HttpRouteDtoModel } from '../model/dto/http-dto.model';
-import { HTTP_ROUTE_ } from '../const/env.const';
+import { HTTP_ROUTE_, MYSQL_DATABASE, MYSQL_HOST } from '../const/env.const';
 
 @injectable()
 export class BuildHttpDtoService {
   build(): HttpDtoType {
     return {
       routes: this.buildRoutes(),
+      mysql: this.buildMysql(),
     };
   }
 
@@ -27,5 +28,12 @@ export class BuildHttpDtoService {
           return <HttpRouteDtoModel>{ id: env.key };
         }
       });
+  }
+
+  private buildMysql(): HttpDtoType['mysql'] {
+    return {
+      host: process.env[MYSQL_HOST],
+      database: process.env[MYSQL_DATABASE],
+    };
   }
 }
