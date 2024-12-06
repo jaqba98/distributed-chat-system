@@ -7,7 +7,8 @@ services:
     container_name: base_accounts
     environment:
       - SERVER_TYPE=http
-      - HTTP_ROUTE_ROOT={"method":"POST","url":"/","controller":"rootController"}
+      - HTTP_ROUTE_LOGIN={"method":"POST","url":"/login","controller":"loginController"}
+      - HTTP_ROUTE_REGISTER={"method":"POST","url":"/register","controller":"registerController"}
       - MYSQL_HOST=accounts_db
       - MYSQL_DATABASE=accounts
     depends_on:
