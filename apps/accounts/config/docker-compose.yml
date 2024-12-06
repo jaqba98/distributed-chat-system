@@ -1,4 +1,49 @@
 services:
+  # base
+  base_accounts:
+    build:
+      context: ./
+      dockerfile: Dockerfile.node
+    container_name: base_accounts
+    environment:
+      - SERVER_TYPE=http
+      - HTTP_ROUTE_ROOT={"method":"POST","url":"/","controller":"rootController"}
+      - MYSQL_HOST=accounts_db
+      - MYSQL_DATABASE=accounts
+    depends_on:
+      - accounts_db
+  # accounts
+  accounts1:
+    extends:
+      service: base_accounts
+    container_name: accounts1
+    ports:
+      - 4001:3000
+  accounts2:
+    extends:
+      service: base_accounts
+    container_name: accounts2
+    ports:
+      - 4002:3000
+  accounts3:
+    extends:
+      service: base_accounts
+    container_name: accounts3
+    ports:
+      - 4003:3000
+  accounts4:
+    extends:
+      service: base_accounts
+    container_name: accounts4
+    ports:
+      - 4004:3000
+  accounts5:
+    extends:
+      service: base_accounts
+    container_name: accounts5
+    ports:
+      - 4005:3000
+  # database
   accounts_db:
     image: mysql:9.1
     container_name: accounts_db
@@ -12,20 +57,14 @@ services:
     volumes:
       - accounts_db_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-  accounts:
-    build:
-      context: ./
-      dockerfile: Dockerfile.node
-    container_name: accounts
+  # load balancer
+  nginx:
+    image: nginx:1.27.2-alpine-slim
+    container_name: accounts_load-balancer
     ports:
-      - 4001:3000
-    environment:
-      - SERVER_TYPE=http
-      - HTTP_ROUTE_ROOT={"method":"POST","url":"/","controller":"rootController"}
-      - MYSQL_HOST=accounts_db
-      - MYSQL_DATABASE=accounts
-    depends_on:
-      - accounts_db
+      - 3000:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
 volumes:
   accounts_db_data:
     driver: local
