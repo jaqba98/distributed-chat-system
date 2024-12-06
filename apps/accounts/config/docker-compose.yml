@@ -24,7 +24,8 @@ services:
     ports:
       - 5001:3306
     volumes:
-      - accounts_db_data:/bar/lib/mysql
+      - accounts_db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
   accounts_db_data:
     driver: local

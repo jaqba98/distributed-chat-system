@@ -19,7 +19,7 @@
         "assets": [
           {
             "input": "apps/accounts/config",
-            "glob": "docker-compose.yml",
+            "glob": "*",
             "output": "/"
           },
           {
