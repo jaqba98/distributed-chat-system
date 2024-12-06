@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile.node
     environment:
       - SERVER_TYPE=http
-      - HTTP_ROUTE_ROOT={"method":"GET","url":"/","controller":"rootController"}
+      - HTTP_ROUTE_ROOT={"method":"POST","url":"/","controller":"rootController"}
   accounts:
     extends:
       service: base_accounts
