@@ -8,6 +8,7 @@ import {
   HttpReqUtilsService,
 } from '@distributed-chat-system/be-server';
 import { RegisterModel } from '../model/register.model';
+import { log } from 'console';
 
 @injectable()
 @RegisterHttp('registerController')
@@ -17,14 +18,13 @@ export class RegisterController implements HttpControllerModel {
   ) {}
 
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.httpReq.post<RegisterModel>(req, (data) => {
-      // TODO: Create the registration logic
-      pool.query(
-        `INSERT INTO users (login, password) VALUES ("${data.email}", "${data.password}")`
-      );
-      res.writeHead(200, { 'Content-Type': 'plain/text' });
-      const msg = `Email: ${data.email}, password: ${data.password}`;
-      res.end(msg);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      pool.query('SELECT * FROM users', (err, result, fields) => {
+        res.writeHead(200, { 'Content-Type': 'plain/text' });
+        res.end(result);
+      });
     });
   }
 }
