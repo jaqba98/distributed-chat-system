@@ -7,6 +7,7 @@ import {
   HttpControllerModel,
   HttpReqUtilsService,
 } from '@distributed-chat-system/be-server';
+import { RegisterModel } from '../model/register.model';
 
 @injectable()
 @RegisterHttp('registerController')
@@ -17,9 +18,10 @@ export class RegisterController implements HttpControllerModel {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
-    this.httpReq.post(req, (body) => {
+    this.httpReq.post<RegisterModel>(req, (data) => {
       res.writeHead(200, { 'Content-Type': 'plain/text' });
-      res.end(body);
+      const msg = `Email: ${data.email}, password: ${data.password}`;
+      res.end(msg);
     });
   }
 }

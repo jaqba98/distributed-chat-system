@@ -3,11 +3,12 @@ import { IncomingMessage } from 'http';
 
 @injectable()
 export class HttpReqUtilsService {
-  post(req: IncomingMessage, callback: (body: string) => void) {
-    let body = '';
+  post<T>(req: IncomingMessage, callback: (data: T) => void) {
+    let body: string;
     req.on('data', (chunk) => (body = chunk));
     req.on('end', () => {
-      callback(body);
+      const obj = JSON.parse(body) as T;
+      callback(obj);
     });
   }
 }
