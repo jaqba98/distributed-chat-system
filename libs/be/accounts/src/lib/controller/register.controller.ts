@@ -8,7 +8,6 @@ import {
   HttpReqUtilsService,
 } from '@distributed-chat-system/be-server';
 import { RegisterModel } from '../model/register.model';
-import { log } from 'console';
 
 @injectable()
 @RegisterHttp('registerController')
@@ -18,6 +17,7 @@ export class RegisterController implements HttpControllerModel {
   ) {}
 
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
+    // TODO: Refactor the register logic
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     this.httpReq.post<RegisterModel>(req, (data) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
