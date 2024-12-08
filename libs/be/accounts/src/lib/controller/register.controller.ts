@@ -16,9 +16,12 @@ export class RegisterController implements HttpControllerModel {
     @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
     this.httpReq.post<RegisterModel>(req, (data) => {
+      // TODO: Create the registration logic
+      pool.query(
+        `INSERT INTO users (login, password) VALUES ("${data.email}", "${data.password}")`
+      );
       res.writeHead(200, { 'Content-Type': 'plain/text' });
       const msg = `Email: ${data.email}, password: ${data.password}`;
       res.end(msg);
