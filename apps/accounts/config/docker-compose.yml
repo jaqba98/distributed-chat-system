@@ -50,12 +50,13 @@ services:
     image: mysql:9.1
     container_name: accounts_db
     ports:
-      - 5001:3306
+      - 5001:5001
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: accounts
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
+      MYSQL_TCP_PORT: 5001
     volumes:
       - accounts_db_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -67,6 +68,8 @@ services:
       - 3000:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - accounts_db
 volumes:
   accounts_db_data:
     driver: local

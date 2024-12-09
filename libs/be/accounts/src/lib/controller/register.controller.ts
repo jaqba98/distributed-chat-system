@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
-import { Connection } from 'mysql2';
+import { Pool } from 'mysql2';
 
 import {
   RegisterHttp,
@@ -21,8 +21,7 @@ export class RegisterController implements HttpControllerModel {
     @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  build(req: IncomingMessage, res: ServerResponse, connection: Connection) {
+  build(req: IncomingMessage, res: ServerResponse, connection: Pool) {
     this.httpReq.post(req, (data: RegisterModel) => {
       const validate = this.validateRegisterData(data);
       if (validate !== ErrorCodeEnum.noError) {
@@ -30,6 +29,9 @@ export class RegisterController implements HttpControllerModel {
         res.end(validate);
         return;
       }
+      connection.query('SELECT * FROM users', (err, results, fields) => {
+        console.log(err, results, fields);
+      });
       res.writeHead(400, { 'Content-Type': 'plain/text' });
       res.end('ok');
     });

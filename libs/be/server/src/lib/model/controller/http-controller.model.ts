@@ -1,10 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { Connection } from 'mysql2';
+import { Pool } from 'mysql2';
 
 export interface HttpControllerModel {
-  build: (
-    req: IncomingMessage,
-    res: ServerResponse,
-    connection: Connection
-  ) => void;
+  build: (req: IncomingMessage, res: ServerResponse, connection: Pool) => void;
 }

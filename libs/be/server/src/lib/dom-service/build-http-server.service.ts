@@ -9,34 +9,48 @@ import { getHttp } from '../service/http-decorator.service';
 @injectable()
 export class BuildHttpServerService {
   build(domain: HttpDomainModel) {
-    const connection = mysql.createConnection({
-      host: 'accounts_db',
+    const pool = mysql.createPool({
+      host: domain.mysql.host,
       user: 'admin',
       password: 'admin',
-      database: 'accounts',
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0,
-      port: 5001,
-      localAddress: undefined,
+      database: domain.mysql.database,
+      port: domain.mysql.port,
     });
-    console.log(connection);
-    connection.connect((err) => {
+
+    // Test the connection
+    pool.getConnection((err, connection) => {
       if (err) {
-        console.error('Connection error:', err);
-      } else {
-        console.log('Connected!');
+        console.error('Error connecting to MySQL:', err.message);
+        return;
       }
+      console.log('Connected to MySQL successfully!');
+      connection.release();
     });
+
+    const waitForConnection = async () => {
+      let connected = false;
+      while (!connected) {
+        try {
+          await pool.promise().query('SELECT 1');
+          connected = true;
+          console.log('Database is ready!');
+        } catch (err) {
+          console.log('Waiting for database...');
+          await new Promise((resolve) => setTimeout(resolve, 5000));
+        }
+      }
+    };
+    waitForConnection();
+
     const server = createServer((req, res) => {
       const method = req.method ?? '';
       const url = req.url ?? '';
       const { methods } = domain.routes;
       if (method in methods && url in methods[method].urls) {
         const { controller } = methods[method].urls[url];
-        getHttp(controller).build(req, res, connection);
+        getHttp(controller).build(req, res, pool);
       } else {
-        getHttp('http404Controller').build(req, res, connection);
+        getHttp('http404Controller').build(req, res, pool);
       }
     });
     server.listen(3000, () => console.log(serverIsRunningMsg));
