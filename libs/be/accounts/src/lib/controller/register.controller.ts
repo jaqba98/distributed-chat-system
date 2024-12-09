@@ -6,9 +6,12 @@ import {
   RegisterHttp,
   HttpControllerModel,
   HttpReqUtilsService,
-  StatusCodeEnum,
 } from '@distributed-chat-system/be-server';
-import { validateEmail } from '@distributed-chat-system/shared-utils';
+import {
+  ErrorCodeEnum,
+  validateEmail,
+  validatePassword,
+} from '@distributed-chat-system/shared-utils';
 import { RegisterModel } from '../model/register.model';
 
 @injectable()
@@ -21,14 +24,14 @@ export class RegisterController implements HttpControllerModel {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
     this.httpReq.post(req, (data: RegisterModel) => {
-      const resultValidate = this.validateRegisterData(data);
-      if (resultValidate === StatusCodeEnum.invalidInput) {
-        res.writeHead(resultValidate, { 'Content-Type': 'application/json' });
-        res.end(resultValidate);
+      const validate = this.validateRegisterData(data);
+      if (validate !== ErrorCodeEnum.noError) {
+        res.writeHead(400, { 'Content-Type': 'plain/text' });
+        res.end(validate);
         return;
       }
-      res.writeHead(resultValidate, { 'Content-Type': 'application/json' });
-      res.end(resultValidate);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(validate);
     });
     // TODO: Refactor the register logic
     // this.httpReq.post<RegisterModel>(req, (data) => {
@@ -40,10 +43,11 @@ export class RegisterController implements HttpControllerModel {
     // });
   }
 
-  private validateRegisterData(data: RegisterModel): StatusCodeEnum {
+  private validateRegisterData(data: RegisterModel): ErrorCodeEnum {
     const { email, password, rePassword } = data;
-    if (!validateEmail(email)) return StatusCodeEnum.invalidInput;
-    if (password !== rePassword) return StatusCodeEnum.invalidInput;
-    return StatusCodeEnum.ok;
+    if (!validateEmail(email)) return ErrorCodeEnum.invalidEmail;
+    if (!validatePassword(password)) return ErrorCodeEnum.invalidPassword;
+    if (password !== rePassword) return ErrorCodeEnum.passwordsNotTheSame;
+    return ErrorCodeEnum.noError;
   }
 }
