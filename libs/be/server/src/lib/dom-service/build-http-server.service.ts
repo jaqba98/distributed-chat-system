@@ -34,6 +34,7 @@ export class BuildHttpServerService {
           await pool.promise().query('SELECT 1');
           connected = true;
           console.log('Database is ready!');
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (err) {
           console.log('Waiting for database...');
           await new Promise((resolve) => setTimeout(resolve, 5000));
