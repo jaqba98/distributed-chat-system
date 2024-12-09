@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
-import { Pool } from 'mysql2';
+import { Connection } from 'mysql2';
 
 import {
   RegisterHttp,
@@ -21,7 +21,8 @@ export class RegisterController implements HttpControllerModel {
     @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
   ) {}
 
-  build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  build(req: IncomingMessage, res: ServerResponse, connection: Connection) {
     this.httpReq.post(req, (data: RegisterModel) => {
       const validate = this.validateRegisterData(data);
       if (validate !== ErrorCodeEnum.noError) {
@@ -29,25 +30,8 @@ export class RegisterController implements HttpControllerModel {
         res.end(validate);
         return;
       }
-      const select = pool.query(`SELECT * FROM users`);
-
-      select.on('end', () => {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end('end');
-      });
-
-      select.on('error', (err) => {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(err.message);
-      });
-
-      select.on('fields', (fields) => {
-        console.log(fields);
-      });
-
-      select.on('result', (result) => {
-        console.log(result);
-      });
+      res.writeHead(400, { 'Content-Type': 'plain/text' });
+      res.end('ok');
     });
 
     // TODO: Refactor the register logic

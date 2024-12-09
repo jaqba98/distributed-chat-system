@@ -1,6 +1,6 @@
 import { injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
-import { Pool } from 'mysql2';
+import { Connection, Pool } from 'mysql2';
 
 import {
   RegisterHttp,
@@ -11,7 +11,12 @@ import {
 @RegisterHttp('loginController')
 export class LoginController implements HttpControllerModel {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async build(_req: IncomingMessage, res: ServerResponse, pool: Pool) {
+  async build(
+    _req: IncomingMessage,
+    res: ServerResponse,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    connection: Connection
+  ) {
     // const [rows] = await pool.promise().query('SELECT * FROM users');
     // res.writeHead(200, { 'Content-Type': 'application/json' });
     // res.end(JSON.stringify(rows));
