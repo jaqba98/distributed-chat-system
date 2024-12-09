@@ -11,6 +11,7 @@ services:
       - HTTP_ROUTE_REGISTER={"method":"POST","url":"/register","controller":"registerController"}
       - MYSQL_HOST=accounts_db
       - MYSQL_DATABASE=accounts
+      - MYSQL_PORT=5001
     depends_on:
       - accounts_db
   # accounts

@@ -13,6 +13,7 @@ interface RoutesDomainModel {
 interface MySqlDomainModel {
   host: string;
   database: string;
+  port: number;
 }
 
 export interface HttpDomainModel {

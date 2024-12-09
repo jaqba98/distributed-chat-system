@@ -17,6 +17,7 @@ export class BuildHttpServerService {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
+      port: domain.mysql.port,
     });
     const server = createServer((req, res) => {
       const method = req.method ?? '';

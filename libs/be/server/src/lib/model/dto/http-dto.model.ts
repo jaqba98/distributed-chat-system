@@ -11,6 +11,7 @@ export interface HttpRouteDtoModel extends Partial<RouteDtoModel> {
 export interface MySqlDtoModel {
   host: string;
   database: string;
+  port: string;
 }
 
 export interface HttpDtoModel {

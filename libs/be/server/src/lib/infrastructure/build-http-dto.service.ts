@@ -1,7 +1,12 @@
 import { injectable } from 'tsyringe';
 
 import { HttpDtoType, HttpRouteDtoModel } from '../model/dto/http-dto.model';
-import { HTTP_ROUTE_, MYSQL_DATABASE, MYSQL_HOST } from '../const/env.const';
+import {
+  HTTP_ROUTE_,
+  MYSQL_DATABASE,
+  MYSQL_HOST,
+  MYSQL_PORT,
+} from '../const/env.const';
 
 @injectable()
 export class BuildHttpDtoService {
@@ -34,6 +39,7 @@ export class BuildHttpDtoService {
     return {
       host: process.env[MYSQL_HOST],
       database: process.env[MYSQL_DATABASE],
+      port: process.env[MYSQL_PORT],
     };
   }
 }

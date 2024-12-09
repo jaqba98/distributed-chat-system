@@ -21,7 +21,6 @@ export class RegisterController implements HttpControllerModel {
     @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
     this.httpReq.post(req, (data: RegisterModel) => {
       const validate = this.validateRegisterData(data);
@@ -30,9 +29,27 @@ export class RegisterController implements HttpControllerModel {
         res.end(validate);
         return;
       }
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(validate);
+      const select = pool.query(`SELECT * FROM users`);
+
+      select.on('end', () => {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end('end');
+      });
+
+      select.on('error', (err) => {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(err.message);
+      });
+
+      select.on('fields', (fields) => {
+        console.log(fields);
+      });
+
+      select.on('result', (result) => {
+        console.log(result);
+      });
     });
+
     // TODO: Refactor the register logic
     // this.httpReq.post<RegisterModel>(req, (data) => {
     //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
