@@ -23,6 +23,7 @@ export class RegisterController implements HttpControllerModel {
 
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
     this.httpReq.post(req, (data: RegisterModel) => {
+      // TODO: Finish the registration logic
       const validate = this.validateRegisterData(data);
       if (validate !== ErrorCodeEnum.noError) {
         res.writeHead(400, { 'Content-Type': 'plain/text' });
@@ -36,7 +37,6 @@ export class RegisterController implements HttpControllerModel {
       res.end('ok');
     });
 
-    // TODO: Refactor the register logic
     // this.httpReq.post<RegisterModel>(req, (data) => {
     //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
     //   pool.query('SELECT * FROM users', (err, result, fields) => {
