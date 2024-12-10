@@ -26,3 +26,7 @@ export const serverIsRunningMsg = 'Server is running...';
 
 export const notSupportedServerType = (serverType: string) =>
   `Not supported server type: ${serverType}`;
+
+export const databaseReadyMsg = 'Database is ready!';
+
+export const databaseNotReadyMsg = 'Waiting for database...';

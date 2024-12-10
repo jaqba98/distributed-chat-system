@@ -21,7 +21,7 @@ export class RegisterController implements HttpControllerModel {
     @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
   ) {}
 
-  build(req: IncomingMessage, res: ServerResponse, connection: Pool) {
+  build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
     this.httpReq.post(req, (data: RegisterModel) => {
       const validate = this.validateRegisterData(data);
       if (validate !== ErrorCodeEnum.noError) {
@@ -29,7 +29,7 @@ export class RegisterController implements HttpControllerModel {
         res.end(validate);
         return;
       }
-      connection.query('SELECT * FROM users', (err, results, fields) => {
+      pool.query('SELECT * FROM users', (err, results, fields) => {
         console.log(err, results, fields);
       });
       res.writeHead(400, { 'Content-Type': 'plain/text' });
