@@ -23,6 +23,12 @@
       "@distributed-chat-system/fe-chat-client-main": [
         "libs/fe/chat-client-main/src/index.ts"
       ],
+      "@distributed-chat-system/fe-chat-client-pages": [
+        "libs/fe/chat-client-pages/src/index.ts"
+      ],
+      "@distributed-chat-system/fe-chat-client-routes": [
+        "libs/fe/chat-client-routes/src/index.ts"
+      ],
       "@distributed-chat-system/shared-utils": [
         "libs/shared/utils/src/index.ts"
       ]
