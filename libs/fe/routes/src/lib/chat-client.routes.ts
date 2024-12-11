@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-import { RegistrationPageComponent } from '@distributed-chat-system/fe-chat-client-pages';
+import { RegistrationPageComponent } from '@distributed-chat-system/fe-pages';
 
 export const chatClientRoutes: Route[] = [
   {

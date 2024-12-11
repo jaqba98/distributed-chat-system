@@ -1,8 +1,8 @@
 export default {
-  displayName: 'fe-chat-client-routes',
+  displayName: 'fe-pages',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/fe/chat-client-routes',
+  coverageDirectory: '../../../coverage/libs/fe/pages',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

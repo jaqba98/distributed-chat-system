@@ -1,7 +1,7 @@
 {
-  "name": "fe-chat-client-routes",
+  "name": "fe-pages",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/fe/chat-client-routes/src",
+  "sourceRoot": "libs/fe/pages/src",
   "prefix": "lib",
   "projectType": "library",
   "tags": [],
@@ -10,7 +10,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/fe/chat-client-routes/jest.config.ts"
+        "jestConfig": "libs/fe/pages/jest.config.ts"
       }
     },
     "lint": {

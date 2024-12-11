@@ -1,7 +1,7 @@
 {
-  "name": "fe-chat-client-main",
+  "name": "fe-main",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/fe/chat-client-main/src",
+  "sourceRoot": "libs/fe/main/src",
   "prefix": "lib",
   "projectType": "library",
   "tags": [],
@@ -10,7 +10,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/fe/chat-client-main/jest.config.ts"
+        "jestConfig": "libs/fe/main/jest.config.ts"
       }
     },
     "lint": {
