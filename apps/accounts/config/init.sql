@@ -5,6 +5,6 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 INSERT INTO users (email, password) VALUES
-    ('user1@gmai.com', 'Pa$$word1'),
-    ('user2@gmai.com', 'Pa$$word2'),
-    ('user3@gmai.com', 'Pa$$word3');
+    ('user1@gmail.com', 'Pa$$word1'),
+    ('user2@gmail.com', 'Pa$$word2'),
+    ('user3@gmail.com', 'Pa$$word3');
