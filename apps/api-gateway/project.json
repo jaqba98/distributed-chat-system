@@ -16,7 +16,18 @@
         "bundle": false,
         "main": "apps/api-gateway/src/main.ts",
         "tsConfig": "apps/api-gateway/tsconfig.app.json",
-        "assets": ["apps/api-gateway/src/assets"],
+        "assets": [
+          {
+            "input": "apps/api-gateway/config",
+            "glob": "*",
+            "output": "/"
+          },
+          {
+            "input": "apps/docker",
+            "glob": "Dockerfile.node",
+            "output": "/"
+          }
+        ],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
