@@ -16,12 +16,8 @@ export class SignUpController implements HttpControllerModel {
 
   build(req: IncomingMessage, res: ServerResponse) {
     this.httpReq.post(req, async () => {
-      this.sendRes(res, 'Api gateway !!!');
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ msg: 'api-gateway works!' }));
     });
-  }
-
-  private sendRes(res: ServerResponse, msg: string) {
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ msg }));
   }
 }
