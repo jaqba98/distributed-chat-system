@@ -46,7 +46,7 @@ export class SignUpPageComponent {
       password: this.signUpForm.get('password')?.value,
       rePassword: this.signUpForm.get('rePassword')?.value,
     };
-    this.http.post('http://localhost:4000/register', data).subscribe((res) => {
+    this.http.post('http://localhost:4000/sign-up', data).subscribe((res) => {
       console.log(res);
     });
   }
