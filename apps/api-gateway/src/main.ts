@@ -1,1 +1,1 @@
-console.log('Hello World');
+import '@distributed-chat-system/be-api-gateway';
