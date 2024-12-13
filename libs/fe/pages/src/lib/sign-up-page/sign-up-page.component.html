@@ -45,4 +45,12 @@
     <small>Passwords do not match.</small>
   </div>
   <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
+  <ng-container *ngIf="isSubmited">
+    <ng-container *ngIf="responseSuccess">
+      <p>Success: {{ responseMessage }}</p>
+    </ng-container>
+    <ng-container *ngIf="!responseSuccess">
+      <p>Error: {{ responseMessage }}</p>
+    </ng-container>
+  </ng-container>
 </form>

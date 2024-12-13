@@ -11,7 +11,10 @@ import {
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
-import { SignUpDtoModel } from '@distributed-chat-system/shared-model';
+import {
+  ResponseDtoModel,
+  SignUpDtoModel,
+} from '@distributed-chat-system/shared-model';
 
 @Component({
   selector: 'lib-sign-up-page',
@@ -22,6 +25,12 @@ import { SignUpDtoModel } from '@distributed-chat-system/shared-model';
 })
 export class SignUpPageComponent {
   signUpForm: FormGroup;
+
+  responseMessage!: string;
+
+  responseSuccess!: boolean;
+
+  isSubmited = false;
 
   constructor(private readonly http: HttpClient) {
     this.signUpForm = new FormGroup(
@@ -39,6 +48,7 @@ export class SignUpPageComponent {
   }
 
   onSubmit() {
+    this.isSubmited = false;
     if (!this.signUpForm.valid) return;
     const data: SignUpDtoModel = {
       nick: this.signUpForm.get('nick')?.value,
@@ -46,9 +56,17 @@ export class SignUpPageComponent {
       password: this.signUpForm.get('password')?.value,
       rePassword: this.signUpForm.get('rePassword')?.value,
     };
-    this.http.post('http://localhost:3000/sign-up', data).subscribe((res) => {
-      console.log(res);
-    });
+    this.http
+      .post<ResponseDtoModel>('http://localhost:3000/sign-up', data)
+      .subscribe((data) => {
+        this.responseMessage = data.msg;
+        this.responseSuccess = data.success;
+        this.isSubmited = true;
+        if (data.success) {
+          this.signUpForm.reset();
+          this.signUpForm.markAsUntouched();
+        }
+      });
   }
 
   controlInvalid(control: string) {

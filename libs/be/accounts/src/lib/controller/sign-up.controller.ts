@@ -8,6 +8,7 @@ import {
   HttpReqUtilsService,
 } from '@distributed-chat-system/be-server';
 import {
+  ResponseDtoModel,
   SignUpDtoModel,
   UsersDtoModel,
 } from '@distributed-chat-system/shared-model';
@@ -53,12 +54,13 @@ export class SignUpController implements HttpControllerModel {
       }
       const insert = `INSERT INTO users (nick, email, password) VALUES ("${nick}", "${email}", ${password})`;
       pool.query(insert);
-      this.sendRes(res, 'Registered successfully!');
+      this.sendRes(res, 'Registered successfully!', true);
     });
   }
 
-  private sendRes(res: ServerResponse, msg: string) {
+  private sendRes(res: ServerResponse, msg: string, success = false) {
+    const data: ResponseDtoModel = { msg, success };
     res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ msg }));
+    res.end(JSON.stringify(data));
   }
 }
