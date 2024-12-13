@@ -1,31 +1,30 @@
 services:
-  accounts_db:
-    image: mysql:8.4
-    container_name: accounts_db
-    ports:
-      - 40004:40004
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: accounts
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
-      MYSQL_TCP_PORT: 40004
-    volumes:
-      - accounts_db_volumes:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  # base
   base_accounts:
     build:
       context: ./
       dockerfile: Dockerfile.node
+    container_name: base_accounts
     environment:
       - SERVER_TYPE=http
       - HTTP_ROUTE_LOGIN={"method":"POST","url":"/login","controller":"loginController"}
       - HTTP_ROUTE_REGISTER={"method":"POST","url":"/register","controller":"registerController"}
       - MYSQL_HOST=accounts_db
       - MYSQL_DATABASE=accounts
-      - MYSQL_PORT=40004
+      - MYSQL_PORT=40001
     depends_on:
       - accounts_db
+  # load balancer
+  accounts_load-balancer:
+    image: nginx:stable-alpine-perl
+    container_name: accounts_load-balancer
+    ports:
+      - 4000:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - base_accounts
+  # microservice instances
   accounts1:
     extends:
       service: base_accounts
@@ -56,15 +55,21 @@ services:
     container_name: accounts5
     ports:
       - 4005:3000
-  accounts_load-balancer:
-    image: nginx:stable-alpine-perl
-    container_name: accounts_load-balancer
+  # db
+  accounts_db:
+    image: mysql:8.4
+    container_name: accounts_db
     ports:
-      - 4000:80
+      - 40001:40001
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: accounts
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_TCP_PORT: 40001
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - base_accounts
+      - accounts_db_volumes:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
   accounts_db_volumes:
     driver: local
