@@ -10,7 +10,7 @@ import { HttpControllerModel } from '../model/controller/http-controller.model';
 export class RootController implements HttpControllerModel {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   build(_req: IncomingMessage, res: ServerResponse, _pool: Pool) {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('HTTP 404');
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ msg: 'work' }));
   }
 }

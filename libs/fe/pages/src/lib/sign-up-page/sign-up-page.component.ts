@@ -9,6 +9,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'lib-sign-up-page',
@@ -20,7 +21,7 @@ import {
 export class SignUpPageComponent {
   signUpForm: FormGroup;
 
-  constructor() {
+  constructor(private readonly http: HttpClient) {
     this.signUpForm = new FormGroup(
       {
         nick: new FormControl('', Validators.required),
@@ -33,6 +34,9 @@ export class SignUpPageComponent {
       },
       [this.passwordsMatchValidator()]
     );
+    this.http.get('http://localhost:4000').subscribe((res) => {
+      console.log(res);
+    });
   }
 
   onSubmit() {
