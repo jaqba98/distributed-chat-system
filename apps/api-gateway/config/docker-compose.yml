@@ -69,7 +69,6 @@ services:
       MYSQL_TCP_PORT: 30001
     volumes:
       - api-gateway_db_volumes:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 volumes:
   api-gateway_db_volumes:
     driver: local
