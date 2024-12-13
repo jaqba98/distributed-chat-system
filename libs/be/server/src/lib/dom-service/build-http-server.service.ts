@@ -1,5 +1,5 @@
 import { injectable } from 'tsyringe';
-import { createServer } from 'http';
+import { createServer, ServerResponse } from 'http';
 import mysql, { Pool } from 'mysql2';
 
 import { HttpDomainModel } from '../model/domain/http-domain.model';
@@ -16,29 +16,19 @@ export class BuildHttpServerService {
     const pool = this.createMysqlConnection(domain);
     this.waitForConnection(pool);
     const server = createServer((req, res) => {
-      res.setHeader('Access-Control-Allow-Origin', '*');
-      res.setHeader(
-        'Access-Control-Allow-Methods',
-        'GET, POST, PUT, DELETE, OPTIONS'
-      );
-      res.setHeader(
-        'Access-Control-Allow-Headers',
-        'Content-Type, Authorization'
-      );
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
-      if (req.method === 'OPTIONS') {
-        res.writeHead(204);
-        res.end();
-        return;
-      }
+      this.setCors(res);
       const method = req.method ?? '';
       const url = req.url ?? '';
+      if (req.method === 'OPTIONS') {
+        getHttp('corsController').build(req, res, pool);
+        return;
+      }
       const { methods } = domain.routes;
       if (method in methods && url in methods[method].urls) {
         const { controller } = methods[method].urls[url];
         getHttp(controller).build(req, res, pool);
       } else {
-        getHttp('http404Controller').build(req, res, pool);
+        getHttp('pageNotFoundController').build(req, res, pool);
       }
     });
     server.listen(3000, () => console.log(serverIsRunningMsg));
@@ -66,5 +56,18 @@ export class BuildHttpServerService {
         await new Promise((resolve) => setTimeout(resolve, 5000));
       }
     }
+  }
+
+  private setCors(res: ServerResponse) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+      'Access-Control-Allow-Methods',
+      'GET, POST, PUT, DELETE, OPTIONS'
+    );
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Content-Type, Authorization'
+    );
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
   }
 }
