@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'http';
+import { IncomingMessage, request, ServerResponse } from 'http';
 import { injectable, inject } from 'tsyringe';
 
 import {
@@ -15,9 +15,42 @@ export class SignUpController implements HttpControllerModel {
   ) {}
 
   build(req: IncomingMessage, res: ServerResponse) {
-    this.httpReq.post(req, async () => {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ msg: 'api-gateway works!' }));
+    // TODO: Refactor the code
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.httpReq.post(req, async (data2: any) => {
+      console.log(1);
+      const data = JSON.stringify(data2);
+
+      const options = {
+        hostname: 'accounts_load-balancer',
+        port: 80,
+        path: '/sign-up',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(data),
+        },
+      };
+
+      const req2 = request(options, (res2) => {
+        let data = '';
+
+        res2.on('data', (chunk) => {
+          data += chunk;
+        });
+
+        res2.on('end', () => {
+          console.log('Response from B:', data);
+          res.end(data);
+        });
+      });
+
+      req.on('error', (e) => {
+        console.error(`Problem with request: ${e.message}`);
+      });
+
+      req2.write(data);
+      req2.end();
     });
   }
 }
