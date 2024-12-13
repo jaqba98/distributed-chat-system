@@ -1,0 +1,16 @@
+{
+  "name": "be-api-gateway",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/be/api-gateway/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/be/api-gateway/jest.config.ts"
+      }
+    }
+  }
+}
