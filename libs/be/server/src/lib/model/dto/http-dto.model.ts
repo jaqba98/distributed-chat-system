@@ -12,6 +12,7 @@ export interface MySqlDtoModel {
   host: string;
   database: string;
   port: string;
+  cors: string;
 }
 
 export interface HttpDtoModel {

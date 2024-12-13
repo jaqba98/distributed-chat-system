@@ -11,6 +11,8 @@ import {
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+import { SignUpDtoModel } from '@distributed-chat-system/shared-model';
+
 @Component({
   selector: 'lib-sign-up-page',
   standalone: true,
@@ -38,7 +40,7 @@ export class SignUpPageComponent {
 
   onSubmit() {
     if (!this.signUpForm.valid) return;
-    const data = {
+    const data: SignUpDtoModel = {
       nick: this.signUpForm.get('nick')?.value,
       email: this.signUpForm.get('email')?.value,
       password: this.signUpForm.get('password')?.value,

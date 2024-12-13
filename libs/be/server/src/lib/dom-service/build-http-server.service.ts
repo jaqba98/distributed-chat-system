@@ -16,9 +16,9 @@ export class BuildHttpServerService {
     const pool = this.createMysqlConnection(domain);
     this.waitForConnection(pool);
     const server = createServer((req, res) => {
-      this.setCors(res);
       const method = req.method ?? '';
       const url = req.url ?? '';
+      this.setCors(res, domain);
       if (req.method === 'OPTIONS') {
         getHttp('corsController').build(req, res, pool);
         return;
@@ -58,8 +58,8 @@ export class BuildHttpServerService {
     }
   }
 
-  private setCors(res: ServerResponse) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+  private setCors(res: ServerResponse, domain: HttpDomainModel) {
+    res.setHeader('Access-Control-Allow-Origin', domain.mysql.cors);
     res.setHeader(
       'Access-Control-Allow-Methods',
       'GET, POST, PUT, DELETE, OPTIONS'

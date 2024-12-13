@@ -8,10 +8,11 @@ services:
     environment:
       - SERVER_TYPE=http
       - HTTP_ROUTE_LOGIN={"method":"POST","url":"/login","controller":"loginController"}
-      - HTTP_ROUTE_REGISTER={"method":"POST","url":"/register","controller":"registerController"}
+      - HTTP_ROUTE_SIGN_UP={"method":"POST","url":"/sign-up","controller":"signUpController"}
       - MYSQL_HOST=accounts_db
       - MYSQL_DATABASE=accounts
       - MYSQL_PORT=40001
+      - MYSQL_CORS=http://localhost:3333
     depends_on:
       - accounts_db
   # load balancer

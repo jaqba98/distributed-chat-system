@@ -1,6 +1,5 @@
 import { injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
-import { Pool } from 'mysql2';
 
 import {
   RegisterHttp,
@@ -10,9 +9,8 @@ import {
 @injectable()
 @RegisterHttp('loginController')
 export class LoginController implements HttpControllerModel {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async build(_req: IncomingMessage, res: ServerResponse, pool: Pool) {
-    res.writeHead(200, { 'Content-Type': 'plain/text' });
-    res.end('login');
+  build(_req: IncomingMessage, res: ServerResponse) {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ msg: 'login' }));
   }
 }

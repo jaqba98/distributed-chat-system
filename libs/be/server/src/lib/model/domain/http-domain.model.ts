@@ -14,6 +14,7 @@ interface MySqlDomainModel {
   host: string;
   database: string;
   port: number;
+  cors: string;
 }
 
 export interface HttpDomainModel {
