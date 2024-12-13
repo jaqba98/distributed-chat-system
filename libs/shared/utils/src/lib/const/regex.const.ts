@@ -1,4 +1,1 @@
-export const isEmailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-export const isPasswordStrongRegex =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+export const isEmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;

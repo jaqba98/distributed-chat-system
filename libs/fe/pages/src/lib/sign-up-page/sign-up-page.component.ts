@@ -34,22 +34,19 @@ export class SignUpPageComponent {
       },
       [this.passwordsMatchValidator()]
     );
-    this.http.get('http://localhost:4000').subscribe((res) => {
-      console.log(res);
-    });
-    this.http
-      .post('http://localhost:4000/register', { msg: true })
-      .subscribe((res) => {
-        console.log(res);
-      });
   }
 
   onSubmit() {
-    if (this.signUpForm.valid) {
-      console.log('Form Data:', this.signUpForm.value);
-    } else {
-      console.log('Form is invalid');
-    }
+    if (!this.signUpForm.valid) return;
+    const data = {
+      nick: this.signUpForm.get('nick')?.value,
+      email: this.signUpForm.get('email')?.value,
+      password: this.signUpForm.get('password')?.value,
+      rePassword: this.signUpForm.get('rePassword')?.value,
+    };
+    this.http.post('http://localhost:4000/register', data).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   controlInvalid(control: string) {
