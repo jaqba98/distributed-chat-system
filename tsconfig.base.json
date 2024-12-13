@@ -22,6 +22,9 @@
       "@distributed-chat-system/be-server": ["libs/be/server/src/index.ts"],
       "@distributed-chat-system/fe-main": ["libs/fe/main/src/index.ts"],
       "@distributed-chat-system/fe-pages": ["libs/fe/pages/src/index.ts"],
+      "@distributed-chat-system/shared-model": [
+        "libs/shared/model/src/index.ts"
+      ],
       "@distributed-chat-system/shared-utils": [
         "libs/shared/utils/src/index.ts"
       ]
