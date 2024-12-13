@@ -6,6 +6,7 @@ import {
   HttpControllerModel,
   HttpReqUtilsService,
 } from '@distributed-chat-system/be-server';
+import { SignUpDtoModel } from '@distributed-chat-system/shared-model';
 
 @injectable()
 @RegisterHttp('signUpController')
@@ -15,12 +16,8 @@ export class SignUpController implements HttpControllerModel {
   ) {}
 
   build(req: IncomingMessage, res: ServerResponse) {
-    // TODO: Refactor the code
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.httpReq.post(req, async (data2: any) => {
-      console.log(1);
-      const data = JSON.stringify(data2);
-
+    this.httpReq.post(req, async (input: SignUpDtoModel) => {
+      const inputText = JSON.stringify(input);
       const options = {
         hostname: 'accounts_load-balancer',
         port: 80,
@@ -28,29 +25,16 @@ export class SignUpController implements HttpControllerModel {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(data),
+          'Content-Length': Buffer.byteLength(inputText),
         },
       };
-
-      const req2 = request(options, (res2) => {
+      const reqAccounts = request(options, (resAccounts) => {
         let data = '';
-
-        res2.on('data', (chunk) => {
-          data += chunk;
-        });
-
-        res2.on('end', () => {
-          console.log('Response from B:', data);
-          res.end(data);
-        });
+        resAccounts.on('data', (chunk) => (data += chunk));
+        resAccounts.on('end', () => res.end(data));
       });
-
-      req.on('error', (e) => {
-        console.error(`Problem with request: ${e.message}`);
-      });
-
-      req2.write(data);
-      req2.end();
+      reqAccounts.write(inputText);
+      reqAccounts.end();
     });
   }
 }
