@@ -24,8 +24,9 @@ export class RegisterController implements HttpControllerModel {
     this.httpReq.post(req, (data: RegisterModel) => {
       const { email, password, rePassword } = data;
       if (!validateEmail(email)) {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ msg: 'The email address is invalid!' }));
+        console.log(data);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ msg: 'The email address is invalid!', data }));
         return;
       }
       if (!validatePassword(password)) {

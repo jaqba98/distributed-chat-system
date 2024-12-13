@@ -37,6 +37,11 @@ export class SignUpPageComponent {
     this.http.get('http://localhost:4000').subscribe((res) => {
       console.log(res);
     });
+    this.http
+      .post('http://localhost:4000/register', { msg: true })
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   onSubmit() {
