@@ -1,1 +1,14 @@
-<p>sign-in-page works!</p>
+<form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="email">Email</label><br />
+    <input type="email" id="email" formControlName="email" />
+  </div>
+  <div>
+    <label for="password">Password</label><br />
+    <input type="password" id="password" formControlName="password" />
+  </div>
+  <button type="submit">Sign In</button>
+  <ng-container *ngIf="errorMessage !== ''">
+    <p>{{ errorMessage }}</p>
+  </ng-container>
+</form>
