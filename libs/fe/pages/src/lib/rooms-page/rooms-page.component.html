@@ -1,1 +1,4 @@
-<p>rooms-page works!</p>
+<form [formGroup]="roomsForm" (ngSubmit)="onSubmit()">
+  <input type="text" id="message" formControlName="message" />
+  <button type="submit">Send</button>
+</form>

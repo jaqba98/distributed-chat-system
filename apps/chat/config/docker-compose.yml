@@ -1,62 +1,57 @@
 services:
+  # base
   base_chat:
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.node
+    container_name: base_chat
     environment:
       - SERVER_TYPE=socketIO
-      - SERVER_ROUTE_ROOT={"method":"GET","url":"/","controller":"rootController"}
-      - SERVER_ROUTE_HELLO={"method":"GET","url":"/hello","controller":"helloController"}
-      - SERVER_SOCKET_IO={"controller":"socketIOController"}
+      - SERVER_SOCKET_IO_CONTROLLER=socketIOController
     depends_on:
-      - nginx
       - redis
+  # load balancer
+  chat_load-balancer:
+    image: nginx:1.27.2-alpine-slim
+    container_name: chat_load-balancer
+    ports:
+      - 2000:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - base_chat
+  # microservices instances
   chat1:
     extends:
       service: base_chat
+    container_name: chat1
     ports:
-      - 3001:3000
+      - 2001:3000
   chat2:
     extends:
       service: base_chat
+    container_name: chat2
     ports:
-      - 3002:3000
+      - 2002:3000
   chat3:
     extends:
       service: base_chat
+    container_name: chat3
     ports:
-      - 3003:3000
+      - 2003:3000
   chat4:
     extends:
       service: base_chat
+    container_name: chat4
     ports:
-      - 3004:3000
+      - 2004:3000
   chat5:
     extends:
       service: base_chat
+    container_name: chat5
     ports:
-      - 3005:3000
-  chat6:
-    extends:
-      service: base_chat
-    ports:
-      - 3006:3000
-  chat7:
-    extends:
-      service: base_chat
-    ports:
-      - 3007:3000
-  chat8:
-    extends:
-      service: base_chat
-    ports:
-      - 3008:3000
-  nginx:
-    image: nginx:1.27.2-alpine-slim
-    ports:
-      - 3000:80
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - 2005:3000
+  # redis
   redis:
     image: redis:8.0-M02-alpine
     ports:

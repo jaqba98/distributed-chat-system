@@ -21,6 +21,11 @@
             "input": "apps/chat/config",
             "glob": "*",
             "output": "/"
+          },
+          {
+            "input": "apps/docker",
+            "glob": "Dockerfile.node",
+            "output": "/"
           }
         ],
         "generatePackageJson": true,
