@@ -2,13 +2,13 @@ import { injectable } from 'tsyringe';
 import { Server, Socket } from 'socket.io';
 
 import {
-  RegisterHttp,
-  SocketIoController,
+  RegisterSocket,
+  SocketControllerModel,
 } from '@distributed-chat-system/be-server';
 
 @injectable()
-@RegisterHttp('socketIOController')
-export class SocketIOController implements SocketIoController {
+@RegisterSocket('socketIOController')
+export class SocketIOController implements SocketControllerModel {
   build(io: Server, socket: Socket) {
     console.log('A user connected: ', socket.id);
     socket.on('message', (data) => {
