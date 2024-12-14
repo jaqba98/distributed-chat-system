@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
-import { SignInDtoModel } from '@distributed-chat-system/shared-model';
+import {
+  ResponseDtoModel,
+  SignInDtoModel,
+} from '@distributed-chat-system/shared-model';
 
 @Component({
   selector: 'lib-sign-in-page',
@@ -15,7 +18,7 @@ import { SignInDtoModel } from '@distributed-chat-system/shared-model';
 export class SignInPageComponent {
   signInForm: FormGroup;
 
-  errorMessage = '';
+  response!: ResponseDtoModel;
 
   constructor(private readonly http: HttpClient) {
     this.signInForm = new FormGroup({
@@ -26,13 +29,15 @@ export class SignInPageComponent {
 
   onSubmit() {
     const data: SignInDtoModel = {
-      email: 'aaaaa@wp.pl',
-      password: '123456',
+      email: this.signInForm.get('email')?.value,
+      password: this.signInForm.get('password')?.value,
     };
     this.http
-      .post<SignInDtoModel>('http://localhost:3000/sign-in', data)
+      .post<ResponseDtoModel>('http://localhost:3000/sign-in', data)
       .subscribe((data) => {
-        console.log(data);
+        this.response = data;
+        this.signInForm.reset();
+        this.signInForm.markAsUntouched();
       });
   }
 }
