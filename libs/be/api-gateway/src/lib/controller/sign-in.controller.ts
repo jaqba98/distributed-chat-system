@@ -6,6 +6,7 @@ import {
   HttpControllerModel,
   HttpReqUtilsService,
 } from '@distributed-chat-system/be-server';
+import { SignInDtoModel } from '@distributed-chat-system/shared-model';
 
 @injectable()
 @RegisterHttp('signInController')
@@ -15,8 +16,7 @@ export class SignInController implements HttpControllerModel {
   ) {}
 
   build(req: IncomingMessage, res: ServerResponse) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.httpReq.post(req, async (input: any) => {
+    this.httpReq.post(req, async (input: SignInDtoModel) => {
       const inputText = JSON.stringify(input);
       const options = {
         hostname: 'accounts_load-balancer',

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+import { SignInDtoModel } from '@distributed-chat-system/shared-model';
+
 @Component({
   selector: 'lib-sign-in-page',
   standalone: true,
@@ -23,13 +25,12 @@ export class SignInPageComponent {
   }
 
   onSubmit() {
-    console.log(this.signInForm);
-    const test = {
-      msg: 'sign-in',
+    const data: SignInDtoModel = {
+      email: 'aaaaa@wp.pl',
+      password: '123456',
     };
     this.http
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .post<any>('http://localhost:3000/sign-in', test)
+      .post<SignInDtoModel>('http://localhost:3000/sign-in', data)
       .subscribe((data) => {
         console.log(data);
       });
