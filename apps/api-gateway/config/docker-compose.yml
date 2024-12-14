@@ -7,6 +7,7 @@ services:
     container_name: api-gateway
     environment:
       - SERVER_TYPE=http
+      - HTTP_ROUTE_SIGN_IN={"method":"POST","url":"/sign-in","controller":"signInController"}
       - HTTP_ROUTE_SIGN_UP={"method":"POST","url":"/sign-up","controller":"signUpController"}
       - MYSQL_HOST=api-gateway_db
       - MYSQL_DATABASE=api-gateway
