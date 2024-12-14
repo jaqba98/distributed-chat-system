@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.node
     container_name: base_chat
     environment:
-      - SERVER_TYPE=socketIO
+      - SERVER_TYPE=socket
       - SERVER_SOCKET_IO_CONTROLLER=socketIOController
     depends_on:
       - redis
