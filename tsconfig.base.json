@@ -23,6 +23,7 @@
       ],
       "@distributed-chat-system/be-chat": ["libs/be/chat/src/index.ts"],
       "@distributed-chat-system/be-server": ["libs/be/server/src/index.ts"],
+      "@distributed-chat-system/fe-guard": ["libs/fe/guard/src/index.ts"],
       "@distributed-chat-system/fe-main": ["libs/fe/main/src/index.ts"],
       "@distributed-chat-system/fe-pages": ["libs/fe/pages/src/index.ts"],
       "@distributed-chat-system/shared-model": [
