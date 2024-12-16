@@ -50,19 +50,20 @@ export class SignUpPageComponent {
   onSubmit() {
     this.isSubmited = false;
     if (!this.signUpForm.valid) return;
-    const data: SignUpDtoModel = {
+    const dto: SignUpDtoModel = {
       nick: this.signUpForm.get('nick')?.value,
       email: this.signUpForm.get('email')?.value,
       password: this.signUpForm.get('password')?.value,
       rePassword: this.signUpForm.get('rePassword')?.value,
     };
     this.http
-      .post<ResponseDtoModel>('http://localhost:3000/sign-up', data)
-      .subscribe((data) => {
-        this.responseMessage = data.data;
-        this.responseSuccess = data.success;
+      .post<ResponseDtoModel>('http://localhost:3000/sign-up', dto)
+      .subscribe((response) => {
+        const { data, success } = response;
+        this.responseMessage = data;
+        this.responseSuccess = success;
         this.isSubmited = true;
-        if (data.success) {
+        if (response.success) {
           this.signUpForm.reset();
           this.signUpForm.markAsUntouched();
         }

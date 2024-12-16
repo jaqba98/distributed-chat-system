@@ -30,11 +30,12 @@ export class SignInController implements HttpControllerModel {
       const users = result as UsersDtoModel;
       if (users.length === 0) {
         const dto: ResponseDtoModel = {
-          data: 'Incorrect email address or password!',
+          data: 'Incorrect email or password!',
           success: false,
         };
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(dto));
+        return;
       }
       const token = sign({ email }, JWT_SECRET_KEY, { expiresIn: '1h' });
       const dto: ResponseDtoModel = { data: token, success: true };

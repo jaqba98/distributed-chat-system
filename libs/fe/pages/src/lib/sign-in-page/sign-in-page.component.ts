@@ -20,9 +20,10 @@ export class SignInPageComponent {
 
   response!: ResponseDtoModel;
 
-  constructor(
-    private readonly http: HttpClient // private readonly auth: AuthService, // private router: Router
-  ) {
+  // private readonly auth: AuthService,
+  // private router: Router
+
+  constructor(private readonly http: HttpClient) {
     this.signInForm = new FormGroup({
       email: new FormControl(''),
       password: new FormControl(''),
@@ -30,21 +31,17 @@ export class SignInPageComponent {
   }
 
   onSubmit() {
-    const data: SignInDtoModel = {
+    const dto: SignInDtoModel = {
       email: this.signInForm.get('email')?.value,
       password: this.signInForm.get('password')?.value,
     };
     this.http
-      .post<ResponseDtoModel>('http://localhost:3000/sign-in', data)
-      .subscribe((data) => {
-        if (data.success) {
-          console.log('TOKEN: ', data.data);
-        } else {
-          console.log('Error: ', data.data);
-        }
+      .post<ResponseDtoModel>('http://localhost:3000/sign-in', dto)
+      .subscribe((response) => {
+        console.log(response);
         // this.router.navigate(['/rooms']);
-        this.signInForm.reset();
-        this.signInForm.markAsUntouched();
+        // this.signInForm.reset();
+        // this.signInForm.markAsUntouched();
       });
   }
 }
