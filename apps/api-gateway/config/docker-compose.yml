@@ -9,6 +9,7 @@ services:
       - SERVER_TYPE=http
       - HTTP_ROUTE_SIGN_IN={"method":"POST","url":"/sign-in","controller":"signInController"}
       - HTTP_ROUTE_SIGN_UP={"method":"POST","url":"/sign-up","controller":"signUpController"}
+      - HTTP_ROUTE_PROTECTED={"method":"POST","url":"/protected","controller":"protectedController"}
       - MYSQL_HOST=api-gateway_db
       - MYSQL_DATABASE=api-gateway
       - MYSQL_PORT=30001

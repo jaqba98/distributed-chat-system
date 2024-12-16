@@ -1,1 +1,1 @@
-export * from './lib/fe-guard/fe-guard.component';
+export * from './lib/protected.guard';
