@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 
 import {
+  AuthGuard,
   RoomsPageComponent,
   SignInPageComponent,
   SignUpPageComponent,
@@ -15,6 +16,7 @@ export const appRoutes: Route[] = [
   {
     path: 'rooms',
     component: RoomsPageComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'sign-in',

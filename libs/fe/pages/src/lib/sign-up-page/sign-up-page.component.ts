@@ -59,7 +59,7 @@ export class SignUpPageComponent {
     this.http
       .post<ResponseDtoModel>('http://localhost:3000/sign-up', data)
       .subscribe((data) => {
-        this.responseMessage = data.msg;
+        this.responseMessage = data.data;
         this.responseSuccess = data.success;
         this.isSubmited = true;
         if (data.success) {

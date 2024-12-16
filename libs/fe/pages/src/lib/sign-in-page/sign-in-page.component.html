@@ -9,6 +9,6 @@
   </div>
   <button type="submit">Sign In</button>
   <ng-container *ngIf="response && !response.success">
-    <p>{{ response.msg }}</p>
+    <p>{{ response.data }}</p>
   </ng-container>
 </form>

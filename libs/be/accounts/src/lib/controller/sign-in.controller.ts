@@ -1,11 +1,13 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { injectable, inject } from 'tsyringe';
 import { Pool } from 'mysql2/typings/mysql/lib/Pool';
+import { sign } from 'jsonwebtoken';
 
 import {
   RegisterHttp,
   HttpControllerModel,
   HttpReqUtilsService,
+  JWT_SECRET_KEY,
 } from '@distributed-chat-system/be-server';
 import {
   ResponseDtoModel,
@@ -23,19 +25,21 @@ export class SignInController implements HttpControllerModel {
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
     this.httpReq.post(req, async (data: SignInDtoModel) => {
       const { email, password } = data;
-      const selectUser = `SELECT * FROM users WHERE email="${email}" AND password="${password}"`;
-      const [resultUser] = await pool.promise().query(selectUser);
-      if ((<UsersDtoModel>resultUser).length > 0) {
-        this.sendRes(res, 'You have logged in successfully', true);
-        return;
+      const select = `SELECT * FROM users WHERE email="${email}" AND password="${password}"`;
+      const [result] = await pool.promise().query(select);
+      const users = result as UsersDtoModel;
+      if (users.length === 0) {
+        const dto: ResponseDtoModel = {
+          data: 'Incorrect email address or password!',
+          success: false,
+        };
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(dto));
       }
-      this.sendRes(res, 'Incorrect email address or password!');
+      const token = sign({ email }, JWT_SECRET_KEY, { expiresIn: '1h' });
+      const dto: ResponseDtoModel = { data: token, success: true };
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(dto));
     });
-  }
-
-  private sendRes(res: ServerResponse, msg: string, success = false) {
-    const data: ResponseDtoModel = { msg, success };
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(data));
   }
 }

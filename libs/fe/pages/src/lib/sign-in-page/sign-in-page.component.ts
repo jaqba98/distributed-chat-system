@@ -20,7 +20,9 @@ export class SignInPageComponent {
 
   response!: ResponseDtoModel;
 
-  constructor(private readonly http: HttpClient) {
+  constructor(
+    private readonly http: HttpClient // private readonly auth: AuthService, // private router: Router
+  ) {
     this.signInForm = new FormGroup({
       email: new FormControl(''),
       password: new FormControl(''),
@@ -35,7 +37,12 @@ export class SignInPageComponent {
     this.http
       .post<ResponseDtoModel>('http://localhost:3000/sign-in', data)
       .subscribe((data) => {
-        this.response = data;
+        if (data.success) {
+          console.log('TOKEN: ', data.data);
+        } else {
+          console.log('Error: ', data.data);
+        }
+        // this.router.navigate(['/rooms']);
         this.signInForm.reset();
         this.signInForm.markAsUntouched();
       });
