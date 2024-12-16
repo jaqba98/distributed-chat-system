@@ -8,7 +8,7 @@
     <input type="password" id="password" formControlName="password" />
   </div>
   <button type="submit">Sign In</button>
-  <ng-container *ngIf="response && !response.success">
-    <p>{{ response.data }}</p>
+  <ng-container *ngIf="isSubmited && !responseSuccess">
+    <p>{{ responseMessage }}</p>
   </ng-container>
 </form>

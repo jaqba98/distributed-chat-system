@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 import {
   ResponseDtoModel,
   SignInDtoModel,
 } from '@distributed-chat-system/shared-model';
+import { AuthService } from '@distributed-chat-system/fe-system';
 
 @Component({
   selector: 'lib-sign-in-page',
@@ -18,12 +20,17 @@ import {
 export class SignInPageComponent {
   signInForm: FormGroup;
 
-  response!: ResponseDtoModel;
+  responseMessage!: string;
 
-  // private readonly auth: AuthService,
-  // private router: Router
+  responseSuccess!: boolean;
 
-  constructor(private readonly http: HttpClient) {
+  isSubmited = false;
+
+  constructor(
+    private readonly http: HttpClient,
+    private readonly auth: AuthService,
+    private router: Router
+  ) {
     this.signInForm = new FormGroup({
       email: new FormControl(''),
       password: new FormControl(''),
@@ -38,10 +45,17 @@ export class SignInPageComponent {
     this.http
       .post<ResponseDtoModel>('http://localhost:3000/sign-in', dto)
       .subscribe((response) => {
-        console.log(response);
-        // this.router.navigate(['/rooms']);
-        // this.signInForm.reset();
-        // this.signInForm.markAsUntouched();
+        this.signInForm.reset();
+        this.signInForm.markAsUntouched();
+        const { data, success } = response;
+        if (success) {
+          this.auth.saveToken(data);
+          this.router.navigate(['/rooms']);
+          return;
+        }
+        this.isSubmited = true;
+        this.responseMessage = data;
+        this.responseSuccess = success;
       });
   }
 }

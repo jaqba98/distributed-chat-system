@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  saveToken(token: string): void {
+  saveToken(token: string) {
     localStorage.setItem('token', token);
   }
 
-  getToken(): string | null {
+  getToken() {
     return localStorage.getItem('token');
   }
 
-  isAuthenticated(): boolean {
+  isAuthenticated() {
     return !!this.getToken();
   }
 }

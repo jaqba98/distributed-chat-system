@@ -1,1 +1,1 @@
-export * from './lib/fe-system/fe-system.component';
+export * from './lib/service/auth.service';
