@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-<<<<<<< HEAD
-import { MatButtonModule } from '@angular/material/button';
-=======
->>>>>>> parent of 2119f90 (feat: add basic button and input primeng controls)
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { FloatLabel } from 'primeng/floatlabel';
+import { CardModule } from 'primeng/card';
 
 import {
   ResponseDtoModel,
@@ -17,11 +22,7 @@ import { AuthService } from '@distributed-chat-system/fe-system';
 @Component({
   selector: 'lib-sign-in-page',
   standalone: true,
-<<<<<<< HEAD
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatButtonModule],
-=======
   imports: [CommonModule, ReactiveFormsModule],
->>>>>>> parent of 2119f90 (feat: add basic button and input primeng controls)
   templateUrl: './sign-in-page.component.html',
   styleUrl: './sign-in-page.component.scss',
 })
@@ -33,6 +34,8 @@ export class SignInPageComponent {
   responseSuccess!: boolean;
 
   isSubmited = false;
+
+  value1: string | undefined;
 
   constructor(
     private readonly http: HttpClient,
