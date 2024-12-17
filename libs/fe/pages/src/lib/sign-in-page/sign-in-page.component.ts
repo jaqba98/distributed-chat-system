@@ -8,10 +8,6 @@ import {
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabel } from 'primeng/floatlabel';
-import { CardModule } from 'primeng/card';
 
 import {
   ResponseDtoModel,
@@ -22,15 +18,7 @@ import { AuthService } from '@distributed-chat-system/fe-system';
 @Component({
   selector: 'lib-sign-in-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    InputTextModule,
-    FloatLabel,
-    FormsModule,
-    CardModule,
-  ],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './sign-in-page.component.html',
   styleUrl: './sign-in-page.component.scss',
 })
