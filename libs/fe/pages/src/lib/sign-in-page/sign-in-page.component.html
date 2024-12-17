@@ -1,26 +1,29 @@
-<form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="email">Email</label><br />
-    <input type="email" id="email" formControlName="email" />
-  </div>
-  <div>
-    <label for="password">Password</label><br />
-    <input type="password" id="password" formControlName="password" />
-  </div>
-  <button type="submit">Sign In</button>
-  <ng-container *ngIf="isSubmited && !responseSuccess">
-    <p>{{ responseMessage }}</p>
-  </ng-container>
-</form>
-
-<br />
-<hr />
-<br />
-
-<p-card header="Simple Card">
-  <p-floatlabel>
-    <input pInputText id="over_label" [(ngModel)]="value1" autocomplete="off" />
-    <label for="over_label">Over Label</label>
-  </p-floatlabel>
-  <p-button label="Check"></p-button>
+<p-card header="Sign In">
+  <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+    <p-floatlabel variant="in">
+      <label for="email">Email</label>
+      <input
+        pInputText
+        type="email"
+        id="email"
+        formControlName="email"
+        autocomplete="off"
+      />
+    </p-floatlabel>
+    <p-floatlabel variant="in">
+      <label for="password">Password</label>
+      <input
+        pInputText
+        type="password"
+        id="password"
+        formControlName="password"
+        autocomplete="off"
+      />
+    </p-floatlabel>
+    <p-button type="submit" label="Sign In"></p-button>
+    <ng-container *ngIf="isSubmited && !responseSuccess">
+      <p>{{ responseMessage }}</p>
+      <p-message severity="error">{{ responseMessage }}</p-message>
+    </ng-container>
+  </form>
 </p-card>
