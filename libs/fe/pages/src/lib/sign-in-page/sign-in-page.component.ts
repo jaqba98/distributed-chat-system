@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 import {
   ResponseDtoModel,
@@ -18,7 +19,7 @@ import { AuthService } from '@distributed-chat-system/fe-system';
 @Component({
   selector: 'lib-sign-in-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, MatButtonModule],
   templateUrl: './sign-in-page.component.html',
   styleUrl: './sign-in-page.component.scss',
 })
