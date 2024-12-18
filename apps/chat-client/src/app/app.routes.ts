@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 
 import {
+  LogoutPageComponent,
   RoomsPageComponent,
   SignInPageComponent,
   SignUpPageComponent,
@@ -30,5 +31,10 @@ export const appRoutes: Route[] = [
     path: 'sign-up',
     component: SignUpPageComponent,
     canActivate: [NotProtectedGuard],
+  },
+  {
+    path: 'logout',
+    component: LogoutPageComponent,
+    canActivate: [ProtectedGuard],
   },
 ];

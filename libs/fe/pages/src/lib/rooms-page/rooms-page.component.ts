@@ -1,19 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { io, Socket } from 'socket.io-client';
+import { Menubar } from 'primeng/menubar';
+import { MenuItem } from 'primeng/api';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'lib-rooms-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, Menubar, RouterLink],
   templateUrl: './rooms-page.component.html',
   styleUrl: './rooms-page.component.scss',
 })
-export class RoomsPageComponent {
+export class RoomsPageComponent implements OnInit {
   roomsForm: FormGroup;
 
   private socket: Socket;
+
+  items: MenuItem[] = [];
 
   constructor() {
     this.roomsForm = new FormGroup({
@@ -31,6 +36,16 @@ export class RoomsPageComponent {
     this.socket.on('response', (data) => {
       console.log(data);
     });
+  }
+
+  ngOnInit() {
+    this.items = [
+      {
+        label: 'Log out',
+        icon: 'pi pi-sign-out',
+        routerLink: '/logout',
+      },
+    ];
   }
 
   onSubmit() {
