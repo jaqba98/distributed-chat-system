@@ -1,0 +1,11 @@
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+
+  .p-card-content {
+    padding: 2rem 1rem;
+    width: 300px;
+  }
+}

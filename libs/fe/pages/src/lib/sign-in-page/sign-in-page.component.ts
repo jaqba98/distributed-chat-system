@@ -14,7 +14,11 @@ import {
   SignInDtoModel,
 } from '@distributed-chat-system/shared-model';
 import { AuthService } from '@distributed-chat-system/fe-system';
-import { LogoComponent } from '@distributed-chat-system/fe-controls';
+import {
+  FlexComponent,
+  FormWrapperComponent,
+  LogoComponent,
+} from '@distributed-chat-system/fe-controls';
 
 @Component({
   selector: 'lib-sign-in-page',
@@ -27,7 +31,9 @@ import { LogoComponent } from '@distributed-chat-system/fe-controls';
     InputTextModule,
     Message,
     FloatLabelModule,
+    FormWrapperComponent,
     LogoComponent,
+    FlexComponent,
   ],
   templateUrl: './sign-in-page.component.html',
   styleUrl: './sign-in-page.component.scss',
