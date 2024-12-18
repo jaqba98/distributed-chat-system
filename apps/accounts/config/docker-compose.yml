@@ -13,7 +13,7 @@ services:
       - MYSQL_HOST=accounts_db
       - MYSQL_DATABASE=accounts
       - MYSQL_PORT=40001
-      - MYSQL_CORS=http://localhost:3333
+      - MYSQL_CORS=*
     depends_on:
       - accounts_db
   # load balancer

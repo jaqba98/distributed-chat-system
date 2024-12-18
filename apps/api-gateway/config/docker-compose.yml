@@ -13,7 +13,7 @@ services:
       - MYSQL_HOST=api-gateway_db
       - MYSQL_DATABASE=api-gateway
       - MYSQL_PORT=30001
-      - MYSQL_CORS=http://localhost:3333
+      - MYSQL_CORS=*
     depends_on:
       - api-gateway_db
   # load balancer
