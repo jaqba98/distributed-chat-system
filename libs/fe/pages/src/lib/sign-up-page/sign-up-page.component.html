@@ -1,56 +1,159 @@
-<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="nick">Nickname</label><br />
-    <input type="text" id="nick" formControlName="nick" />
-    <div *ngIf="controlInvalid('nick')">
-      <small *ngIf="controlError('nick', 'required')">
-        Nickname is required.
-      </small>
-    </div>
-  </div>
-  <div>
-    <label for="email">Email</label><br />
-    <input type="email" id="email" formControlName="email" />
-    <div *ngIf="controlInvalid('email')">
-      <small *ngIf="controlError('email', 'required')">
-        Email is required.
-      </small>
-      <small *ngIf="controlError('email', 'email')">
-        Invalid email format.
-      </small>
-    </div>
-  </div>
-  <div>
-    <label for="password">Password</label><br />
-    <input type="password" id="password" formControlName="password" />
-    <div *ngIf="controlInvalid('password')">
-      <small *ngIf="controlError('password', 'required')">
-        Password is required.
-      </small>
-      <small *ngIf="controlError('password', 'minlength')">
-        Password must be at least 6 characters long.
-      </small>
-    </div>
-  </div>
-  <div>
-    <label for="rePassword">Repeat Password</label><br />
-    <input type="password" id="rePassword" formControlName="rePassword" />
-    <div *ngIf="controlInvalid('rePassword')">
-      <small *ngIf="controlError('rePassword', 'required')">
-        Please confirm your password.
-      </small>
-    </div>
-  </div>
-  <div *ngIf="formError('passwordsMismatch')">
-    <small>Passwords do not match.</small>
-  </div>
-  <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
-  <ng-container *ngIf="isSubmited">
-    <ng-container *ngIf="responseSuccess">
-      <p>Success: {{ responseMessage }}</p>
+<lib-flex minHeight="100svh" alignItems="center" justifyContent="center">
+  <lib-form-wrapper>
+    <lib-logo slot="logo"></lib-logo>
+    <lib-flex
+      slot="content"
+      gap="2rem"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <form slot="content" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+        <lib-flex gap="1rem">
+          <h2>Sign Up</h2>
+          <lib-flex gap="0.5rem">
+            <p-floatlabel variant="on">
+              <input
+                pInputText
+                type="text"
+                id="nick"
+                formControlName="nick"
+                autocomplete="off"
+                style="width: 100%"
+                pSize="large"
+              />
+              <label for="nick">Nick</label>
+            </p-floatlabel>
+            <div *ngIf="controlInvalid('nick')">
+              <p-message
+                severity="error"
+                variant="simple"
+                size="small"
+                *ngIf="controlError('nick', 'required')"
+              >
+                Nickname is required.
+              </p-message>
+            </div>
+            <p-floatlabel variant="on">
+              <input
+                pInputText
+                type="email"
+                id="email"
+                formControlName="email"
+                autocomplete="off"
+                style="width: 100%"
+                pSize="large"
+              />
+              <label for="email">Email</label>
+            </p-floatlabel>
+            <div *ngIf="controlInvalid('email')">
+              <p-message
+                severity="error"
+                variant="simple"
+                size="small"
+                *ngIf="controlError('email', 'required')"
+              >
+                Email is required.
+              </p-message>
+              <p-message
+                severity="error"
+                variant="simple"
+                size="small"
+                *ngIf="controlError('email', 'email')"
+              >
+                Invalid email format.
+              </p-message>
+            </div>
+            <p-floatlabel variant="on">
+              <input
+                pInputText
+                type="password"
+                id="password"
+                formControlName="password"
+                autocomplete="off"
+                style="width: 100%"
+                pSize="large"
+              />
+              <label for="password">Password</label>
+            </p-floatlabel>
+            <div *ngIf="controlInvalid('password')">
+              <p-message
+                severity="error"
+                variant="simple"
+                size="small"
+                *ngIf="controlError('password', 'required')"
+              >
+                Password is required.
+              </p-message>
+              <p-message
+                severity="error"
+                variant="simple"
+                size="small"
+                *ngIf="controlError('password', 'minlength')"
+              >
+                Password must be at least 6 characters long.
+              </p-message>
+            </div>
+            <p-floatlabel variant="on">
+              <input
+                pInputText
+                type="password"
+                id="rePassword"
+                formControlName="rePassword"
+                autocomplete="off"
+                style="width: 100%"
+                pSize="large"
+              />
+              <label for="rePassword">Repeat password</label>
+            </p-floatlabel>
+            <div *ngIf="controlInvalid('rePassword')">
+              <p-message
+                severity="error"
+                variant="simple"
+                size="small"
+                *ngIf="controlError('rePassword', 'required')"
+              >
+                Please confirm your password.
+              </p-message>
+            </div>
+            <p-message
+              severity="error"
+              variant="simple"
+              size="small"
+              *ngIf="formError('passwordsMismatch')"
+            >
+              Passwords do not match.
+            </p-message>
+          </lib-flex>
+          <lib-flex flexDirection="row" gap="0.5rem">
+            <p-button
+              type="submit"
+              label="Sign In"
+              [disabled]="signUpForm.invalid"
+            ></p-button>
+            <p-button
+              label="Sign In"
+              severity="secondary"
+              (click)="onSignIn()"
+            ></p-button>
+          </lib-flex>
+        </lib-flex>
+      </form>
+    </lib-flex>
+    <ng-container slot="footer" *ngIf="isSubmited">
+      <ng-container slot="footer" *ngIf="responseSuccess">
+        <p-message
+          severity="success"
+          icon="pi pi-times-circle"
+          styleClass="mb-2"
+        >
+          {{ responseMessage }}
+        </p-message>
+      </ng-container>
+      <ng-container slot="footer" *ngIf="!responseSuccess">
+        <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2">
+          {{ responseMessage }}
+        </p-message>
+      </ng-container>
     </ng-container>
-    <ng-container *ngIf="!responseSuccess">
-      <p>Error: {{ responseMessage }}</p>
-    </ng-container>
-  </ng-container>
-</form>
+  </lib-form-wrapper>
+</lib-flex>

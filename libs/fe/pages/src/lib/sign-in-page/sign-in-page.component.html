@@ -38,7 +38,11 @@
           </lib-flex>
           <lib-flex flexDirection="row" gap="0.5rem">
             <p-button type="submit" label="Sign In"></p-button>
-            <p-button label="Sign Up" (click)="onSignUp()"></p-button>
+            <p-button
+              label="Sign Up"
+              severity="secondary"
+              (click)="onSignUp()"
+            ></p-button>
           </lib-flex>
         </lib-flex>
       </form>

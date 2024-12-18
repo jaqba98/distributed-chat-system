@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { Message } from 'primeng/message';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import {
   AbstractControl,
   FormControl,
@@ -15,11 +20,28 @@ import {
   ResponseDtoModel,
   SignUpDtoModel,
 } from '@distributed-chat-system/shared-model';
+import {
+  FlexComponent,
+  FormWrapperComponent,
+  LogoComponent,
+} from '@distributed-chat-system/fe-controls';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-sign-up-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    Message,
+    FloatLabelModule,
+    FormWrapperComponent,
+    LogoComponent,
+    FlexComponent,
+  ],
   templateUrl: './sign-up-page.component.html',
   styleUrl: './sign-up-page.component.scss',
 })
@@ -32,7 +54,10 @@ export class SignUpPageComponent {
 
   isSubmited = false;
 
-  constructor(private readonly http: HttpClient) {
+  constructor(
+    private readonly http: HttpClient,
+    private readonly router: Router
+  ) {
     this.signUpForm = new FormGroup(
       {
         nick: new FormControl('', Validators.required),
@@ -94,5 +119,9 @@ export class SignUpPageComponent {
       }
       return null;
     };
+  }
+
+  onSignIn() {
+    this.router.navigate(['/sign-in']);
   }
 }
