@@ -5,7 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { AuthService } from '@distributed-chat-system/fe-system';
 
 @Injectable({ providedIn: 'root' })
-export class ProtectedGuard implements CanActivate {
+export class NotProtectedGuard implements CanActivate {
   constructor(
     private readonly auth: AuthService,
     private readonly router: Router
@@ -14,9 +14,9 @@ export class ProtectedGuard implements CanActivate {
   async canActivate() {
     const response = await lastValueFrom(this.auth.isAuthenticated());
     if (response.success) {
-      return true;
+      this.router.navigate(['/rooms']);
+      return false;
     }
-    this.router.navigate(['/sign-in']);
-    return false;
+    return true;
   }
 }
