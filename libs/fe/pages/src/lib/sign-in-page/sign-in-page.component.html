@@ -36,7 +36,10 @@
               <label for="password">Password</label>
             </p-floatlabel>
           </lib-flex>
-          <p-button type="submit" label="Sign In"></p-button>
+          <lib-flex flexDirection="row" gap="0.5rem">
+            <p-button type="submit" label="Sign In"></p-button>
+            <p-button label="Sign Up" (click)="onSignUp()"></p-button>
+          </lib-flex>
         </lib-flex>
       </form>
     </lib-flex>

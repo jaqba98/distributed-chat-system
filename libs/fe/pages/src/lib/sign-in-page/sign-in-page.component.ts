@@ -81,4 +81,8 @@ export class SignInPageComponent {
         this.responseSuccess = success;
       });
   }
+
+  onSignUp() {
+    this.router.navigate(['/sign-up']);
+  }
 }
