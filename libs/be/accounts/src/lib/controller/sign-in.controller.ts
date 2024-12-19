@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { injectable, inject } from 'tsyringe';
 import { Pool } from 'mysql2/typings/mysql/lib/Pool';
 import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   RegisterHttp,
@@ -37,7 +38,9 @@ export class SignInController implements HttpControllerModel {
         res.end(JSON.stringify(dto));
         return;
       }
-      const token = jwt.sign({ email }, JWT_SECRET_KEY, { expiresIn: '1h' });
+      const token = jwt.sign({ email, jti: uuidv4() }, JWT_SECRET_KEY, {
+        expiresIn: '1h',
+      });
       const dto: ResponseDtoModel = { data: token, success: true };
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(dto));

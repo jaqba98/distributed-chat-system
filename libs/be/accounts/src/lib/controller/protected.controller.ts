@@ -1,6 +1,7 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { injectable, inject } from 'tsyringe';
 import { verify } from 'jsonwebtoken';
+import { Pool } from 'mysql2/typings/mysql/lib/Pool';
 
 import {
   RegisterHttp,
@@ -20,9 +21,19 @@ export class ProtectedController implements HttpControllerModel {
     @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
   ) {}
 
-  build(req: IncomingMessage, res: ServerResponse) {
+  build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
     this.httpReq.post(req, async (data: TokenDtoModel) => {
       const { token } = data;
+      const select = `SELECT * FROM blockedTokens WHERE token="${token}"`;
+      const [result] = await pool.promise().query(select);
+      const tokens = result as TokenDtoModel[];
+      if (tokens.length > 0) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(
+          JSON.stringify(<ResponseDtoModel>{ data: 'error', success: false })
+        );
+        return;
+      }
       if (token) {
         try {
           verify(token, JWT_SECRET_KEY);

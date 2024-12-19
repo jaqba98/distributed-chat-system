@@ -9,6 +9,7 @@ import {
 import {
   ProtectedGuard,
   NotProtectedGuard,
+  LogoutGuard,
 } from '@distributed-chat-system/fe-guard';
 
 export const appRoutes: Route[] = [
@@ -35,6 +36,6 @@ export const appRoutes: Route[] = [
   {
     path: 'logout',
     component: LogoutPageComponent,
-    canActivate: [ProtectedGuard],
+    canActivate: [ProtectedGuard, LogoutGuard],
   },
 ];

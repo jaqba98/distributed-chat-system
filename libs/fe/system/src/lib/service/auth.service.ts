@@ -26,4 +26,13 @@ export class AuthService {
       data
     );
   }
+
+  logout() {
+    const token = this.getToken();
+    const data: TokenDtoModel = { token };
+    return this.http.post<ResponseDtoModel>(
+      'http://localhost:3000/logout',
+      data
+    );
+  }
 }

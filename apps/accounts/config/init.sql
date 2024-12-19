@@ -9,3 +9,8 @@ INSERT INTO users (nick, email, password) VALUES
     ('user1', 'user1@gmail.com', 'Pa$$word1'),
     ('user2', 'user2@gmail.com', 'Pa$$word2'),
     ('user3', 'user3@gmail.com', 'Pa$$word3');
+
+CREATE TABLE IF NOT EXISTS blockedTokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    token VARCHAR(10000) NOT NULL
+);
