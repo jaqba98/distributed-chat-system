@@ -66,7 +66,7 @@ export class SignInPageComponent {
       password: this.signInForm.get('password')?.value,
     };
     this.http
-      .post<ResponseDtoModel>('http://localhost:3000/sign-in', dto)
+      .post<ResponseDtoModel>('http://localhost:3002/sign-in', dto)
       .subscribe((response) => {
         this.signInForm.reset();
         this.signInForm.markAsUntouched();

@@ -22,7 +22,7 @@ export class AuthService {
     const token = this.getToken();
     const data: TokenDtoModel = { token };
     return this.http.post<ResponseDtoModel>(
-      'http://localhost:3000/protected',
+      'http://localhost:3002/protected',
       data
     );
   }
@@ -31,7 +31,7 @@ export class AuthService {
     const token = this.getToken();
     const data: TokenDtoModel = { token };
     return this.http.post<ResponseDtoModel>(
-      'http://localhost:3000/logout',
+      'http://localhost:3002/logout',
       data
     );
   }

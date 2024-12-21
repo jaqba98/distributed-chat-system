@@ -18,6 +18,6 @@ export class BuildSocketServerService {
     io.on('connection', (socket) => {
       getSocket(domain.controller).build(io, socket);
     });
-    io.listen(3000);
+    io.listen(3002);
   }
 }

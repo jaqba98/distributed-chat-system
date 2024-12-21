@@ -34,7 +34,7 @@ export class RoomPageComponent implements OnInit {
         this.router.navigate(['dashboard']);
         return;
       }
-      this.socket = io('localhost:2000', {
+      this.socket = io('localhost:3003', {
         transports: ['websocket'],
       });
       this.socket.on('connect', () => {

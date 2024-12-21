@@ -1,3 +1,12 @@
+# Ports
+# Load balancer           = 3002
+# Microservice instance 1 = 30021
+# Microservice instance 2 = 30022
+# Microservice instance 3 = 30023
+# Microservice instance 4 = 30024
+# Microservice instance 5 = 30025
+# Database                = 30020
+
 services:
   # base
   base_api-gateway:
@@ -13,7 +22,7 @@ services:
       - HTTP_ROUTE_LOGOUT={"method":"POST","url":"/logout","controller":"logoutController"}
       - MYSQL_HOST=api-gateway_db
       - MYSQL_DATABASE=api-gateway
-      - MYSQL_PORT=30001
+      - MYSQL_PORT=30020
       - MYSQL_CORS=*
     depends_on:
       - api-gateway_db
@@ -22,7 +31,7 @@ services:
     image: nginx:stable-alpine-perl
     container_name: api-gateway_load-balancer
     ports:
-      - 3000:80
+      - 3002:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
@@ -33,43 +42,43 @@ services:
       service: base_api-gateway
     container_name: api-gateway1
     ports:
-      - 3001:3000
+      - 30021:3000
   api-gateway2:
     extends:
       service: base_api-gateway
     container_name: api-gateway2
     ports:
-      - 3002:3000
+      - 30022:3000
   api-gateway3:
     extends:
       service: base_api-gateway
     container_name: api-gateway3
     ports:
-      - 3003:3000
+      - 30023:3000
   api-gateway4:
     extends:
       service: base_api-gateway
     container_name: api-gateway4
     ports:
-      - 3004:3000
+      - 30024:3000
   api-gateway5:
     extends:
       service: base_api-gateway
     container_name: api-gateway5
     ports:
-      - 3005:3000
-  # db
+      - 30025:3000
+  # database
   api-gateway_db:
     image: mysql:8.4
     container_name: api-gateway_db
     ports:
-      - 30001:30001
+      - 30020:30020
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: api-gateway
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-      MYSQL_TCP_PORT: 30001
+      MYSQL_TCP_PORT: 30020
     volumes:
       - api-gateway_db_volumes:/var/lib/mysql
 volumes:

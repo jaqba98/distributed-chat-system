@@ -1,3 +1,12 @@
+# Ports
+# Load balancer           = 3001
+# Microservice instance 1 = 30011
+# Microservice instance 2 = 30012
+# Microservice instance 3 = 30013
+# Microservice instance 4 = 30014
+# Microservice instance 5 = 30015
+# Database                = 30010
+
 services:
   # base
   base_accounts:
@@ -13,7 +22,7 @@ services:
       - HTTP_ROUTE_LOGOUT={"method":"POST","url":"/logout","controller":"logoutController"}
       - MYSQL_HOST=accounts_db
       - MYSQL_DATABASE=accounts
-      - MYSQL_PORT=40001
+      - MYSQL_PORT=30010
       - MYSQL_CORS=*
     depends_on:
       - accounts_db
@@ -22,7 +31,7 @@ services:
     image: nginx:stable-alpine-perl
     container_name: accounts_load-balancer
     ports:
-      - 4000:80
+      - 3001:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
@@ -33,43 +42,43 @@ services:
       service: base_accounts
     container_name: accounts1
     ports:
-      - 4001:3000
+      - 30011:3000
   accounts2:
     extends:
       service: base_accounts
     container_name: accounts2
     ports:
-      - 4002:3000
+      - 30012:3000
   accounts3:
     extends:
       service: base_accounts
     container_name: accounts3
     ports:
-      - 4003:3000
+      - 30013:3000
   accounts4:
     extends:
       service: base_accounts
     container_name: accounts4
     ports:
-      - 4004:3000
+      - 30014:3000
   accounts5:
     extends:
       service: base_accounts
     container_name: accounts5
     ports:
-      - 4005:3000
-  # db
+      - 30015:3000
+  # database
   accounts_db:
     image: mysql:8.4
     container_name: accounts_db
     ports:
-      - 40001:40001
+      - 30010:30010
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: accounts
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-      MYSQL_TCP_PORT: 40001
+      MYSQL_TCP_PORT: 30010
     volumes:
       - accounts_db_volumes:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
