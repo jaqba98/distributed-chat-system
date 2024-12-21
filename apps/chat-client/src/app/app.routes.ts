@@ -1,8 +1,9 @@
 import { Route } from '@angular/router';
 
 import {
+  DashboardPageComponent,
   LogoutPageComponent,
-  RoomsPageComponent,
+  RoomPageComponent,
   SignInPageComponent,
   SignUpPageComponent,
 } from '@distributed-chat-system/fe-pages';
@@ -15,13 +16,20 @@ import {
 export const appRoutes: Route[] = [
   {
     path: '',
-    redirectTo: 'rooms',
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
   {
-    path: 'rooms',
-    component: RoomsPageComponent,
+    path: 'dashboard',
+    component: DashboardPageComponent,
     canActivate: [ProtectedGuard],
+    children: [
+      {
+        path: 'room/:id',
+        component: RoomPageComponent,
+        canActivate: [ProtectedGuard],
+      },
+    ],
   },
   {
     path: 'sign-in',

@@ -1,5 +1,4 @@
-<p-menubar [model]="items" />
-<form [formGroup]="roomsForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
   <input type="text" id="message" formControlName="message" />
   <button type="submit">Send</button>
 </form>

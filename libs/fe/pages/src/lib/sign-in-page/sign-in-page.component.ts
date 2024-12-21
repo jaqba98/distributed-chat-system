@@ -73,7 +73,7 @@ export class SignInPageComponent {
         const { data, success } = response;
         if (success) {
           this.auth.saveToken(data);
-          this.router.navigate(['/rooms']);
+          this.router.navigate(['/dashboard']);
           return;
         }
         this.isSubmited = true;
