@@ -13,6 +13,7 @@ export class SocketIOController implements SocketControllerModel {
   constructor(@inject(UserRoomsStore) private readonly store: UserRoomsStore) {}
 
   build(io: Server, socket: Socket) {
+    console.log('works!');
     socket.on('joinRoom', (roomKey) => {
       const previousRoom = this.store.data.get(socket.id);
       if (previousRoom) {
