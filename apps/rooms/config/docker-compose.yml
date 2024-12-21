@@ -1,0 +1,75 @@
+services:
+  # base
+  base_rooms:
+    build:
+      context: ./
+      dockerfile: Dockerfile.node
+    container_name: base_rooms
+    environment:
+      - SERVER_TYPE=http
+      - HTTP_ROUTE_ROOT={"method":"GET","url":"/","controller":"rootController"}
+      - MYSQL_HOST=rooms_db
+      - MYSQL_DATABASE=rooms
+      - MYSQL_PORT=60001
+      - MYSQL_CORS=*
+    depends_on:
+      - rooms_db
+  # load balancer
+  rooms_load-balancer:
+    image: nginx:stable-alpine-perl
+    container_name: rooms_load-balancer
+    ports:
+      - 6006:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - base_rooms
+  # microservice instances
+  rooms1:
+    extends:
+      service: base_rooms
+    container_name: rooms1
+    ports:
+      - 6001:3000
+  rooms2:
+    extends:
+      service: base_rooms
+    container_name: rooms2
+    ports:
+      - 6002:3000
+  rooms3:
+    extends:
+      service: base_rooms
+    container_name: rooms3
+    ports:
+      - 6003:3000
+  rooms4:
+    extends:
+      service: base_rooms
+    container_name: rooms4
+    ports:
+      - 6004:3000
+  rooms5:
+    extends:
+      service: base_rooms
+    container_name: rooms5
+    ports:
+      - 6005:3000
+  # db
+  rooms_db:
+    image: mysql:8.4
+    container_name: rooms_db
+    ports:
+      - 60001:60001
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rooms
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_TCP_PORT: 60001
+    volumes:
+      - rooms_db_volumes:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  rooms_db_volumes:
+    driver: local

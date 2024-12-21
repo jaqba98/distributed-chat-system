@@ -1,3 +1,5 @@
-export function beRooms(): string {
-  return 'be-rooms';
-}
+import { runServer } from '@distributed-chat-system/be-server';
+
+import './controller/root.controller';
+
+runServer();

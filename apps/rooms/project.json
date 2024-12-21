@@ -16,7 +16,18 @@
         "bundle": false,
         "main": "apps/rooms/src/main.ts",
         "tsConfig": "apps/rooms/tsconfig.app.json",
-        "assets": ["apps/rooms/src/assets"],
+        "assets": [
+          {
+            "input": "apps/rooms/config",
+            "glob": "*",
+            "output": "/"
+          },
+          {
+            "input": "apps/docker",
+            "glob": "Dockerfile.node",
+            "output": "/"
+          }
+        ],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
