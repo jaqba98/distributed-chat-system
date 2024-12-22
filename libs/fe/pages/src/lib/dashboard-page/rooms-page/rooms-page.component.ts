@@ -5,6 +5,7 @@ import { TableModule } from 'primeng/table';
 import { CustomerService } from './customer.service';
 import { Customer } from './customer';
 import { HttpClient } from '@angular/common/http';
+import { RoomsDtoModel } from '@distributed-chat-system/shared-model';
 
 @Component({
   selector: 'lib-rooms-page',
@@ -25,8 +26,12 @@ export class RoomsPageComponent implements OnInit {
     this.customerService
       .getCustomersLarge()
       .then((customers) => (this.customers = customers));
-    this.http.get('http://localhost:3002/get-rooms').subscribe((response) => {
-      console.log(response);
-    });
+    this.http
+      .get<RoomsDtoModel>('http://localhost:3002/get-rooms')
+      .subscribe((response) => {
+        response.forEach((res) => {
+          console.log(res.name, res.password);
+        });
+      });
   }
 }
