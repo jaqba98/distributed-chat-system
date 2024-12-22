@@ -1,0 +1,11 @@
+:host {
+  ::ng-deep {
+    .p-datatable {
+      min-height: calc(100svh - 70px);
+
+      &-table-container {
+        height: calc(100svh - 130px);
+      }
+    }
+  }
+}
