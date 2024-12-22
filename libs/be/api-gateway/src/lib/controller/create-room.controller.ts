@@ -17,12 +17,11 @@ export class CreateRoomController implements HttpControllerModel {
 
   build(req: IncomingMessage, res: ServerResponse) {
     this.httpReq.post(req, async (input: CreateRoomDtoModel) => {
-      console.log(input);
       const inputText = JSON.stringify(input);
       const options = {
         hostname: 'rooms_load-balancer',
         port: 80,
-        path: '/create-room',
+        path: '/dashboard/create-room',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

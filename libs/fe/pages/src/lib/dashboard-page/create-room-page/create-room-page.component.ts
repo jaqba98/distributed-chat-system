@@ -70,16 +70,17 @@ export class CreateRoomPageComponent {
       password: this.createRoomForm.get('password')?.value,
     };
     this.http
-      .post<ResponseDtoModel>('http://localhost:3002/create-room', dto)
+      .post<ResponseDtoModel>(
+        'http://localhost:3002/dashboard/create-room',
+        dto
+      )
       .subscribe((response) => {
         const { data, success } = response;
         this.responseMessage = data;
         this.responseSuccess = success;
         this.isSubmited = true;
-        if (response.success) {
-          this.createRoomForm.reset();
-          this.createRoomForm.markAsUntouched();
-        }
+        this.createRoomForm.reset();
+        this.createRoomForm.markAsUntouched();
       });
   }
 
