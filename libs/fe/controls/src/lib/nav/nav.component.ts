@@ -20,6 +20,11 @@ export class NavComponent implements OnInit {
         icon: 'pi pi-sign-out',
         routerLink: '/logout',
       },
+      {
+        label: 'Create room',
+        icon: 'pi pi-plus-circle',
+        routerLink: '/dashboard/create-room',
+      },
     ];
   }
 }

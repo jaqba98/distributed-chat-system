@@ -20,6 +20,7 @@ services:
       - HTTP_ROUTE_SIGN_UP={"method":"POST","url":"/sign-up","controller":"signUpController"}
       - HTTP_ROUTE_PROTECTED={"method":"POST","url":"/protected","controller":"protectedController"}
       - HTTP_ROUTE_LOGOUT={"method":"POST","url":"/logout","controller":"logoutController"}
+      - HTTP_ROUTE_CREATE_ROOM={"method":"POST","url":"/create-room","controller":"createRoomController"}
       - MYSQL_HOST=api-gateway_db
       - MYSQL_DATABASE=api-gateway
       - MYSQL_PORT=30020

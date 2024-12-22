@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 
 import {
+  CreateRoomPageComponent,
   DashboardPageComponent,
   LogoutPageComponent,
   RoomPageComponent,
@@ -27,6 +28,11 @@ export const appRoutes: Route[] = [
       {
         path: 'room/:id',
         component: RoomPageComponent,
+        canActivate: [ProtectedGuard],
+      },
+      {
+        path: 'create-room',
+        component: CreateRoomPageComponent,
         canActivate: [ProtectedGuard],
       },
     ],
