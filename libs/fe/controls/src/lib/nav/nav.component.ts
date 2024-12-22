@@ -21,6 +21,11 @@ export class NavComponent implements OnInit {
         routerLink: '/logout',
       },
       {
+        label: 'Rooms',
+        icon: 'pi pi-comments',
+        routerLink: '/dashboard/rooms',
+      },
+      {
         label: 'Create room',
         icon: 'pi pi-plus-circle',
         routerLink: '/dashboard/create-room',

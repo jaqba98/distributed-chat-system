@@ -5,6 +5,7 @@ import {
   DashboardPageComponent,
   LogoutPageComponent,
   RoomPageComponent,
+  RoomsPageComponent,
   SignInPageComponent,
   SignUpPageComponent,
 } from '@distributed-chat-system/fe-pages';
@@ -28,6 +29,11 @@ export const appRoutes: Route[] = [
       {
         path: 'room/:id',
         component: RoomPageComponent,
+        canActivate: [ProtectedGuard],
+      },
+      {
+        path: 'rooms',
+        component: RoomsPageComponent,
         canActivate: [ProtectedGuard],
       },
       {
