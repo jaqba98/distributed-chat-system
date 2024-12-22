@@ -17,6 +17,7 @@ services:
     environment:
       - SERVER_TYPE=http
       - HTTP_ROUTE_CREATE_ROOM={"method":"POST","url":"/dashboard/create-room","controller":"createRoomController"}
+      - HTTP_ROUTE_GET_ROOMS={"method":"GET","url":"/get-rooms","controller":"getRoomsController"}
       - MYSQL_HOST=rooms_db
       - MYSQL_DATABASE=rooms
       - MYSQL_PORT=30040

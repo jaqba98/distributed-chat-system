@@ -4,6 +4,7 @@ import { TableModule } from 'primeng/table';
 
 import { CustomerService } from './customer.service';
 import { Customer } from './customer';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'lib-rooms-page',
@@ -15,11 +16,17 @@ import { Customer } from './customer';
 export class RoomsPageComponent implements OnInit {
   customers!: Customer[];
 
-  constructor(private customerService: CustomerService) {}
+  constructor(
+    private customerService: CustomerService,
+    private readonly http: HttpClient
+  ) {}
 
   ngOnInit() {
     this.customerService
       .getCustomersLarge()
       .then((customers) => (this.customers = customers));
+    this.http.get('http://localhost:3002/get-rooms').subscribe((response) => {
+      console.log(response);
+    });
   }
 }
