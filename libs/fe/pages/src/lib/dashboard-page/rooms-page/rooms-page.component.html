@@ -1,23 +1,21 @@
 <p-table
-  [value]="customers"
+  [value]="rooms"
   [paginator]="true"
   [rows]="15"
   [tableStyle]="{ 'min-width': '50rem' }"
 >
   <ng-template #header>
     <tr>
-      <th style="width: 25%">Name</th>
-      <th style="width: 25%">Country</th>
-      <th style="width: 25%">Company</th>
-      <th style="width: 25%">Representative</th>
+      <th style="width: 75%">Name</th>
+      <th style="width: 25%">Action</th>
     </tr>
   </ng-template>
-  <ng-template #body let-customer>
+  <ng-template #body let-room>
     <tr>
-      <td>{{ customer.name }}</td>
-      <td>{{ customer.country.name }}</td>
-      <td>{{ customer.company }}</td>
-      <td>{{ customer.representative.name }}</td>
+      <td>{{ room.name }}</td>
+      <td>
+        <p-button label="Join" (onClick)="join(room.name)"></p-button>
+      </td>
     </tr>
   </ng-template>
 </p-table>

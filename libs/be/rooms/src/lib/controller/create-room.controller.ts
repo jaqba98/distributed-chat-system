@@ -37,8 +37,8 @@ export class CreateRoomController implements HttpControllerModel {
         this.sendRes(res, 'Name is already in use!');
         return;
       }
-      const insert = `INSERT INTO rooms (name, password) VALUES ("${name}", ${password})`;
-      pool.query(insert);
+      const insert = `INSERT INTO rooms (name, password) VALUES ("${name}", "${password}")`;
+      await pool.promise().query(insert);
       this.sendRes(res, 'Room created!', true);
     });
   }
