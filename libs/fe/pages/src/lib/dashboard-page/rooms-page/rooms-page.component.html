@@ -1,13 +1,13 @@
 <p-table
   [value]="rooms"
   [paginator]="true"
-  [rows]="15"
+  [rows]="11"
   [tableStyle]="{ 'min-width': '50rem' }"
 >
   <ng-template #header>
     <tr>
-      <th style="width: 75%">Name</th>
-      <th style="width: 25%">Action</th>
+      <th style="width: calc(100% - 100px)">Name</th>
+      <th style="width: 100px">Action</th>
     </tr>
   </ng-template>
   <ng-template #body let-room>

@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrl: './rooms-page.component.scss',
 })
 export class RoomsPageComponent implements OnInit {
-  rooms: { name: string }[] = [];
+  rooms: RoomsDtoModel = [];
 
   constructor(
     private readonly http: HttpClient,
@@ -23,17 +23,16 @@ export class RoomsPageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.rooms = [];
     this.http
       .get<RoomsDtoModel>('http://localhost:3002/get-rooms')
       .subscribe((response) => {
-        response.forEach((res) => {
-          this.rooms.push({ name: res.name });
+        Promise.resolve(response.slice(0, 200)).then((aaa) => {
+          this.rooms = aaa;
         });
       });
   }
 
-  join(name: string) {
-    this.router.navigate(['/dashboard', '/room', name]);
+  join(id: string) {
+    this.router.navigate(['dashboard', 'room', id]);
   }
 }
