@@ -30,7 +30,10 @@ export class ProtectedController implements HttpControllerModel {
       if (tokens.length > 0) {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(
-          JSON.stringify(<ResponseDtoModel>{ data: 'error', success: false })
+          JSON.stringify(<ResponseDtoModel<string>>{
+            data: 'error',
+            success: false,
+          })
         );
         return;
       }
@@ -39,7 +42,10 @@ export class ProtectedController implements HttpControllerModel {
           verify(token, JWT_SECRET_KEY);
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(
-            JSON.stringify(<ResponseDtoModel>{ data: 'success', success: true })
+            JSON.stringify(<ResponseDtoModel<string>>{
+              data: 'success',
+              success: true,
+            })
           );
           return;
         } catch (error) {
@@ -48,7 +54,10 @@ export class ProtectedController implements HttpControllerModel {
       }
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(
-        JSON.stringify(<ResponseDtoModel>{ data: 'error', success: false })
+        JSON.stringify(<ResponseDtoModel<string>>{
+          data: 'error',
+          success: false,
+        })
       );
     });
   }

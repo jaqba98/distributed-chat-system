@@ -82,7 +82,7 @@ export class SignUpPageComponent {
       rePassword: this.signUpForm.get('rePassword')?.value,
     };
     this.http
-      .post<ResponseDtoModel>('http://localhost:3002/sign-up', dto)
+      .post<ResponseDtoModel<string>>('http://localhost:3002/sign-up', dto)
       .subscribe((response) => {
         const { data, success } = response;
         this.responseMessage = data;

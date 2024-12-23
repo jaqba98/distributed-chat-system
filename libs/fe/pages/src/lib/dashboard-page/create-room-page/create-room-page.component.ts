@@ -70,7 +70,7 @@ export class CreateRoomPageComponent {
       password: this.createRoomForm.get('password')?.value,
     };
     this.http
-      .post<ResponseDtoModel>(
+      .post<ResponseDtoModel<string>>(
         'http://localhost:3002/dashboard/create-room',
         dto
       )

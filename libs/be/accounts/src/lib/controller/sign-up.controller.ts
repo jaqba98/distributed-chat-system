@@ -59,7 +59,7 @@ export class SignUpController implements HttpControllerModel {
   }
 
   private sendRes(res: ServerResponse, msg: string, success = false) {
-    const data: ResponseDtoModel = { data: msg, success };
+    const data: ResponseDtoModel<string> = { data: msg, success };
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(data));
   }

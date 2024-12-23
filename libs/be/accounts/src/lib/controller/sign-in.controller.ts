@@ -1,49 +1,68 @@
+// done
+import { inject, injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
-import { injectable, inject } from 'tsyringe';
-import { Pool } from 'mysql2/typings/mysql/lib/Pool';
+import { Pool } from 'mysql2';
 import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
-  RegisterHttp,
+  ColumnAccountsUsersEnum,
+  DatabaseEnum,
   HttpControllerModel,
   HttpReqUtilsService,
+  HttpResUtils,
   JWT_SECRET_KEY,
+  RegisterHttp,
+  SqlQueryUtils,
+  TableAccountsEnum,
 } from '@distributed-chat-system/be-server';
 import {
-  ResponseDtoModel,
+  AccountDtoModel,
   SignInDtoModel,
-  UsersDtoModel,
 } from '@distributed-chat-system/shared-model';
+import { AccountDbModel } from '../model/account-db.model';
 
 @injectable()
 @RegisterHttp('signInController')
 export class SignInController implements HttpControllerModel {
   constructor(
-    @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
+    @inject(HttpReqUtilsService) private readonly httpReq: HttpReqUtilsService,
+    @inject(SqlQueryUtils) private readonly sqlQuery: SqlQueryUtils,
+    @inject(HttpResUtils) private readonly httpRes: HttpResUtils
   ) {}
 
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
-    this.httpReq.post(req, async (data: SignInDtoModel) => {
-      const { email, password } = data;
-      const select = `SELECT * FROM users WHERE email="${email}" AND password="${password}"`;
-      const [result] = await pool.promise().query(select);
-      const users = result as UsersDtoModel;
-      if (users.length === 0) {
-        const dto: ResponseDtoModel = {
-          data: 'Incorrect email or password!',
-          success: false,
-        };
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(dto));
+    this.httpReq.post(req, async (dto: SignInDtoModel) => {
+      const { email, password } = dto;
+      const accounts = await this.sqlQuery.select<AccountDbModel[]>(
+        {
+          database: DatabaseEnum.accounts,
+          table: TableAccountsEnum.accounts,
+          scope: ['*'],
+          conditions: [
+            { column: ColumnAccountsUsersEnum.email, value: email },
+            { column: ColumnAccountsUsersEnum.password, value: password },
+          ],
+        },
+        pool
+      );
+      if (accounts.length === 0) {
+        this.httpRes.jsonOkMessage('Incorrect email or password!', false, res);
         return;
       }
+      const account = accounts[0];
       const token = jwt.sign({ email, jti: uuidv4() }, JWT_SECRET_KEY, {
         expiresIn: '1h',
       });
-      const dto: ResponseDtoModel = { data: token, success: true };
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify(dto));
+      this.httpRes.jsonOk<AccountDtoModel>(
+        {
+          id: account.id,
+          email: account.email,
+          token,
+        },
+        true,
+        res
+      );
     });
   }
 }

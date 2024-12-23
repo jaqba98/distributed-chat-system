@@ -10,6 +10,7 @@ import { Message } from 'primeng/message';
 import { FloatLabelModule } from 'primeng/floatlabel';
 
 import {
+  AccountDtoModel,
   ResponseDtoModel,
   SignInDtoModel,
 } from '@distributed-chat-system/shared-model';
@@ -66,16 +67,17 @@ export class SignInPageComponent {
       password: this.signInForm.get('password')?.value,
     };
     this.http
-      .post<ResponseDtoModel>('http://localhost:3002/sign-in', dto)
+      .post<ResponseDtoModel<unknown>>('http://localhost:3002/sign-in', dto)
       .subscribe((response) => {
         this.signInForm.reset();
         this.signInForm.markAsUntouched();
-        const { data, success } = response;
-        if (success) {
-          this.auth.saveToken(data);
+        if (response.success) {
+          const { data } = response as ResponseDtoModel<AccountDtoModel>;
+          this.auth.saveToken(data.token);
           this.router.navigate(['/dashboard']);
           return;
         }
+        const { data, success } = response as ResponseDtoModel<string>;
         this.isSubmited = true;
         this.responseMessage = data;
         this.responseSuccess = success;

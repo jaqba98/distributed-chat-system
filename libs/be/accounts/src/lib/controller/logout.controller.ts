@@ -27,7 +27,10 @@ export class LogoutController implements HttpControllerModel {
       await pool.promise().query(insert);
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(
-        JSON.stringify(<ResponseDtoModel>{ data: 'success', success: true })
+        JSON.stringify(<ResponseDtoModel<string>>{
+          data: 'success',
+          success: true,
+        })
       );
     });
   }

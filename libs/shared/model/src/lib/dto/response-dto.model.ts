@@ -1,4 +1,5 @@
-export interface ResponseDtoModel {
-  data: string;
+// done
+export interface ResponseDtoModel<TData> {
+  data: TData;
   success: boolean;
 }

@@ -10,7 +10,8 @@ import {
 export class AuthService {
   constructor(private readonly http: HttpClient) {}
 
-  saveToken(token: string) {
+  saveToken(token: string | null) {
+    if (token === null) return;
     localStorage.setItem('token', token);
   }
 
@@ -21,7 +22,7 @@ export class AuthService {
   isAuthenticated() {
     const token = this.getToken();
     const data: TokenDtoModel = { token };
-    return this.http.post<ResponseDtoModel>(
+    return this.http.post<ResponseDtoModel<string>>(
       'http://localhost:3002/protected',
       data
     );
@@ -30,7 +31,7 @@ export class AuthService {
   logout() {
     const token = this.getToken();
     const data: TokenDtoModel = { token };
-    return this.http.post<ResponseDtoModel>(
+    return this.http.post<ResponseDtoModel<string>>(
       'http://localhost:3002/logout',
       data
     );
