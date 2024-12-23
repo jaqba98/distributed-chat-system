@@ -31,6 +31,7 @@
       "@distributed-chat-system/fe-main": ["libs/fe/main/src/index.ts"],
       "@distributed-chat-system/fe-pages": ["libs/fe/pages/src/index.ts"],
       "@distributed-chat-system/fe-system": ["libs/fe/system/src/index.ts"],
+      "@distributed-chat-system/fe-utils": ["libs/fe/utils/src/index.ts"],
       "@distributed-chat-system/shared-model": [
         "libs/shared/model/src/index.ts"
       ],

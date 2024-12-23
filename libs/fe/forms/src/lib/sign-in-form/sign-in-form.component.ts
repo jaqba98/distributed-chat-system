@@ -1,64 +1,57 @@
+// done
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
 import { Message } from 'primeng/message';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 
+import { AuthService } from '@distributed-chat-system/fe-system';
+import { FlexComponent } from '@distributed-chat-system/fe-controls';
 import {
   AccountDtoModel,
   ResponseDtoModel,
   SignInDtoModel,
 } from '@distributed-chat-system/shared-model';
-import { AuthService } from '@distributed-chat-system/fe-system';
-import {
-  FlexComponent,
-  FormWrapperComponent,
-  LogoComponent,
-} from '@distributed-chat-system/fe-controls';
+import { EndpointEnum, HttpUtils } from '@distributed-chat-system/fe-utils';
 
 @Component({
-  selector: 'lib-sign-in-page',
+  selector: 'lib-sign-in-form',
   standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CardModule,
-    ButtonModule,
-    InputTextModule,
-    Message,
-    FloatLabelModule,
-    FormWrapperComponent,
-    LogoComponent,
     FlexComponent,
+    FloatLabelModule,
+    ButtonModule,
+    Message,
+    InputTextModule,
   ],
-  templateUrl: './sign-in-page.component.html',
-  styleUrl: './sign-in-page.component.scss',
+  templateUrl: './sign-in-form.component.html',
 })
-export class SignInPageComponent {
+export class SignInFormComponent {
   signInForm: FormGroup;
 
-  responseMessage!: string;
+  responseMessage: string;
 
-  responseSuccess!: boolean;
+  responseSuccess: boolean;
 
-  isSubmited = false;
-
-  value1: string | undefined;
+  isSubmited: boolean;
 
   constructor(
-    private readonly http: HttpClient,
     private readonly auth: AuthService,
-    private router: Router
+    private readonly router: Router,
+    private readonly http: HttpUtils
   ) {
     this.signInForm = new FormGroup({
       email: new FormControl(''),
       password: new FormControl(''),
     });
+    this.responseMessage = '';
+    this.responseSuccess = false;
+    this.isSubmited = false;
   }
 
   onSubmit() {
@@ -66,14 +59,17 @@ export class SignInPageComponent {
       email: this.signInForm.get('email')?.value,
       password: this.signInForm.get('password')?.value,
     };
-    this.http
-      .post<ResponseDtoModel<unknown>>('http://localhost:3002/sign-in', dto)
-      .subscribe((response) => {
+    console.log(123);
+    this.http.post<SignInDtoModel, ResponseDtoModel<unknown>>(
+      dto,
+      EndpointEnum.signIn,
+      (response) => {
         this.signInForm.reset();
         this.signInForm.markAsUntouched();
         if (response.success) {
           const { data } = response as ResponseDtoModel<AccountDtoModel>;
-          this.auth.saveToken(data.token);
+          const { token } = data;
+          this.auth.saveToken(token);
           this.router.navigate(['/dashboard']);
           return;
         }
@@ -81,7 +77,8 @@ export class SignInPageComponent {
         this.isSubmited = true;
         this.responseMessage = data;
         this.responseSuccess = success;
-      });
+      }
+    );
   }
 
   onSignUp() {

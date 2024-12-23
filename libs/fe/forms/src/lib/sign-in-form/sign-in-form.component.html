@@ -1,0 +1,53 @@
+<!-- done -->
+<form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+  <lib-flex>
+    <lib-flex gap="0.5rem">
+      <!-- email input -->
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          type="email"
+          id="email"
+          formControlName="email"
+          autocomplete="off"
+          pSize="small"
+        />
+        <label for="email">Email</label>
+      </p-floatlabel>
+      <!-- password input -->
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          type="password"
+          id="password"
+          formControlName="password"
+          autocomplete="off"
+          pSize="small"
+        />
+        <label for="password">Password</label>
+      </p-floatlabel>
+    </lib-flex>
+    <lib-flex flexDirection="row" gap="0.5rem">
+      <!-- sign in button -->
+      <p-button type="submit" size="small" label="Sign In"></p-button>
+      <!-- sign up button -->
+      <p-button
+        size="small"
+        label="Sign Up"
+        severity="secondary"
+        (click)="onSignUp()"
+      ></p-button>
+    </lib-flex>
+    <!-- error message -->
+    <ng-container *ngIf="isSubmited && !responseSuccess">
+      <p-message
+        severity="error"
+        icon="pi pi-times-circle"
+        size="small"
+        styles="width: 300px"
+      >
+        {{ responseMessage }}
+      </p-message>
+    </ng-container>
+  </lib-flex>
+</form>

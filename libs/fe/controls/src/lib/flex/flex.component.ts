@@ -1,6 +1,7 @@
+// done
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import type * as CSS from 'csstype';
+import { Properties } from 'csstype';
 
 @Component({
   selector: 'lib-flex',
@@ -10,15 +11,15 @@ import type * as CSS from 'csstype';
   styleUrl: './flex.component.scss',
 })
 export class FlexComponent {
-  @Input() alignItems: CSS.Properties['alignItems'] = 'flex-start';
+  @Input() alignItems: Properties['alignItems'] = 'flex-start';
 
-  @Input() flexDirection: CSS.Properties['flexDirection'] = 'column';
+  @Input() flexDirection: Properties['flexDirection'] = 'column';
 
-  @Input() justifyContent: CSS.Properties['justifyContent'] = 'flex-start';
+  @Input() justifyContent: Properties['justifyContent'] = 'flex-start';
 
-  @Input() gap: CSS.Properties['gap'] = '1rem';
+  @Input() gap: Properties['gap'] = '1rem';
 
-  @Input() minHeight: CSS.Properties['minHeight'];
+  @Input() minHeight: Properties['minHeight'];
 
   getStyles() {
     return {

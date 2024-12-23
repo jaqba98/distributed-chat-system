@@ -1,11 +1,16 @@
-.form-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  padding: 2rem;
+// done
 
-  .p-card-content {
-    padding: 2rem 1rem;
-    width: 300px;
+:host {
+  ::ng-deep {
+    .p-panel {
+      width: 300px;
+
+      p-message,
+      .p-message,
+      .p-floatlabel,
+      .p-inputtext {
+        width: 100%;
+      }
+    }
   }
 }
