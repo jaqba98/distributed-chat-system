@@ -11,7 +11,6 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AuthService } from '@distributed-chat-system/fe-system';
 import { FlexComponent } from '@distributed-chat-system/fe-controls';
 import {
-  AccountDtoModel,
   ResponseDtoModel,
   SignInDtoModel,
 } from '@distributed-chat-system/shared-model';
@@ -60,16 +59,14 @@ export class SignInFormComponent {
       password: this.signInForm.get('password')?.value,
     };
     console.log(123);
-    this.http.post<SignInDtoModel, ResponseDtoModel<unknown>>(
+    this.http.post<SignInDtoModel, ResponseDtoModel<string>>(
       dto,
       EndpointEnum.signIn,
       (response) => {
         this.signInForm.reset();
         this.signInForm.markAsUntouched();
         if (response.success) {
-          const { data } = response as ResponseDtoModel<AccountDtoModel>;
-          const { token } = data;
-          this.auth.saveToken(token);
+          this.auth.saveToken(response.data);
           this.router.navigate(['/dashboard']);
           return;
         }

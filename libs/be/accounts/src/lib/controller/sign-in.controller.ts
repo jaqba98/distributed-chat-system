@@ -16,10 +16,7 @@ import {
   SqlQueryUtils,
   TableAccountsEnum,
 } from '@distributed-chat-system/be-server';
-import {
-  AccountDtoModel,
-  SignInDtoModel,
-} from '@distributed-chat-system/shared-model';
+import { SignInDtoModel } from '@distributed-chat-system/shared-model';
 import { AccountDbModel } from '../model/account-db.model';
 
 @injectable()
@@ -50,19 +47,10 @@ export class SignInController implements HttpControllerModel {
         this.httpRes.jsonOkMessage('Incorrect email or password!', false, res);
         return;
       }
-      const account = accounts[0];
       const token = jwt.sign({ email, jti: uuidv4() }, JWT_SECRET_KEY, {
         expiresIn: '1h',
       });
-      this.httpRes.jsonOk<AccountDtoModel>(
-        {
-          id: account.id,
-          email: account.email,
-          token,
-        },
-        true,
-        res
-      );
+      this.httpRes.jsonOkMessage(token, true, res);
     });
   }
 }

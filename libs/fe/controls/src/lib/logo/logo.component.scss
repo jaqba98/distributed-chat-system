@@ -1,27 +1,26 @@
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+// done
+.pi {
+  font-size: 2rem;
+}
 
-  > .pi {
-    font-size: 3rem;
-  }
+.logo__text {
+  font-size: 1rem;
+}
 
-  &__text,
-  &__author {
-    font-size: 1rem;
-  }
+.logo__author {
+  font-size: 0.75rem;
 }
 
 @media screen and (min-width: 768px) {
-  .logo {
-    > .pi {
-      font-size: 4rem;
-    }
+  .pi {
+    font-size: 3rem;
+  }
 
-    &__text {
-      font-size: 1.5rem;
-    }
+  .logo__text {
+    font-size: 1.5rem;
+  }
+
+  .logo__author {
+    font-size: 1rem;
   }
 }

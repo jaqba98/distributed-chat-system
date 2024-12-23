@@ -3,13 +3,19 @@
 :host {
   ::ng-deep {
     .p-panel {
-      width: 300px;
+      width: 250px;
 
       p-message,
       .p-message,
       .p-floatlabel,
       .p-inputtext {
         width: 100%;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      .p-panel {
+        width: 300px;
       }
     }
   }
