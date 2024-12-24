@@ -1,66 +1,98 @@
+// done
+import { inject, injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
 import { Pool } from 'mysql2';
-import { injectable, inject } from 'tsyringe';
 
 import {
-  RegisterHttp,
+  ColumnAccountsUsersEnum,
+  DatabaseEnum,
   HttpControllerModel,
   HttpReqUtilsService,
+  HttpResUtils,
+  RegisterHttp,
+  SqlQueryUtils,
+  TableAccountsEnum,
 } from '@distributed-chat-system/be-server';
-import {
-  ResponseDtoModel,
-  SignUpDtoModel,
-  UsersDtoModel,
-} from '@distributed-chat-system/shared-model';
+import { SignUpDtoModel } from '@distributed-chat-system/shared-model';
+import { AccountDbModel } from '../model/account-db.model';
 import { validateEmail } from '@distributed-chat-system/shared-utils';
 
 @injectable()
 @RegisterHttp('signUpController')
 export class SignUpController implements HttpControllerModel {
   constructor(
-    @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
+    @inject(HttpReqUtilsService) private readonly httpReq: HttpReqUtilsService,
+    @inject(SqlQueryUtils) private readonly sqlQuery: SqlQueryUtils,
+    @inject(HttpResUtils) private readonly httpRes: HttpResUtils
   ) {}
 
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
-    this.httpReq.post(req, async (data: SignUpDtoModel) => {
-      const { nick, email, password, rePassword } = data;
+    this.httpReq.post(req, async (dto: SignUpDtoModel) => {
+      const { nick, email, password, rePassword } = dto;
       if (nick.length === 0) {
-        this.sendRes(res, 'Nickname cannot be empty.');
+        this.httpRes.jsonOkMessage('Nickname cannot be empty!', false, res);
         return;
       }
       if (!validateEmail(email)) {
-        this.sendRes(res, 'Please enter a valid email address.');
+        this.httpRes.jsonOkMessage(
+          'Please enter a valid email address!',
+          false,
+          res
+        );
         return;
       }
       if (password.length < 6) {
-        this.sendRes(res, 'Password must be at least 6 characters long.');
+        this.httpRes.jsonOkMessage(
+          'Password must be at least 6 characters long!',
+          false,
+          res
+        );
         return;
       }
       if (password !== rePassword) {
-        this.sendRes(res, 'Passwords must be the same!');
+        this.httpRes.jsonOkMessage('Passwords must be the same!', false, res);
         return;
       }
-      const selectNick = `SELECT nick FROM users WHERE nick="${nick}"`;
-      const selectEmail = `SELECT email FROM users WHERE email="${email}"`;
-      const [resultNick] = await pool.promise().query(selectNick);
-      if ((<UsersDtoModel>resultNick).length > 0) {
-        this.sendRes(res, 'Nick is already in use!');
+      const accountsByNick = await this.sqlQuery.select<AccountDbModel[]>(
+        {
+          database: DatabaseEnum.accounts,
+          table: TableAccountsEnum.accounts,
+          scope: [ColumnAccountsUsersEnum.nick],
+          columns: [{ column: ColumnAccountsUsersEnum.nick, value: nick }],
+        },
+        pool
+      );
+      if (accountsByNick.length > 0) {
+        this.httpRes.jsonOkMessage('Nick is already in use!', false, res);
         return;
       }
-      const [resultEmail] = await pool.promise().query(selectEmail);
-      if ((<UsersDtoModel>resultEmail).length > 0) {
-        this.sendRes(res, 'Email is already in use!');
+      const accountsByEmail = await this.sqlQuery.select<AccountDbModel[]>(
+        {
+          database: DatabaseEnum.accounts,
+          table: TableAccountsEnum.accounts,
+          scope: [ColumnAccountsUsersEnum.email],
+          columns: [{ column: ColumnAccountsUsersEnum.email, value: email }],
+        },
+        pool
+      );
+      if (accountsByEmail.length > 0) {
+        this.httpRes.jsonOkMessage('Email is already in use!', false, res);
         return;
       }
-      const insert = `INSERT INTO users (nick, email, password) VALUES ("${nick}", "${email}", ${password})`;
-      pool.query(insert);
-      this.sendRes(res, 'Registered successfully!', true);
+      await this.sqlQuery.insert(
+        {
+          database: DatabaseEnum.accounts,
+          table: TableAccountsEnum.accounts,
+          scope: [],
+          columns: [
+            { column: ColumnAccountsUsersEnum.nick, value: nick },
+            { column: ColumnAccountsUsersEnum.email, value: email },
+            { column: ColumnAccountsUsersEnum.password, value: password },
+          ],
+        },
+        pool
+      );
+      this.httpRes.jsonOkMessage('Registered successfully!', true, res);
     });
-  }
-
-  private sendRes(res: ServerResponse, msg: string, success = false) {
-    const data: ResponseDtoModel<string> = { data: msg, success };
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(data));
   }
 }

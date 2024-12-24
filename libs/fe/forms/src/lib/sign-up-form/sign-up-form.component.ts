@@ -18,8 +18,12 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { AuthService } from '@distributed-chat-system/fe-system';
 import { FlexComponent } from '@distributed-chat-system/fe-controls';
-import { SignUpDtoModel } from '@distributed-chat-system/shared-model';
+import {
+  ResponseDtoModel,
+  SignUpDtoModel,
+} from '@distributed-chat-system/shared-model';
 import { HttpUtils } from '@distributed-chat-system/fe-utils';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
 @Component({
   selector: 'lib-sign-up-form',
@@ -74,7 +78,20 @@ export class SignUpFormComponent {
       password: this.signUpForm.get('password')?.value,
       rePassword: this.signUpForm.get('rePassword')?.value,
     };
-    console.log(dto);
+    this.http.post<SignUpDtoModel, ResponseDtoModel<string>>(
+      dto,
+      EndpointEnum.signUp,
+      (response) => {
+        const { data, success } = response;
+        if (response.success) {
+          this.signUpForm.reset();
+          this.signUpForm.markAsUntouched();
+        }
+        this.isSubmited = true;
+        this.responseMessage = data;
+        this.responseSuccess = success;
+      }
+    );
   }
 
   onSignIn() {

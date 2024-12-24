@@ -66,12 +66,12 @@ export class SignInFormComponent {
       (response) => {
         this.signInForm.reset();
         this.signInForm.markAsUntouched();
-        if (response.success) {
-          this.auth.saveToken(response.data);
+        const { data, success } = response;
+        if (success) {
+          this.auth.saveToken(data);
           this.router.navigate(['/dashboard']);
           return;
         }
-        const { data, success } = response as ResponseDtoModel<string>;
         this.isSubmited = true;
         this.responseMessage = data;
         this.responseSuccess = success;

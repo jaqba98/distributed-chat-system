@@ -36,7 +36,7 @@ export class SignInController implements HttpControllerModel {
           database: DatabaseEnum.accounts,
           table: TableAccountsEnum.accounts,
           scope: ['*'],
-          conditions: [
+          columns: [
             { column: ColumnAccountsUsersEnum.email, value: email },
             { column: ColumnAccountsUsersEnum.password, value: password },
           ],
