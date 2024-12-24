@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { take } from 'rxjs/operators';
 
-import { EndpointEnum } from '../enum/endpoint.enum';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
 @Injectable({ providedIn: 'root' })
 export class HttpUtils {

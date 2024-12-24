@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 import { IncomingMessage, request, ServerResponse } from 'http';
 
-import { EndpointEnum } from '@distributed-chat-system/fe-utils';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
 @injectable()
 export class HttpReqUtilsService {

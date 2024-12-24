@@ -29,7 +29,7 @@ export class ResponsiveUtils {
             return 'xSmall';
           }
           if (state.breakpoints[Breakpoints.Small]) {
-            console.log('small', Breakpoints.Small);
+            // console.log('small', Breakpoints.Small);
             return 'small';
           }
           if (state.breakpoints[Breakpoints.Medium]) {

@@ -8,7 +8,7 @@ import {
   HttpReqUtilsService,
 } from '@distributed-chat-system/be-server';
 import { SignInDtoModel } from '@distributed-chat-system/shared-model';
-import { EndpointEnum } from '@distributed-chat-system/fe-utils';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
 @injectable()
 @RegisterHttp('signInController')

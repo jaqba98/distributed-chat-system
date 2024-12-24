@@ -14,7 +14,8 @@ import {
   ResponseDtoModel,
   SignInDtoModel,
 } from '@distributed-chat-system/shared-model';
-import { EndpointEnum, HttpUtils } from '@distributed-chat-system/fe-utils';
+import { HttpUtils } from '@distributed-chat-system/fe-utils';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
 @Component({
   selector: 'lib-sign-in-form',
