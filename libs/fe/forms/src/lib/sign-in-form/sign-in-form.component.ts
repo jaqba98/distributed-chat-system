@@ -55,12 +55,12 @@ export class SignInFormComponent {
     this.isSubmited = false;
   }
 
-  onSubmit() {
+  async onSubmit() {
     const dto: SignInDtoModel = {
       email: this.signInForm.get('email')?.value,
       password: this.signInForm.get('password')?.value,
     };
-    this.http.post<SignInDtoModel, ResponseDtoModel<string>>(
+    await this.http.post<SignInDtoModel, ResponseDtoModel<string>, void>(
       dto,
       EndpointEnum.signIn,
       (response) => {

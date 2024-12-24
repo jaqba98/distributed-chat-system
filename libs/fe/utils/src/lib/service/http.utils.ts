@@ -1,7 +1,7 @@
 // done
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { take } from 'rxjs/operators';
+import { firstValueFrom } from 'rxjs';
 
 import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
@@ -9,14 +9,14 @@ import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 export class HttpUtils {
   constructor(private readonly http: HttpClient) {}
 
-  post<TInput, TOutput>(
+  async post<TInput, TOutput, TReturn>(
     input: TInput,
     endpoint: EndpointEnum,
-    callback: (response: TOutput) => void
+    callback: (response: TOutput) => TReturn
   ) {
-    this.http
-      .post<TOutput>(`http://localhost:3002/${endpoint}`, input)
-      .pipe(take(1))
-      .subscribe((response) => callback(response));
+    const response = await firstValueFrom(
+      this.http.post<TOutput>(`http://localhost:3002/${endpoint}`, input)
+    );
+    return callback(response);
   }
 }

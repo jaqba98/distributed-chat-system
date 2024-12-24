@@ -71,14 +71,14 @@ export class SignUpFormComponent {
     this.isSubmited = false;
   }
 
-  onSubmit() {
+  async onSubmit() {
     const dto: SignUpDtoModel = {
       nick: this.signUpForm.get('nick')?.value,
       email: this.signUpForm.get('email')?.value,
       password: this.signUpForm.get('password')?.value,
       rePassword: this.signUpForm.get('rePassword')?.value,
     };
-    this.http.post<SignUpDtoModel, ResponseDtoModel<string>>(
+    await this.http.post<SignUpDtoModel, ResponseDtoModel<string>, void>(
       dto,
       EndpointEnum.signUp,
       (response) => {
