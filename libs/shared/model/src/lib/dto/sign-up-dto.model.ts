@@ -1,3 +1,4 @@
+// done
 export interface SignUpDtoModel {
   nick: string;
   email: string;

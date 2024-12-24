@@ -1,0 +1,141 @@
+<!-- done -->
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <lib-flex gap="1rem">
+    <lib-flex gap="0.5rem">
+      <!-- nick input -->
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          type="text"
+          id="nick"
+          formControlName="nick"
+          autocomplete="off"
+          pSize="small"
+        />
+        <label for="nick">Nick</label>
+      </p-floatlabel>
+      <ng-container *ngIf="controlInvalid('nick')">
+        <p-message
+          severity="error"
+          size="small"
+          *ngIf="controlError('nick', 'required')"
+        >
+          Nickname is required.
+        </p-message>
+      </ng-container>
+      <!-- email input -->
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          type="email"
+          id="email"
+          formControlName="email"
+          autocomplete="off"
+          pSize="small"
+        />
+        <label for="email">Email</label>
+      </p-floatlabel>
+      <ng-container *ngIf="controlInvalid('email')">
+        <p-message
+          severity="error"
+          size="small"
+          *ngIf="controlError('email', 'required')"
+        >
+          Email is required.
+        </p-message>
+        <p-message
+          severity="error"
+          size="small"
+          *ngIf="controlError('email', 'email')"
+        >
+          Invalid email format.
+        </p-message>
+      </ng-container>
+      <!-- password input -->
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          type="password"
+          id="password"
+          formControlName="password"
+          autocomplete="off"
+          pSize="small"
+        />
+        <label for="password">Password</label>
+      </p-floatlabel>
+      <ng-container *ngIf="controlInvalid('password')">
+        <p-message
+          severity="error"
+          size="small"
+          *ngIf="controlError('password', 'required')"
+        >
+          Password is required.
+        </p-message>
+        <p-message
+          severity="error"
+          size="small"
+          *ngIf="controlError('password', 'minlength')"
+        >
+          Password must be at least 6 characters long.
+        </p-message>
+      </ng-container>
+      <!-- re password input -->
+      <p-floatlabel variant="on">
+        <input
+          pInputText
+          type="password"
+          id="rePassword"
+          formControlName="rePassword"
+          autocomplete="off"
+          pSize="small"
+        />
+        <label for="rePassword">Repeat Password</label>
+      </p-floatlabel>
+      <ng-container *ngIf="controlInvalid('rePassword')">
+        <p-message
+          severity="error"
+          size="small"
+          *ngIf="controlError('rePassword', 'required')"
+        >
+          Please confirm your password.
+        </p-message>
+      </ng-container>
+      <p-message
+        severity="error"
+        size="small"
+        *ngIf="formError('passwordsMismatch')"
+      >
+        Passwords do not match.
+      </p-message>
+    </lib-flex>
+    <lib-flex flexDirection="row" gap="0.5rem">
+      <!-- sign up button -->
+      <p-button
+        type="submit"
+        size="small"
+        label="Sign Up"
+        [disabled]="signUpForm.invalid"
+      ></p-button>
+      <!-- sign up button -->
+      <p-button
+        size="small"
+        label="Sign In"
+        severity="secondary"
+        (click)="onSignIn()"
+      ></p-button>
+    </lib-flex>
+    <!-- error message -->
+    <ng-container *ngIf="isSubmited">
+      <ng-container *ngIf="responseSuccess">
+        <p-message severity="success" icon="pi pi-times-circle">
+          {{ responseMessage }}
+        </p-message>
+      </ng-container>
+      <ng-container *ngIf="!responseSuccess">
+        <p-message severity="error" icon="pi pi-times-circle">
+          {{ responseMessage }}
+        </p-message>
+      </ng-container>
+    </ng-container>
+  </lib-flex>
+</form>
