@@ -1,5 +1,7 @@
 import { injectable } from 'tsyringe';
-import { IncomingMessage } from 'http';
+import { IncomingMessage, request, ServerResponse } from 'http';
+
+import { EndpointEnum } from '@distributed-chat-system/fe-utils';
 
 @injectable()
 export class HttpReqUtilsService {
@@ -10,5 +12,30 @@ export class HttpReqUtilsService {
       const obj = JSON.parse(body) as T;
       callback(obj);
     });
+  }
+
+  postEndpoint<TInput>(
+    res: ServerResponse,
+    input: TInput,
+    endpoint: EndpointEnum
+  ) {
+    const inputText = JSON.stringify(input);
+    const options = {
+      hostname: 'accounts_load-balancer',
+      port: 80,
+      path: `/${endpoint}`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(inputText),
+      },
+    };
+    const reqAccounts = request(options, (resAccounts) => {
+      let data = '';
+      resAccounts.on('data', (chunk) => (data += chunk));
+      resAccounts.on('end', () => res.end(data));
+    });
+    reqAccounts.write(inputText);
+    reqAccounts.end();
   }
 }

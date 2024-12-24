@@ -29,6 +29,7 @@ import { EndpointEnum, HttpUtils } from '@distributed-chat-system/fe-utils';
     InputTextModule,
   ],
   templateUrl: './sign-in-form.component.html',
+  styleUrl: './sign-in-form.component.scss',
 })
 export class SignInFormComponent {
   signInForm: FormGroup;
@@ -58,7 +59,6 @@ export class SignInFormComponent {
       email: this.signInForm.get('email')?.value,
       password: this.signInForm.get('password')?.value,
     };
-    console.log(123);
     this.http.post<SignInDtoModel, ResponseDtoModel<string>>(
       dto,
       EndpointEnum.signIn,

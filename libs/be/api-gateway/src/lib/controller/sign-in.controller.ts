@@ -1,4 +1,5 @@
-import { IncomingMessage, request, ServerResponse } from 'http';
+// done
+import { IncomingMessage, ServerResponse } from 'http';
 import { injectable, inject } from 'tsyringe';
 
 import {
@@ -7,6 +8,7 @@ import {
   HttpReqUtilsService,
 } from '@distributed-chat-system/be-server';
 import { SignInDtoModel } from '@distributed-chat-system/shared-model';
+import { EndpointEnum } from '@distributed-chat-system/fe-utils';
 
 @injectable()
 @RegisterHttp('signInController')
@@ -17,24 +19,11 @@ export class SignInController implements HttpControllerModel {
 
   build(req: IncomingMessage, res: ServerResponse) {
     this.httpReq.post(req, async (input: SignInDtoModel) => {
-      const inputText = JSON.stringify(input);
-      const options = {
-        hostname: 'accounts_load-balancer',
-        port: 80,
-        path: '/sign-in',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(inputText),
-        },
-      };
-      const reqAccounts = request(options, (resAccounts) => {
-        let data = '';
-        resAccounts.on('data', (chunk) => (data += chunk));
-        resAccounts.on('end', () => res.end(data));
-      });
-      reqAccounts.write(inputText);
-      reqAccounts.end();
+      this.httpReq.postEndpoint<SignInDtoModel>(
+        res,
+        input,
+        EndpointEnum.signIn
+      );
     });
   }
 }

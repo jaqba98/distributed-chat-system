@@ -1,11 +1,13 @@
 // done
-
 :host {
   ::ng-deep {
-    .p-panel {
-      width: 250px;
+    .p-card {
+      width: 275px;
 
-      p-message,
+      p-message {
+        display: contents;
+      }
+
       .p-message,
       .p-floatlabel,
       .p-inputtext {
@@ -13,8 +15,9 @@
       }
     }
 
-    @media screen and (min-width: 768px) {
-      .p-panel {
+    // min small
+    @media screen and (min-width: 600px) {
+      .p-card {
         width: 300px;
       }
     }

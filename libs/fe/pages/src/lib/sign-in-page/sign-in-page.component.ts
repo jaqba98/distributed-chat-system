@@ -1,22 +1,13 @@
 // done
 import { Component } from '@angular/core';
 
-import {
-  FlexComponent,
-  FormWrapperComponent,
-  LogoComponent,
-} from '@distributed-chat-system/fe-controls';
+import { AuthWrapperComponent } from '@distributed-chat-system/fe-controls';
 import { SignInFormComponent } from '@distributed-chat-system/fe-forms';
 
 @Component({
   selector: 'lib-sign-in-page',
   standalone: true,
-  imports: [
-    FlexComponent,
-    FormWrapperComponent,
-    SignInFormComponent,
-    LogoComponent,
-  ],
+  imports: [SignInFormComponent, AuthWrapperComponent],
   templateUrl: './sign-in-page.component.html',
 })
 export class SignInPageComponent {}

@@ -1,6 +1,12 @@
 // done
+.pi,
+.logo__text,
+.logo__author {
+  color: #2e2e2e;
+}
+
 .pi {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .logo__text {
@@ -9,18 +15,12 @@
 
 .logo__author {
   font-size: 0.75rem;
+  font-weight: bold;
 }
 
-@media screen and (min-width: 768px) {
+// min small
+@media screen and (min-width: 600px) {
   .pi {
-    font-size: 3rem;
-  }
-
-  .logo__text {
-    font-size: 1.5rem;
-  }
-
-  .logo__author {
-    font-size: 1rem;
+    font-size: 2rem;
   }
 }

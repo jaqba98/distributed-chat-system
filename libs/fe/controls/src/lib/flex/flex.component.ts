@@ -17,9 +17,11 @@ export class FlexComponent {
 
   @Input() justifyContent: Properties['justifyContent'] = 'flex-start';
 
-  @Input() gap: Properties['gap'] = '1rem';
+  @Input() gap: Properties['gap'];
 
   @Input() minHeight: Properties['minHeight'];
+
+  @Input() padding: Properties['padding'];
 
   getStyles() {
     return {
@@ -28,6 +30,7 @@ export class FlexComponent {
       justifyContent: this.justifyContent,
       gap: this.gap,
       minHeight: this.minHeight,
+      padding: this.padding,
     };
   }
 }
