@@ -16,6 +16,7 @@
     "@angular/platform-browser-dynamic": "~18.2.0",
     "@angular/router": "~18.2.0",
     "@auth0/angular-jwt": "^5.2.0",
+    "@ngrx/store": "^19.0.0",
     "@primeng/themes": "^18.0.0",
     "@socket.io/redis-adapter": "^8.3.0",
     "axios": "^1.6.0",
@@ -34,8 +35,7 @@
     "socket.io-redis": "^5.2.0",
     "tsyringe": "^4.8.0",
     "uuid": "^11.0.3",
-    "zone.js": "~0.14.3",
-    "@ngrx/store": "^19.0.0"
+    "zone.js": "~0.14.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~18.2.0",
@@ -46,7 +46,6 @@
     "@angular/language-service": "~18.2.0",
     "@eslint/js": "^9.8.0",
     "@ngrx/store": "^19.0.0",
-    "@ngxs/store": "^19.0.0",
     "@nx/angular": "20.1.4",
     "@nx/esbuild": "20.1.4",
     "@nx/eslint": "20.1.4",
