@@ -1,22 +1,38 @@
+// done
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
 
 import { AuthService } from '@distributed-chat-system/fe-system';
+import { HttpUtils } from '@distributed-chat-system/fe-utils';
+import {
+  ResponseDtoModel,
+  TokenDtoModel,
+} from '@distributed-chat-system/shared-model';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
 @Injectable({ providedIn: 'root' })
 export class LogoutGuard implements CanActivate {
   constructor(
     private readonly auth: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly http: HttpUtils
   ) {}
 
   async canActivate() {
-    const response = await lastValueFrom(this.auth.logout());
-    if (response.success) {
-      this.router.navigate(['/sign-in']);
-      return false;
-    }
-    return true;
+    const dto: TokenDtoModel = {
+      token: this.auth.getToken(),
+    };
+    return await this.http.post<
+      TokenDtoModel,
+      ResponseDtoModel<string>,
+      boolean
+    >(dto, EndpointEnum.logout, (response) => {
+      const { success } = response;
+      if (success) {
+        this.router.navigate(['/sign-in']);
+        return false;
+      }
+      return true;
+    });
   }
 }

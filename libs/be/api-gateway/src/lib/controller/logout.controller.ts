@@ -1,4 +1,5 @@
-import { IncomingMessage, request, ServerResponse } from 'http';
+// done
+import { IncomingMessage, ServerResponse } from 'http';
 import { injectable, inject } from 'tsyringe';
 
 import {
@@ -7,6 +8,7 @@ import {
   HttpReqUtilsService,
 } from '@distributed-chat-system/be-server';
 import { TokenDtoModel } from '@distributed-chat-system/shared-model';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
 @injectable()
 @RegisterHttp('logoutController')
@@ -16,25 +18,8 @@ export class LogoutController implements HttpControllerModel {
   ) {}
 
   build(req: IncomingMessage, res: ServerResponse) {
-    this.httpReq.post(req, async (token: TokenDtoModel) => {
-      const tokenText = JSON.stringify(token);
-      const options = {
-        hostname: 'accounts_load-balancer',
-        port: 80,
-        path: '/logout',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(tokenText),
-        },
-      };
-      const reqAccounts = request(options, (resAccounts) => {
-        let data = '';
-        resAccounts.on('data', (chunk) => (data += chunk));
-        resAccounts.on('end', () => res.end(data));
-      });
-      reqAccounts.write(tokenText);
-      reqAccounts.end();
+    this.httpReq.post(req, async (input: TokenDtoModel) => {
+      this.httpReq.postEndpoint<TokenDtoModel>(res, input, EndpointEnum.logout);
     });
   }
 }
