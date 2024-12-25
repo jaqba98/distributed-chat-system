@@ -6,6 +6,7 @@ import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 
 import { appRoutes } from './app.routes';
+import { provideStore } from '@ngrx/store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,5 +19,6 @@ export const appConfig: ApplicationConfig = {
         preset: Lara,
       },
     }),
+    provideStore(),
   ],
 };
