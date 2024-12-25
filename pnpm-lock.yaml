@@ -120,6 +120,9 @@ importers:
       '@eslint/js':
         specifier: ^9.8.0
         version: 9.17.0
+      '@ngxs/store':
+        specifier: ^19.0.0
+        version: 19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)
       '@nx/angular':
         specifier: 20.1.4
         version: 20.1.4(4br4ewfvkhgcrlsbsyvz3codm4)
@@ -2183,6 +2186,12 @@ packages:
       '@angular/compiler-cli': ^18.0.0
       typescript: '>=5.4 <5.6'
       webpack: ^5.54.0
+
+  '@ngxs/store@19.0.0':
+    resolution: {integrity: sha512-h8xMl3OisrYabdfbUQjy98X/BSaId8t0iX3VlQgOmG0sYuC5OuZvggZywn0urLkA3H97LEI7ihvuS8spEBo6YA==}
+    peerDependencies:
+      '@angular/core': '>=19.0.0 <20.0.0'
+      rxjs: '>=7.0.0'
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -10550,6 +10559,12 @@ snapshots:
       '@angular/compiler-cli': 18.2.13(@angular/compiler@18.2.13(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10)))(typescript@5.5.4)
       typescript: 5.5.4
       webpack: 5.94.0(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.23.0)(webpack-cli@5.1.4)
+
+  '@ngxs/store@19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)':
+    dependencies:
+      '@angular/core': 18.2.13(rxjs@7.8.1)(zone.js@0.14.10)
+      rxjs: 7.8.1
+      tslib: 2.8.1
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:

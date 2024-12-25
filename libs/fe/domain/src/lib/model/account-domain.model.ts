@@ -1,5 +1,6 @@
 // done
 export interface AccountDomainModel {
-  id: string;
+  id: number;
+  nick: string;
   email: string;
 }
