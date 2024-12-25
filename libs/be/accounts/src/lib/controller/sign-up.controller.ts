@@ -4,7 +4,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { Pool } from 'mysql2';
 
 import {
-  ColumnAccountsUsersEnum,
+  ColumnAccountsEnum,
   DatabaseEnum,
   HttpControllerModel,
   HttpReqUtilsService,
@@ -57,8 +57,8 @@ export class SignUpController implements HttpControllerModel {
         {
           database: DatabaseEnum.accounts,
           table: TableAccountsEnum.accounts,
-          scope: [ColumnAccountsUsersEnum.nick],
-          columns: [{ column: ColumnAccountsUsersEnum.nick, value: nick }],
+          scope: [ColumnAccountsEnum.nick],
+          columns: [{ column: ColumnAccountsEnum.nick, value: nick }],
         },
         pool
       );
@@ -70,8 +70,8 @@ export class SignUpController implements HttpControllerModel {
         {
           database: DatabaseEnum.accounts,
           table: TableAccountsEnum.accounts,
-          scope: [ColumnAccountsUsersEnum.email],
-          columns: [{ column: ColumnAccountsUsersEnum.email, value: email }],
+          scope: [ColumnAccountsEnum.email],
+          columns: [{ column: ColumnAccountsEnum.email, value: email }],
         },
         pool
       );
@@ -85,9 +85,9 @@ export class SignUpController implements HttpControllerModel {
           table: TableAccountsEnum.accounts,
           scope: [],
           columns: [
-            { column: ColumnAccountsUsersEnum.nick, value: nick },
-            { column: ColumnAccountsUsersEnum.email, value: email },
-            { column: ColumnAccountsUsersEnum.password, value: password },
+            { column: ColumnAccountsEnum.nick, value: nick },
+            { column: ColumnAccountsEnum.email, value: email },
+            { column: ColumnAccountsEnum.password, value: password },
           ],
         },
         pool

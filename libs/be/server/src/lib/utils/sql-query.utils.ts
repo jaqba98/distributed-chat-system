@@ -7,10 +7,10 @@ import { SqlQueryType } from '../model/sql-query/sql-query.model';
 @injectable()
 export class SqlQueryUtils {
   async select<TData>(sqlQuery: SqlQueryType, pool: Pool) {
-    const { scope, table, columns: conditions } = sqlQuery;
+    const { scope, table, columns } = sqlQuery;
     const scopeText = scope.join(', ');
-    const conditionsItems = conditions.map((condition) => {
-      return `${condition.column}="${condition.value}"`;
+    const conditionsItems = columns.map((column) => {
+      return `${column.column}="${column.value}"`;
     });
     const conditionsText =
       conditionsItems.length === 0

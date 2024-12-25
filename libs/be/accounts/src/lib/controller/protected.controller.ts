@@ -1,64 +1,60 @@
+// done
+import { inject, injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
-import { injectable, inject } from 'tsyringe';
+import { Pool } from 'mysql2';
 import { verify } from 'jsonwebtoken';
-import { Pool } from 'mysql2/typings/mysql/lib/Pool';
 
 import {
-  RegisterHttp,
+  ColumnBlockedTokensEnum,
+  DatabaseEnum,
   HttpControllerModel,
   HttpReqUtilsService,
+  HttpResUtils,
   JWT_SECRET_KEY,
+  RegisterHttp,
+  SqlQueryUtils,
+  TableAccountsEnum,
 } from '@distributed-chat-system/be-server';
-import {
-  ResponseDtoModel,
-  TokenDtoModel,
-} from '@distributed-chat-system/shared-model';
+import { TokenDtoModel } from '@distributed-chat-system/shared-model';
+import { BlockedTokenDbModel } from '../model/blocked-token-db.model';
 
 @injectable()
 @RegisterHttp('protectedController')
 export class ProtectedController implements HttpControllerModel {
   constructor(
-    @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
+    @inject(HttpReqUtilsService) private readonly httpReq: HttpReqUtilsService,
+    @inject(SqlQueryUtils) private readonly sqlQuery: SqlQueryUtils,
+    @inject(HttpResUtils) private readonly httpRes: HttpResUtils
   ) {}
 
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
-    this.httpReq.post(req, async (data: TokenDtoModel) => {
-      const { token } = data;
-      const select = `SELECT * FROM blockedTokens WHERE token="${token}"`;
-      const [result] = await pool.promise().query(select);
-      const tokens = result as TokenDtoModel[];
-      if (tokens.length > 0) {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(
-          JSON.stringify(<ResponseDtoModel<string>>{
-            data: 'error',
-            success: false,
-          })
-        );
+    this.httpReq.post(req, async (dto: TokenDtoModel) => {
+      const { token } = dto;
+      if (!token) {
+        this.httpRes.jsonOkMessage('Invalid token!', false, res);
         return;
       }
-      if (token) {
-        try {
-          verify(token, JWT_SECRET_KEY);
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(
-            JSON.stringify(<ResponseDtoModel<string>>{
-              data: 'success',
-              success: true,
-            })
-          );
-          return;
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(
-        JSON.stringify(<ResponseDtoModel<string>>{
-          data: 'error',
-          success: false,
-        })
+      const blockedTokens = await this.sqlQuery.select<BlockedTokenDbModel[]>(
+        {
+          database: DatabaseEnum.accounts,
+          table: TableAccountsEnum.blockedTokens,
+          scope: [ColumnBlockedTokensEnum.token],
+          columns: [{ column: ColumnBlockedTokensEnum.token, value: token }],
+        },
+        pool
       );
+      if (blockedTokens.length > 0) {
+        this.httpRes.jsonOkMessage('Token has expired!', false, res);
+        return;
+      }
+      try {
+        verify(token, JWT_SECRET_KEY);
+        this.httpRes.jsonOkMessage('Token correct!', true, res);
+        return;
+      } catch {
+        this.httpRes.jsonOkMessage('Invalid token!', false, res);
+        return;
+      }
     });
   }
 }

@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
-  ColumnAccountsUsersEnum,
+  ColumnAccountsEnum,
   DatabaseEnum,
   HttpControllerModel,
   HttpReqUtilsService,
@@ -37,8 +37,8 @@ export class SignInController implements HttpControllerModel {
           table: TableAccountsEnum.accounts,
           scope: ['*'],
           columns: [
-            { column: ColumnAccountsUsersEnum.email, value: email },
-            { column: ColumnAccountsUsersEnum.password, value: password },
+            { column: ColumnAccountsEnum.email, value: email },
+            { column: ColumnAccountsEnum.password, value: password },
           ],
         },
         pool
