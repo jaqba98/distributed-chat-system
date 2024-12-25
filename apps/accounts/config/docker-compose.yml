@@ -20,6 +20,7 @@ services:
       - HTTP_ROUTE_SIGN_UP={"method":"POST","url":"/sign-up","controller":"signUpController"}
       - HTTP_ROUTE_PROTECTED={"method":"POST","url":"/protected","controller":"protectedController"}
       - HTTP_ROUTE_LOGOUT={"method":"POST","url":"/logout","controller":"logoutController"}
+      - HTTP_ROUTE_FETCH_ACCOUNT={"method":"POST","url":"/fetch-account","controller":"fetchAccountController"}
       - MYSQL_HOST=accounts_db
       - MYSQL_DATABASE=accounts
       - MYSQL_PORT=30010

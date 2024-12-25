@@ -4,4 +4,5 @@ export enum EndpointEnum {
   signUp = 'sign-up',
   protected = 'protected',
   logout = 'logout',
+  fetchAccount = 'fetch-account',
 }

@@ -1,7 +1,6 @@
 // done
-import { TokenDtoModel } from './token-dto.model';
-
-export interface AccountDtoModel extends TokenDtoModel {
+export interface AccountDtoModel {
   id: number;
+  nick: string;
   email: string;
 }
