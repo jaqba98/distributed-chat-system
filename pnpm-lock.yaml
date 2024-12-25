@@ -41,12 +41,6 @@ importers:
       '@auth0/angular-jwt':
         specifier: ^5.2.0
         version: 5.2.0(@angular/common@18.2.13(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))
-      '@ngxs/devtools-plugin':
-        specifier: 19.0.0
-        version: 19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(@ngxs/store@19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(rxjs@7.8.1)
-      '@ngxs/logger-plugin':
-        specifier: 19.0.0
-        version: 19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(@ngxs/store@19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(rxjs@7.8.1)
       '@primeng/themes':
         specifier: ^18.0.0
         version: 18.0.2
@@ -2192,20 +2186,6 @@ packages:
       '@angular/compiler-cli': ^18.0.0
       typescript: '>=5.4 <5.6'
       webpack: ^5.54.0
-
-  '@ngxs/devtools-plugin@19.0.0':
-    resolution: {integrity: sha512-z3O/G0fGeSc/mQRMBWwQ98W+kB0QpIMPZg2FLIubyZwWydouVatjhYck4IDLR/h5i6lq4McKioMK2tn/mXZqnQ==}
-    peerDependencies:
-      '@angular/core': '>=19.0.0 <20.0.0'
-      '@ngxs/store': ^19.0.0 || ^19.0.0-dev
-      rxjs: '>=6.5.5'
-
-  '@ngxs/logger-plugin@19.0.0':
-    resolution: {integrity: sha512-qLGB4muiLlDDYVUOLgXalWYjd3DumMJDM/JCuyQD7xJl9wwixbMWVME1tnZ1e2/FFqKRPuL+54OnEtQ3SrSpOg==}
-    peerDependencies:
-      '@angular/core': '>=19.0.0 <20.0.0'
-      '@ngxs/store': ^19.0.0 || ^19.0.0-dev
-      rxjs: '>=6.5.5'
 
   '@ngxs/store@19.0.0':
     resolution: {integrity: sha512-h8xMl3OisrYabdfbUQjy98X/BSaId8t0iX3VlQgOmG0sYuC5OuZvggZywn0urLkA3H97LEI7ihvuS8spEBo6YA==}
@@ -10579,20 +10559,6 @@ snapshots:
       '@angular/compiler-cli': 18.2.13(@angular/compiler@18.2.13(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10)))(typescript@5.5.4)
       typescript: 5.5.4
       webpack: 5.94.0(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.23.0)(webpack-cli@5.1.4)
-
-  '@ngxs/devtools-plugin@19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(@ngxs/store@19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(rxjs@7.8.1)':
-    dependencies:
-      '@angular/core': 18.2.13(rxjs@7.8.1)(zone.js@0.14.10)
-      '@ngxs/store': 19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)
-      rxjs: 7.8.1
-      tslib: 2.8.1
-
-  '@ngxs/logger-plugin@19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(@ngxs/store@19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1))(rxjs@7.8.1)':
-    dependencies:
-      '@angular/core': 18.2.13(rxjs@7.8.1)(zone.js@0.14.10)
-      '@ngxs/store': 19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)
-      rxjs: 7.8.1
-      tslib: 2.8.1
 
   '@ngxs/store@19.0.0(@angular/core@18.2.13(rxjs@7.8.1)(zone.js@0.14.10))(rxjs@7.8.1)':
     dependencies:

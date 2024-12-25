@@ -6,9 +6,6 @@ import { providePrimeNG } from 'primeng/config';
 import Lara from '@primeng/themes/lara';
 
 import { appRoutes } from './app.routes';
-import { withNgxsReduxDevtoolsPlugin } from '@ngxs/devtools-plugin';
-import { withNgxsLoggerPlugin } from '@ngxs/logger-plugin';
-import { provideStore } from '@ngxs/store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,6 +18,5 @@ export const appConfig: ApplicationConfig = {
         preset: Lara,
       },
     }),
-    provideStore([], withNgxsReduxDevtoolsPlugin(), withNgxsLoggerPlugin()),
   ],
 };
