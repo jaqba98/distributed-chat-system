@@ -16,6 +16,8 @@
     "@angular/platform-browser-dynamic": "~18.2.0",
     "@angular/router": "~18.2.0",
     "@auth0/angular-jwt": "^5.2.0",
+    "@ngxs/devtools-plugin": "19.0.0",
+    "@ngxs/logger-plugin": "19.0.0",
     "@primeng/themes": "^18.0.0",
     "@socket.io/redis-adapter": "^8.3.0",
     "axios": "^1.6.0",
