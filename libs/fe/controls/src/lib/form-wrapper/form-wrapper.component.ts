@@ -1,13 +1,17 @@
 // done
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CardModule } from 'primeng/card';
+
+import { FlexComponent } from '../flex/flex.component';
+import { LogoComponent } from '../logo/logo.component';
+import { CardWrapperComponent } from '../card-wrapper/card-wrapper.component';
 
 @Component({
   selector: 'lib-form-wrapper',
   standalone: true,
-  imports: [CommonModule, CardModule],
+  imports: [CommonModule, FlexComponent, LogoComponent, CardWrapperComponent],
   templateUrl: './form-wrapper.component.html',
-  styleUrl: './form-wrapper.component.scss',
 })
-export class FormWrapperComponent {}
+export class FormWrapperComponent {
+  @Input() isLogo = false;
+}

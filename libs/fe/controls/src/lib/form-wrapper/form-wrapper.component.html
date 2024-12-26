@@ -1,6 +1,14 @@
 <!-- done -->
-<div class="form-wrapper">
-  <p-card>
-    <ng-content></ng-content>
-  </p-card>
-</div>
+<lib-flex
+  alignItems="center"
+  justifyContent="center"
+  minHeight="100%"
+  padding="1rem"
+>
+  <lib-card-wrapper>
+    <lib-flex gap="2rem">
+      <lib-logo *ngIf="isLogo"></lib-logo>
+      <ng-content></ng-content>
+    </lib-flex>
+  </lib-card-wrapper>
+</lib-flex>

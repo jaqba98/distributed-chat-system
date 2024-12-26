@@ -1,0 +1,23 @@
+// done
+::ng-deep {
+  .p-card {
+    width: 275px;
+
+    p-message {
+      display: contents;
+    }
+
+    .p-message,
+    .p-floatlabel,
+    .p-inputtext {
+      width: 100%;
+    }
+  }
+
+  // min small
+  @media screen and (min-width: 600px) {
+    .p-card {
+      width: 300px;
+    }
+  }
+}
