@@ -8,3 +8,9 @@ export enum ColumnAccountsEnum {
 export enum ColumnBlockedTokensEnum {
   token = 'token',
 }
+
+export enum ColumnRoomsEnum {
+  name = 'name',
+  password = 'password',
+  ownerId = 'ownerId',
+}

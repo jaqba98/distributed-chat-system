@@ -7,18 +7,18 @@
         <input
           pInputText
           type="text"
-          id="roomName"
-          formControlName="roomName"
+          id="name"
+          formControlName="name"
           autocomplete="off"
           pSize="small"
         />
-        <label for="roomName">Room name</label>
+        <label for="name">Room name</label>
       </p-floatlabel>
-      <ng-container *ngIf="controlInvalid('roomName')">
+      <ng-container *ngIf="controlInvalid('name')">
         <p-message
           severity="error"
           size="small"
-          *ngIf="controlError('roomName', 'required')"
+          *ngIf="controlError('name', 'required')"
         >
           Room name is required.
         </p-message>

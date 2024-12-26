@@ -5,4 +5,5 @@ export enum EndpointEnum {
   protected = 'protected',
   logout = 'logout',
   fetchAccount = 'fetch-account',
+  dashboardCreateRoom = 'dashboard/create-room',
 }

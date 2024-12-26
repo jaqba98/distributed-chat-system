@@ -11,9 +11,17 @@ import { ButtonModule } from 'primeng/button';
 import { Message } from 'primeng/message';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { Store } from '@ngrx/store';
+import { firstValueFrom } from 'rxjs';
 
 import { FlexComponent } from '@distributed-chat-system/fe-controls';
-import { RoomDtoModel } from '@distributed-chat-system/shared-model';
+import {
+  ResponseDtoModel,
+  RoomDtoModel,
+} from '@distributed-chat-system/shared-model';
+import { HttpUtils } from '@distributed-chat-system/fe-utils';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
+import { AccountStoreModel } from '@distributed-chat-system/fe-store';
 
 @Component({
   selector: 'lib-create-room-form',
@@ -39,9 +47,12 @@ export class CreateRoomFormComponent {
 
   isSubmited: boolean;
 
-  constructor() {
+  constructor(
+    private readonly http: HttpUtils,
+    private readonly store: Store<{ account: AccountStoreModel }>
+  ) {
     this.createRoomForm = new FormGroup({
-      roomName: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -53,11 +64,28 @@ export class CreateRoomFormComponent {
   }
 
   async onSubmit() {
-    const dto: RoomDtoModel = {
-      roomName: this.createRoomForm.get('roomName')?.value,
+    const currentAccount = await firstValueFrom(this.store.select('account'));
+    const { account } = currentAccount;
+    if (!account) return;
+    const dto: Omit<RoomDtoModel, 'id'> = {
+      name: this.createRoomForm.get('name')?.value,
       password: this.createRoomForm.get('password')?.value,
+      ownerId: account.id,
     };
-    console.log(dto);
+    await this.http.post<
+      Omit<RoomDtoModel, 'id'>,
+      ResponseDtoModel<string>,
+      void
+    >(dto, EndpointEnum.dashboardCreateRoom, (response) => {
+      const { data, success } = response;
+      if (response.success) {
+        this.createRoomForm.reset();
+        this.createRoomForm.markAsUntouched();
+      }
+      this.isSubmited = true;
+      this.responseMessage = data;
+      this.responseSuccess = success;
+    });
   }
 
   controlInvalid(control: string) {

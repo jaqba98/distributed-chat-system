@@ -1,6 +1,7 @@
 export * from './lib/server';
 export * from './lib/enum/column.enum';
 export * from './lib/enum/database.enum';
+export * from './lib/enum/hostname.enum';
 export * from './lib/enum/table.enum';
 export * from './lib/utils/http-res.utils';
 export * from './lib/utils/sql-query.utils';

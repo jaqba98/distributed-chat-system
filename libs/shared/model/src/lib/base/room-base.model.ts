@@ -1,5 +1,7 @@
 // done
 export interface RoomBaseModel {
-  roomName: string;
+  id: number;
+  name: string;
   password: string;
+  ownerId: number;
 }
