@@ -1,3 +1,4 @@
+// done
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -5,7 +6,6 @@ import { CommonModule } from '@angular/common';
   selector: 'lib-logout',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './logout-page.component.html',
-  styleUrl: './logout-page.component.scss',
+  template: '',
 })
 export class LogoutPageComponent {}
