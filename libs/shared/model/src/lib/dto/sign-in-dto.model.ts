@@ -1,5 +1,6 @@
+import { AccountBaseModel } from '../base/account-base.model';
+
 // done
-export interface SignInDtoModel {
-  email: string;
+export interface SignInDtoModel extends Pick<AccountBaseModel, 'email'> {
   password: string;
 }

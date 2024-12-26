@@ -16,10 +16,10 @@ import {
   TableAccountsEnum,
 } from '@distributed-chat-system/be-server';
 import {
-  AccountDtoModel,
+  AccountDtoType,
   TokenDtoModel,
 } from '@distributed-chat-system/shared-model';
-import { TokenDataModel } from '../model/token-data.model';
+import { TokenDataType } from '../model/token-data.model';
 import { AccountDbModel } from '../model/account-db.model';
 
 @injectable()
@@ -44,7 +44,7 @@ export class FetchAccountController implements HttpControllerModel {
           this.httpRes.jsonOkMessage('Invalid token!', false, res);
           return;
         }
-        const { email } = tokenData as TokenDataModel;
+        const { email } = tokenData as TokenDataType;
         const accounts = await this.sqlQuery.select<AccountDbModel[]>(
           {
             database: DatabaseEnum.accounts,
@@ -59,12 +59,12 @@ export class FetchAccountController implements HttpControllerModel {
           return;
         }
         const account = accounts[0];
-        const dto: AccountDtoModel = {
+        const dto: AccountDtoType = {
           id: account.id,
           nick: account.nick,
           email: account.email,
         };
-        this.httpRes.jsonOk<AccountDtoModel>(dto, true, res);
+        this.httpRes.jsonOk<AccountDtoType>(dto, true, res);
         return;
       } catch {
         this.httpRes.jsonOkMessage('Invalid token!', false, res);

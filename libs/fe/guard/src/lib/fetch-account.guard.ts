@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 import { AuthService } from '@distributed-chat-system/fe-system';
 import { HttpUtils } from '@distributed-chat-system/fe-utils';
 import {
-  AccountDtoModel,
+  AccountBaseModel,
   ResponseDtoModel,
   TokenDtoModel,
 } from '@distributed-chat-system/shared-model';
@@ -34,7 +34,7 @@ export class FetchAccountGuard implements CanActivate {
     };
     return await this.http.post<
       TokenDtoModel,
-      ResponseDtoModel<AccountDtoModel>,
+      ResponseDtoModel<AccountBaseModel>,
       boolean
     >(dto, EndpointEnum.fetchAccount, (response) => {
       const { data, success } = response;

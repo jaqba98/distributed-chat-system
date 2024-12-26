@@ -1,6 +1,4 @@
 // done
-export interface AccountDtoModel {
-  id: number;
-  nick: string;
-  email: string;
-}
+import { AccountBaseModel } from '../base/account-base.model';
+
+export type AccountDtoType = AccountBaseModel;

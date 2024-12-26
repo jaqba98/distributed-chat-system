@@ -1,7 +1,7 @@
 // done
-export interface SignUpDtoModel {
-  nick: string;
-  email: string;
+import { AccountBaseModel } from '../base/account-base.model';
+
+export interface SignUpDtoModel extends Omit<AccountBaseModel, 'id'> {
   password: string;
   rePassword: string;
 }
