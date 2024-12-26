@@ -16,7 +16,6 @@ import { Message } from 'primeng/message';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 
-import { AuthService } from '@distributed-chat-system/fe-system';
 import { FlexComponent } from '@distributed-chat-system/fe-controls';
 import {
   ResponseDtoModel,
@@ -50,7 +49,6 @@ export class SignUpFormComponent {
   isSubmited: boolean;
 
   constructor(
-    private readonly auth: AuthService,
     private readonly router: Router,
     private readonly http: HttpUtils
   ) {

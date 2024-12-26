@@ -6,4 +6,4 @@ export * from './lib/dto/sign-up-dto.model';
 export * from './lib/dto/token-dto.model';
 
 export * from './lib/dto/create-room-dto.model';
-export * from './lib/dto/rooms-dto.model';
+export * from './lib/dto/room-dto.model';

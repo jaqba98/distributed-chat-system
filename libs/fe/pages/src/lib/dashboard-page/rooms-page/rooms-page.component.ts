@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 
-import { RoomsDtoModel } from '@distributed-chat-system/shared-model';
 import { Router } from '@angular/router';
+import { RoomDtoModel } from '@distributed-chat-system/shared-model';
 
 @Component({
   selector: 'lib-rooms-page',
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrl: './rooms-page.component.scss',
 })
 export class RoomsPageComponent implements OnInit {
-  rooms: RoomsDtoModel = [];
+  rooms: RoomDtoModel[] = [];
 
   constructor(
     private readonly http: HttpClient,
@@ -24,7 +24,7 @@ export class RoomsPageComponent implements OnInit {
 
   ngOnInit() {
     this.http
-      .get<RoomsDtoModel>('http://localhost:3002/get-rooms')
+      .get<RoomDtoModel[]>('http://localhost:3002/get-rooms')
       .subscribe((response) => {
         Promise.resolve(response.slice(0, 200)).then((aaa) => {
           this.rooms = aaa;

@@ -10,7 +10,7 @@ import {
 import {
   CreateRoomDtoModel,
   ResponseDtoModel,
-  RoomsDtoModel,
+  RoomDtoModel,
 } from '@distributed-chat-system/shared-model';
 
 @injectable()
@@ -33,7 +33,7 @@ export class CreateRoomController implements HttpControllerModel {
       }
       const selectName = `SELECT name FROM rooms WHERE name="${name}"`;
       const [resultName] = await pool.promise().query(selectName);
-      if ((<RoomsDtoModel>resultName).length > 0) {
+      if ((<RoomDtoModel[]>resultName).length > 0) {
         this.sendRes(res, 'Name is already in use!');
         return;
       }
