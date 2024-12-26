@@ -14,4 +14,8 @@ import { CardWrapperComponent } from '../card-wrapper/card-wrapper.component';
 })
 export class FormWrapperComponent {
   @Input() isLogo = false;
+
+  @Input() isHeader = false;
+
+  @Input() header = '';
 }

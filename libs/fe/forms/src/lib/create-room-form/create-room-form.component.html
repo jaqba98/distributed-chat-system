@@ -1,0 +1,95 @@
+<lib-flex
+  minHeight="calc(100svh - 70px)"
+  alignItems="center"
+  justifyContent="center"
+>
+  <lib-form-wrapper header="Create room">
+    <lib-flex
+      slot="content"
+      gap="2rem"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <form slot="content" [formGroup]="createRoomForm" (ngSubmit)="onSubmit()">
+        <lib-flex gap="1rem">
+          <h2>Create room</h2>
+          <lib-flex gap="0.5rem">
+            <p-floatlabel variant="on">
+              <input
+                pInputText
+                type="text"
+                id="name"
+                formControlName="name"
+                autocomplete="off"
+                style="width: 100%"
+                pSize="large"
+              />
+              <label for="name">name</label>
+            </p-floatlabel>
+            <div *ngIf="controlInvalid('name')">
+              <p-message
+                severity="error"
+                variant="simple"
+                size="small"
+                *ngIf="controlError('name', 'required')"
+              >
+                Name is required.
+              </p-message>
+            </div>
+            <p-floatlabel variant="on">
+              <input
+                pInputText
+                type="password"
+                id="password"
+                formControlName="password"
+                autocomplete="off"
+                style="width: 100%"
+                pSize="large"
+              />
+              <label for="password">Password</label>
+            </p-floatlabel>
+            <div *ngIf="controlInvalid('password')">
+              <p-message
+                severity="error"
+                variant="simple"
+                size="small"
+                *ngIf="controlError('password', 'required')"
+              >
+                Password is required.
+              </p-message>
+              <p-message
+                severity="error"
+                variant="simple"
+                size="small"
+                *ngIf="controlError('password', 'minlength')"
+              >
+                Password must be at least 6 characters long.
+              </p-message>
+            </div>
+            <p-button
+              type="submit"
+              label="Create"
+              [disabled]="createRoomForm.invalid"
+            ></p-button>
+          </lib-flex>
+        </lib-flex>
+      </form>
+    </lib-flex>
+    <ng-container slot="footer" *ngIf="isSubmited">
+      <ng-container slot="footer" *ngIf="responseSuccess">
+        <p-message
+          severity="success"
+          icon="pi pi-times-circle"
+          styleClass="mb-2"
+        >
+          {{ responseMessage }}
+        </p-message>
+      </ng-container>
+      <ng-container slot="footer" *ngIf="!responseSuccess">
+        <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2">
+          {{ responseMessage }}
+        </p-message>
+      </ng-container>
+    </ng-container>
+  </lib-form-wrapper>
+</lib-flex>
