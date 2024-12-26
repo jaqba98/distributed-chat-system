@@ -1,11 +1,6 @@
-:host {
-  ::ng-deep {
-    .nav {
-      height: 70px;
-
-      .p-menubar {
-        height: 100%;
-      }
-    }
+// done
+::ng-deep {
+  .p-menubar {
+    height: 100%;
   }
 }

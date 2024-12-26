@@ -1,0 +1,10 @@
+// done
+.dashboard {
+  &__nav {
+    height: 70px;
+  }
+
+  &__content {
+    min-height: calc(100svh - 70px);
+  }
+}
