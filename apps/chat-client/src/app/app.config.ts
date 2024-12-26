@@ -1,12 +1,18 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideZoneChangeDetection,
+  isDevMode,
+} from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
+import { provideStore } from '@ngrx/store';
 import Lara from '@primeng/themes/lara';
 
+import { accountReducer } from '@distributed-chat-system/fe-store';
 import { appRoutes } from './app.routes';
-import { provideStore } from '@ngrx/store';
+import { provideStoreDevtools } from '@ngrx/store-devtools';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +25,9 @@ export const appConfig: ApplicationConfig = {
         preset: Lara,
       },
     }),
-    provideStore(),
+    provideStore({
+      account: accountReducer,
+    }),
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 };
