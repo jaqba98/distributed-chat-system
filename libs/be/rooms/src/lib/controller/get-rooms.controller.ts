@@ -1,19 +1,39 @@
+// done
+import { inject, injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
 import { Pool } from 'mysql2';
-import { injectable } from 'tsyringe';
 
 import {
-  RegisterHttp,
+  ColumnRoomsEnum,
+  DatabaseEnum,
   HttpControllerModel,
+  HttpReqUtilsService,
+  HttpResUtils,
+  RegisterHttp,
+  SqlQueryUtils,
+  TableAccountsEnum,
 } from '@distributed-chat-system/be-server';
+import { RoomDtoModel } from '@distributed-chat-system/shared-model';
 
 @injectable()
 @RegisterHttp('getRoomsController')
 export class GetRoomsController implements HttpControllerModel {
-  async build(_req: IncomingMessage, res: ServerResponse, pool: Pool) {
-    const selectRooms = 'SELECT * FROM rooms';
-    const [resultRooms] = await pool.promise().query(selectRooms);
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(resultRooms));
+  constructor(
+    @inject(HttpReqUtilsService) private readonly httpReq: HttpReqUtilsService,
+    @inject(SqlQueryUtils) private readonly sqlQuery: SqlQueryUtils,
+    @inject(HttpResUtils) private readonly httpRes: HttpResUtils
+  ) {}
+
+  async build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
+    const rooms = await this.sqlQuery.select<RoomDtoModel[]>(
+      {
+        database: DatabaseEnum.rooms,
+        table: TableAccountsEnum.rooms,
+        scope: [ColumnRoomsEnum.name],
+        columns: [],
+      },
+      pool
+    );
+    this.httpRes.jsonOk<RoomDtoModel[]>(rooms, true, res);
   }
 }

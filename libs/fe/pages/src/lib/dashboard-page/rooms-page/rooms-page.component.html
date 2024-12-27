@@ -1,21 +1,2 @@
-<p-table
-  [value]="rooms"
-  [paginator]="true"
-  [rows]="11"
-  [tableStyle]="{ 'min-width': '50rem' }"
->
-  <ng-template #header>
-    <tr>
-      <th style="width: calc(100% - 100px)">Name</th>
-      <th style="width: 100px">Action</th>
-    </tr>
-  </ng-template>
-  <ng-template #body let-room>
-    <tr>
-      <td>{{ room.name }}</td>
-      <td>
-        <p-button label="Join" (onClick)="join(room.name)"></p-button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+<!-- done -->
+<lib-rooms-list [endpoint]="endpoint"></lib-rooms-list>

@@ -1,3 +1,4 @@
+// done
 import { injectable } from 'tsyringe';
 import { IncomingMessage, request, ServerResponse } from 'http';
 
@@ -13,6 +14,28 @@ export class HttpReqUtilsService {
       const obj = JSON.parse(body) as T;
       callback(obj);
     });
+  }
+
+  getEndpoint(
+    hostname: HostnameEnum,
+    res: ServerResponse,
+    endpoint: EndpointEnum
+  ) {
+    const options = {
+      hostname,
+      port: 80,
+      path: `/${endpoint}`,
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const req = request(options, (newRes) => {
+      let data = '';
+      newRes.on('data', (chunk) => (data += chunk));
+      newRes.on('end', () => res.end(data));
+    });
+    req.end();
   }
 
   postEndpoint<TInput>(
@@ -32,12 +55,12 @@ export class HttpReqUtilsService {
         'Content-Length': Buffer.byteLength(inputText),
       },
     };
-    const reqAccounts = request(options, (resAccounts) => {
+    const req = request(options, (newRes) => {
       let data = '';
-      resAccounts.on('data', (chunk) => (data += chunk));
-      resAccounts.on('end', () => res.end(data));
+      newRes.on('data', (chunk) => (data += chunk));
+      newRes.on('end', () => res.end(data));
     });
-    reqAccounts.write(inputText);
-    reqAccounts.end();
+    req.write(inputText);
+    req.end();
   }
 }

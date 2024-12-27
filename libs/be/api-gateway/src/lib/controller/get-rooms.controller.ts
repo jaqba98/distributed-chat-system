@@ -1,29 +1,27 @@
-import { IncomingMessage, request, ServerResponse } from 'http';
-import { injectable } from 'tsyringe';
+// done
+import { IncomingMessage, ServerResponse } from 'http';
+import { injectable, inject } from 'tsyringe';
 
 import {
   RegisterHttp,
   HttpControllerModel,
+  HttpReqUtilsService,
+  HostnameEnum,
 } from '@distributed-chat-system/be-server';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
 @injectable()
 @RegisterHttp('getRoomsController')
 export class GetRoomsController implements HttpControllerModel {
-  build(_req: IncomingMessage, res: ServerResponse) {
-    const options = {
-      hostname: 'rooms_load-balancer',
-      port: 80,
-      path: '/get-rooms',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const reqAccounts = request(options, (resAccounts) => {
-      let data = '';
-      resAccounts.on('data', (chunk) => (data += chunk));
-      resAccounts.on('end', () => res.end(data));
-    });
-    reqAccounts.end();
+  constructor(
+    @inject(HttpReqUtilsService) private httpReq: HttpReqUtilsService
+  ) {}
+
+  build(req: IncomingMessage, res: ServerResponse) {
+    this.httpReq.getEndpoint(
+      HostnameEnum.roomsLoadBalancer,
+      res,
+      EndpointEnum.getRooms
+    );
   }
 }

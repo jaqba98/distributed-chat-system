@@ -6,4 +6,5 @@ export enum EndpointEnum {
   logout = 'logout',
   fetchAccount = 'fetch-account',
   dashboardCreateRoom = 'dashboard/create-room',
+  getRooms = 'get-rooms',
 }

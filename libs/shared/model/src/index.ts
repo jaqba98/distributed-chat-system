@@ -1,3 +1,4 @@
+export * from './lib/base/room-base.model';
 export * from './lib/base/account-base.model';
 export * from './lib/dto/account-dto.model';
 export * from './lib/dto/response-dto.model';
