@@ -1,10 +1,7 @@
 // done
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 
 import {
@@ -17,14 +14,7 @@ import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 @Component({
   selector: 'lib-rooms-list',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FloatLabelModule,
-    ButtonModule,
-    InputTextModule,
-    TableModule,
-  ],
+  imports: [CommonModule, ButtonModule, TableModule],
   templateUrl: './rooms-list.component.html',
   styleUrl: './rooms-list.component.scss',
 })
@@ -40,7 +30,7 @@ export class RoomsListComponent implements OnInit {
       ResponseDtoModel<RoomDtoModel[]>,
       RoomDtoModel[]
     >(this.endpoint, (response) => {
-      return response.data;
+      return response.data.reverse();
     });
   }
 }

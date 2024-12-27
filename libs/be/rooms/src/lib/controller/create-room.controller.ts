@@ -26,7 +26,7 @@ export class CreateRoomController implements HttpControllerModel {
 
   build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
     this.httpReq.post(req, async (dto: Omit<RoomDtoModel, 'id'>) => {
-      const { name, password, ownerId } = dto;
+      const { name, password, ownerId, ownerNick } = dto;
       if (name.length === 0) {
         this.httpRes.jsonOkMessage('Name cannot be empty!', false, res);
         return;
@@ -61,6 +61,7 @@ export class CreateRoomController implements HttpControllerModel {
             { column: ColumnRoomsEnum.name, value: name },
             { column: ColumnRoomsEnum.password, value: password },
             { column: ColumnRoomsEnum.ownerId, value: ownerId.toString() },
+            { column: ColumnRoomsEnum.ownerNick, value: ownerNick },
           ],
         },
         pool

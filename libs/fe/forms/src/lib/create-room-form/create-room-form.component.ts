@@ -71,6 +71,7 @@ export class CreateRoomFormComponent {
       name: this.createRoomForm.get('name')?.value,
       password: this.createRoomForm.get('password')?.value,
       ownerId: account.id,
+      ownerNick: account.nick,
     };
     await this.http.post<
       Omit<RoomDtoModel, 'id'>,

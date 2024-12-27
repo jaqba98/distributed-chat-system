@@ -4,4 +4,5 @@ export interface RoomBaseModel {
   name: string;
   password: string;
   ownerId: number;
+  ownerNick: string;
 }

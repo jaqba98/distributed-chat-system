@@ -29,7 +29,7 @@ export class GetRoomsController implements HttpControllerModel {
       {
         database: DatabaseEnum.rooms,
         table: TableAccountsEnum.rooms,
-        scope: [ColumnRoomsEnum.name],
+        scope: [ColumnRoomsEnum.name, ColumnRoomsEnum.ownerNick],
         columns: [],
       },
       pool

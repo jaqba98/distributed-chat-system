@@ -13,4 +13,5 @@ export enum ColumnRoomsEnum {
   name = 'name',
   password = 'password',
   ownerId = 'ownerId',
+  ownerNick = 'ownerNick',
 }
