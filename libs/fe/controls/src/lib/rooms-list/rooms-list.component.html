@@ -9,16 +9,31 @@
   <ng-template #header>
     <tr>
       <th style="width: 100%">Name</th>
+      <th>People</th>
       <th>Owner</th>
+      <th>Edit</th>
       <th>Join</th>
     </tr>
   </ng-template>
   <ng-template #body let-room>
     <tr>
       <td>{{ room.name }}</td>
+      <td>10</td>
       <td>{{ room.ownerNick }}</td>
       <td>
-        <p-button size="small" label="Join"></p-button>
+        <p-button
+          severity="secondary"
+          size="small"
+          label="Edit"
+          [disabled]="false"
+        ></p-button>
+      </td>
+      <td>
+        <p-button
+          size="small"
+          label="Join"
+          (onClick)="joinRoom(room.name)"
+        ></p-button>
       </td>
     </tr>
   </ng-template>

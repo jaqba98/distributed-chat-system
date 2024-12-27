@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { Router } from '@angular/router';
 
 import {
   ResponseDtoModel,
@@ -23,7 +24,10 @@ export class RoomsListComponent implements OnInit {
 
   rooms!: RoomDtoModel[];
 
-  constructor(private readonly http: HttpUtils) {}
+  constructor(
+    private readonly http: HttpUtils,
+    private readonly router: Router
+  ) {}
 
   async ngOnInit() {
     this.rooms = await this.http.get<
@@ -32,5 +36,9 @@ export class RoomsListComponent implements OnInit {
     >(this.endpoint, (response) => {
       return response.data.reverse();
     });
+  }
+
+  joinRoom(roomName: string) {
+    this.router.navigate(['dashboard', 'room', roomName]);
   }
 }
