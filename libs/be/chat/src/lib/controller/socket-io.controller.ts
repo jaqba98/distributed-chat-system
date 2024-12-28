@@ -8,7 +8,7 @@ import {
   SocketControllerModel,
 } from '@distributed-chat-system/be-server';
 import { JoinRoomService } from '../service/join-room.service';
-import { DisconnectService } from '../service/disconnect.service';
+import { DisconnectRoomService } from '../service/disconnect-room.service';
 import { MessageService } from '../service/message.service';
 import { JoinRoomsListService } from '../service/join-rooms-list.service';
 
@@ -17,15 +17,16 @@ import { JoinRoomsListService } from '../service/join-rooms-list.service';
 export class SocketIOController implements SocketControllerModel {
   constructor(
     @inject(JoinRoomService) private readonly joinRoom: JoinRoomService,
-    @inject(DisconnectService) private readonly disconnect: DisconnectService,
+    @inject(DisconnectRoomService)
+    private readonly disconnectRoom: DisconnectRoomService,
     @inject(JoinRoomsListService)
     private readonly joinRoomsList: JoinRoomsListService,
     @inject(MessageService) private message: MessageService
   ) {}
 
   build(io: Server, socket: Socket, pool: Pool) {
+    this.disconnectRoom.build(io, socket, pool);
     this.joinRoom.build(io, socket, pool);
-    this.disconnect.build(io, socket, pool);
     this.joinRoomsList.build(io, socket, pool);
     this.message.build(io, socket);
   }

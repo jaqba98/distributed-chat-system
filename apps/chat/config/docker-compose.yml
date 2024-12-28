@@ -66,6 +66,7 @@ services:
     container_name: chat5
     ports:
       - 30035:3000
+  # database
   chat_db:
     image: mysql:8.4
     container_name: chat_db
@@ -85,7 +86,6 @@ services:
     image: redis:8.0-M02-alpine
     ports:
       - 6379:6379
-  # database
 volumes:
   chat_db_volumes:
     driver: local

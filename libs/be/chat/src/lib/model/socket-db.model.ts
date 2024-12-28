@@ -1,6 +1,4 @@
 // done
-export interface SocketDbModel {
-  id: number;
-  socketId: string;
-  roomName: string;
-}
+import { SocketBaseModel } from '@distributed-chat-system/shared-model';
+
+export type SocketDbModel = SocketBaseModel;

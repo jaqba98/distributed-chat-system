@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { io, Socket } from 'socket.io-client';
@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './room-page.component.html',
   styleUrl: './room-page.component.scss',
 })
-export class RoomPageComponent implements OnInit {
+export class RoomPageComponent implements OnInit, OnDestroy {
   roomForm: FormGroup;
 
   roomKey!: string;
@@ -42,12 +42,16 @@ export class RoomPageComponent implements OnInit {
         this.socket.emit('joinRoom', this.roomKey);
       });
       this.socket.on('disconnect', () => {
-        console.log('Disconnected from server');
+        this.socket.emit('disconnectRoom');
       });
       this.socket.on('response', (data) => {
         console.log(data);
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.socket.disconnect();
   }
 
   onSubmit() {

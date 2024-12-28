@@ -1,5 +1,5 @@
 // done
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -22,7 +22,7 @@ import { EndpointEnum } from '@distributed-chat-system/shared-utils';
   templateUrl: './rooms-list.component.html',
   styleUrl: './rooms-list.component.scss',
 })
-export class RoomsListComponent implements OnInit {
+export class RoomsListComponent implements OnInit, OnDestroy {
   @Input({ required: true }) endpoint!: EndpointEnum;
 
   rooms!: RoomDomainModel[];
@@ -52,6 +52,10 @@ export class RoomsListComponent implements OnInit {
         });
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.socket.disconnect();
   }
 
   joinRoom(roomName: string) {
