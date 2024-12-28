@@ -81,5 +81,6 @@ export class RoomAccessFormComponent implements OnInit, OnDestroy {
         },
       })
     );
+    this.router.navigate(['dashboard', 'room', this.roomName]);
   }
 }
