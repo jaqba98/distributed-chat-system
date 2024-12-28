@@ -1,12 +1,13 @@
 // done
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import { FormWrapperComponent } from '@distributed-chat-system/fe-controls';
+import { RoomAccessFormComponent } from '@distributed-chat-system/fe-forms';
 
 @Component({
   selector: 'lib-room-access-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [RoomAccessFormComponent, FormWrapperComponent],
   templateUrl: './room-access-page.component.html',
-  styleUrl: './room-access-page.component.scss',
 })
 export class RoomAccessPageComponent {}
