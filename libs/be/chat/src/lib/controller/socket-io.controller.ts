@@ -1,36 +1,32 @@
+// done
 import { inject, injectable } from 'tsyringe';
 import { Server, Socket } from 'socket.io';
+import { Pool } from 'mysql2/typings/mysql/lib/Pool';
 
 import {
   RegisterSocket,
   SocketControllerModel,
 } from '@distributed-chat-system/be-server';
-import { UserRoomsStore } from '../store/user-rooms.store';
+import { JoinRoomService } from '../service/join-room.service';
+import { DisconnectService } from '../service/disconnect.service';
+import { MessageService } from '../service/message.service';
+import { JoinRoomsListService } from '../service/join-rooms-list.service';
 
 @injectable()
 @RegisterSocket('socketIOController')
 export class SocketIOController implements SocketControllerModel {
-  constructor(@inject(UserRoomsStore) private readonly store: UserRoomsStore) {}
+  constructor(
+    @inject(JoinRoomService) private readonly joinRoom: JoinRoomService,
+    @inject(DisconnectService) private readonly disconnect: DisconnectService,
+    @inject(JoinRoomsListService)
+    private readonly joinRoomsList: JoinRoomsListService,
+    @inject(MessageService) private message: MessageService
+  ) {}
 
-  build(io: Server, socket: Socket) {
-    console.log('works!');
-    socket.on('joinRoom', (roomKey) => {
-      const previousRoom = this.store.data.get(socket.id);
-      if (previousRoom) {
-        socket.leave(previousRoom);
-      }
-      this.store.data.set(socket.id, roomKey);
-      socket.join(roomKey);
-    });
-    socket.on('message', ({ roomKey, message }) => {
-      io.to(roomKey).emit('response', { sender: socket.id, message });
-    });
-    socket.on('disconnect', () => {
-      const roomKey = this.store.data.get(socket.id);
-      if (roomKey) {
-        socket.leave(roomKey);
-        this.store.data.delete(socket.id);
-      }
-    });
+  build(io: Server, socket: Socket, pool: Pool) {
+    this.joinRoom.build(io, socket, pool);
+    this.disconnect.build(io, socket, pool);
+    this.joinRoomsList.build(io, socket, pool);
+    this.message.build(io, socket);
   }
 }

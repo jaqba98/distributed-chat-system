@@ -34,4 +34,17 @@ export class SqlQueryUtils {
     const insert = `INSERT INTO ${table} (${columnsHeader}) VALUES (${columnsValue})`;
     await pool.promise().query(insert);
   }
+
+  async delete(sqlQuery: SqlQueryType, pool: Pool) {
+    const { table, columns } = sqlQuery;
+    const conditionsItems = columns.map((column) => {
+      return `${column.column}="${column.value}"`;
+    });
+    const conditionsText =
+      conditionsItems.length === 0
+        ? ''
+        : `WHERE ${conditionsItems.join(' AND ')}`;
+    const del = `DELETE FROM ${table} ${conditionsText}`;
+    await pool.promise().query(del);
+  }
 }

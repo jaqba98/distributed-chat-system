@@ -4,10 +4,13 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { Router } from '@angular/router';
+import { io, Socket } from 'socket.io-client';
 
 import {
   ResponseDtoModel,
+  RoomDomainModel,
   RoomDtoModel,
+  SocketsDtoModel,
 } from '@distributed-chat-system/shared-model';
 import { HttpUtils } from '@distributed-chat-system/fe-utils';
 import { EndpointEnum } from '@distributed-chat-system/shared-utils';
@@ -22,19 +25,32 @@ import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 export class RoomsListComponent implements OnInit {
   @Input({ required: true }) endpoint!: EndpointEnum;
 
-  rooms!: RoomDtoModel[];
+  rooms!: RoomDomainModel[];
+
+  private socket!: Socket;
 
   constructor(
     private readonly http: HttpUtils,
     private readonly router: Router
   ) {}
 
-  async ngOnInit() {
-    this.rooms = await this.http.get<
-      ResponseDtoModel<RoomDtoModel[]>,
-      RoomDtoModel[]
-    >(this.endpoint, (response) => {
-      return response.data.reverse();
+  ngOnInit() {
+    this.socket = io('localhost:3003', {
+      transports: ['websocket'],
+    });
+    this.socket.on('connect', () => {
+      this.socket.emit('joinRoomsList');
+    });
+    this.socket.on('getRoomsResponse', async (dto: SocketsDtoModel) => {
+      this.rooms = await this.http.get<
+        ResponseDtoModel<RoomDtoModel[]>,
+        RoomDomainModel[]
+      >(this.endpoint, (response) => {
+        return response.data.reverse().map((room) => {
+          const socket = dto.sockets[room.name];
+          return { ...room, counter: socket ? socket.counter : 0 };
+        });
+      });
     });
   }
 
