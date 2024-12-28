@@ -12,6 +12,7 @@ import {
 } from '@distributed-chat-system/be-server';
 import { GetRoomsService } from './get-rooms.service';
 import { SocketDbModel } from '../model/socket-db.model';
+import { JoinRoomModel } from '@distributed-chat-system/shared-model';
 
 @injectable()
 export class JoinRoomService implements SocketControllerModel {
@@ -21,7 +22,7 @@ export class JoinRoomService implements SocketControllerModel {
   ) {}
 
   build(io: Server, socket: Socket, pool: Pool) {
-    socket.on('joinRoom', async (roomName: string) => {
+    socket.on('joinRoom', async (dto: JoinRoomModel) => {
       const sockets = await this.sqlQuery.select<SocketDbModel[]>(
         {
           database: DatabaseEnum.chat,
@@ -39,12 +40,16 @@ export class JoinRoomService implements SocketControllerModel {
             scope: [],
             columns: [
               { column: ColumnSocketsEnum.socketId, value: socket.id },
-              { column: ColumnSocketsEnum.roomName, value: roomName },
+              { column: ColumnSocketsEnum.roomName, value: dto.roomName },
+              {
+                column: ColumnSocketsEnum.accountId,
+                value: dto.accountId.toString(),
+              },
             ],
           },
           pool
         );
-        socket.join(roomName);
+        socket.join(dto.roomName);
         this.getRooms.build(io, pool);
       }
     });

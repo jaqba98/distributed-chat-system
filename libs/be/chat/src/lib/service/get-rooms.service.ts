@@ -30,12 +30,19 @@ export class GetRoomsService {
     const dto: SocketsDtoModel = {
       sockets: {},
     };
-    for (const socketItem of sockets) {
-      if (dto.sockets[socketItem.roomName]) {
-        dto.sockets[socketItem.roomName].counter++;
+
+    for (const item of sockets) {
+      if (dto.sockets[item.roomName]) {
+        if (dto.sockets[item.roomName].accountIds.includes(item.accountId)) {
+          continue;
+        } else {
+          dto.sockets[item.roomName].accountIds.push(item.accountId);
+          dto.sockets[item.roomName].counter++;
+        }
       } else {
-        dto.sockets[socketItem.roomName] = {
+        dto.sockets[item.roomName] = {
           counter: 1,
+          accountIds: [item.accountId],
         };
       }
     }

@@ -23,4 +23,5 @@ export enum ColumnSocketsEnum {
   id = 'id',
   socketId = 'socketId',
   roomName = 'roomName',
+  accountId = 'accountId',
 }

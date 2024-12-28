@@ -46,6 +46,7 @@ export class RoomsListComponent implements OnInit, OnDestroy {
         ResponseDtoModel<RoomDtoModel[]>,
         RoomDomainModel[]
       >(this.endpoint, (response) => {
+        console.log(dto);
         return response.data.reverse().map((room) => {
           const socket = dto.sockets[room.name];
           return { ...room, counter: socket ? socket.counter : 0 };

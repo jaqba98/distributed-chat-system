@@ -3,6 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { io, Socket } from 'socket.io-client';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { firstValueFrom } from 'rxjs';
+
+import { AccountStoreModel } from '@distributed-chat-system/fe-store';
+import { JoinRoomModel } from '@distributed-chat-system/shared-model';
 
 @Component({
   selector: 'lib-room-page',
@@ -20,7 +25,8 @@ export class RoomPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly store: Store<{ account: AccountStoreModel }>
   ) {
     this.roomForm = new FormGroup({
       message: new FormControl(''),
@@ -37,9 +43,14 @@ export class RoomPageComponent implements OnInit, OnDestroy {
       this.socket = io('localhost:3003', {
         transports: ['websocket'],
       });
-      this.socket.on('connect', () => {
-        this.roomKey = id;
-        this.socket.emit('joinRoom', this.roomKey);
+      this.socket.on('connect', async () => {
+        const currentAccount = await firstValueFrom(
+          this.store.select('account')
+        );
+        const { account } = currentAccount;
+        if (!account) return;
+        const dto: JoinRoomModel = { accountId: account.id, roomName: id };
+        this.socket.emit('joinRoom', dto);
       });
       this.socket.on('disconnect', () => {
         this.socket.emit('disconnectRoom');

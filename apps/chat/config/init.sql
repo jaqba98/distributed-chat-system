@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS sockets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     socketId VARCHAR(100) NOT NULL,
-    roomName VARCHAR(100) NOT NULL
+    roomName VARCHAR(100) NOT NULL,
+    accountId INT
 );
