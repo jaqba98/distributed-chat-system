@@ -44,7 +44,7 @@ export const appRoutes: Route[] = [
         canActivate: [ProtectedGuard, FetchAccountGuard],
       },
       {
-        path: 'room-access/:id',
+        path: 'room-access/:roomName',
         component: RoomAccessPageComponent,
         canActivate: [ProtectedGuard, FetchAccountGuard],
       },

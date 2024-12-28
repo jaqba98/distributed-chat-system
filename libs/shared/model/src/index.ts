@@ -1,6 +1,7 @@
 export * from './lib/base/room-base.model';
 export * from './lib/base/account-base.model';
 export * from './lib/base/socket-base.model';
+export * from './lib/base/room-access-base.model';
 export * from './lib/domain/room-domain.model';
 export * from './lib/dto/account-dto.model';
 export * from './lib/dto/join-room-dto.model';

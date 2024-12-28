@@ -4,7 +4,7 @@ import { createReducer, on } from '@ngrx/store';
 import { AccountStoreModel } from '../model/account-store.model';
 import { clearAccount, setAccount } from '../action/account.action';
 
-export const initialState: AccountStoreModel = {
+const initialState: AccountStoreModel = {
   account: undefined,
 };
 
