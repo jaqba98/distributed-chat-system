@@ -60,6 +60,6 @@ export class RoomsListComponent implements OnInit, OnDestroy {
   }
 
   joinRoom(roomName: string) {
-    this.router.navigate(['dashboard', 'room', roomName]);
+    this.router.navigate(['dashboard', 'room-access', roomName]);
   }
 }
