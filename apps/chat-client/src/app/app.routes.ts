@@ -15,6 +15,7 @@ import {
   NotProtectedGuard,
   LogoutGuard,
   FetchAccountGuard,
+  RoomProtectedGuard,
 } from '@distributed-chat-system/fe-guard';
 
 export const appRoutes: Route[] = [
@@ -51,7 +52,7 @@ export const appRoutes: Route[] = [
       {
         path: 'room/:id',
         component: RoomPageComponent,
-        canActivate: [ProtectedGuard, FetchAccountGuard],
+        canActivate: [ProtectedGuard, RoomProtectedGuard, FetchAccountGuard],
       },
     ],
   },

@@ -24,6 +24,7 @@ services:
       - HTTP_ROUTE_CREATE_ROOM={"method":"POST","url":"/dashboard/create-room","controller":"createRoomController"}
       - HTTP_ROUTE_GET_ROOM={"method":"GET","url":"/get-rooms","controller":"getRoomsController"}
       - HTTP_ROUTE_ROOM_SIGN_IN={"method":"POST","url":"/room-sign-in","controller":"roomSignInController"}
+      - HTTP_ROUTE_ROOM_PROTECTED={"method":"POST","url":"/room-protected","controller":"roomProtectedController"}
       - MYSQL_HOST=api-gateway_db
       - MYSQL_DATABASE=api-gateway
       - MYSQL_PORT=30020

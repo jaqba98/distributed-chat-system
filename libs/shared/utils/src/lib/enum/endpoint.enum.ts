@@ -8,4 +8,5 @@ export enum EndpointEnum {
   dashboardCreateRoom = 'dashboard/create-room',
   getRooms = 'get-rooms',
   roomSignIn = 'room-sign-in',
+  roomProtected = 'room-protected',
 }

@@ -12,3 +12,4 @@ export * from './lib/dto/sockets-dto.model';
 export * from './lib/dto/token-dto.model';
 export * from './lib/dto/room-sign-in-dto.model';
 export * from './lib/dto/room-dto.model';
+export * from './lib/dto/room-protected-dto.model';

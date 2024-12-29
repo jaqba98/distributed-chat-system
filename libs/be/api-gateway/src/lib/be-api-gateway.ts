@@ -10,5 +10,6 @@ import './controller/protected.controller';
 import './controller/sign-in.controller';
 import './controller/sign-up.controller';
 import './controller/room-sign-in.controller';
+import './controller/room-protected.controller';
 
 runServer();
