@@ -2,6 +2,8 @@
 import { inject, injectable } from 'tsyringe';
 import { IncomingMessage, ServerResponse } from 'http';
 import { Pool } from 'mysql2';
+import jwt from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   ColumnRoomsEnum,
@@ -9,43 +11,48 @@ import {
   HttpControllerModel,
   HttpReqUtilsService,
   HttpResUtils,
+  JWT_SECRET_KEY,
   RegisterHttp,
   SqlQueryUtils,
   TableAccountsEnum,
 } from '@distributed-chat-system/be-server';
 import {
-  RoomAccessDtoModel,
   RoomDtoModel,
+  RoomSignInDtoModel,
 } from '@distributed-chat-system/shared-model';
 
 @injectable()
-@RegisterHttp('roomAccessController')
-export class RoomAccessController implements HttpControllerModel {
+@RegisterHttp('roomSignInController')
+export class RoomSignInController implements HttpControllerModel {
   constructor(
     @inject(HttpReqUtilsService) private readonly httpReq: HttpReqUtilsService,
     @inject(SqlQueryUtils) private readonly sqlQuery: SqlQueryUtils,
     @inject(HttpResUtils) private readonly httpRes: HttpResUtils
   ) {}
 
-  async build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
-    this.httpReq.post(req, async (dto: RoomAccessDtoModel) => {
+  build(req: IncomingMessage, res: ServerResponse, pool: Pool) {
+    this.httpReq.post(req, async (dto: RoomSignInDtoModel) => {
+      const { name, password } = dto;
       const rooms = await this.sqlQuery.select<RoomDtoModel[]>(
         {
           database: DatabaseEnum.rooms,
           table: TableAccountsEnum.rooms,
           scope: ['*'],
           columns: [
-            { column: ColumnRoomsEnum.name, value: dto.roomName },
-            { column: ColumnRoomsEnum.password, value: dto.password },
+            { column: ColumnRoomsEnum.name, value: name },
+            { column: ColumnRoomsEnum.password, value: password },
           ],
         },
         pool
       );
-      if (rooms.length > 0) {
-        this.httpRes.jsonOkMessage('success', true, res);
+      if (rooms.length === 0) {
+        this.httpRes.jsonOkMessage('Incorrect room password!', false, res);
         return;
       }
-      this.httpRes.jsonOkMessage('error', false, res);
+      const token = jwt.sign({ name, jti: uuidv4() }, JWT_SECRET_KEY, {
+        expiresIn: '1h',
+      });
+      this.httpRes.jsonOkMessage(token, true, res);
     });
   }
 }

@@ -10,9 +10,13 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { AuthService } from '@distributed-chat-system/fe-system';
 import { FlexComponent } from '@distributed-chat-system/fe-controls';
-import { RoomSignInDtoModel } from '@distributed-chat-system/shared-model';
+import {
+  ResponseDtoModel,
+  RoomSignInDtoModel,
+} from '@distributed-chat-system/shared-model';
 import { HttpUtils } from '@distributed-chat-system/fe-utils';
 import { firstValueFrom } from 'rxjs';
+import { EndpointEnum } from '@distributed-chat-system/shared-utils';
 
 @Component({
   selector: 'lib-room-sign-in-form',
@@ -60,23 +64,23 @@ export class RoomSignInFormComponent {
       name,
       password: this.roomSignInForm.get('password')?.value,
     };
-    console.log(dto);
-    // await this.http.post<SignInDtoModel, ResponseDtoModel<string>, void>(
-    //   dto,
-    //   EndpointEnum.signIn,
-    //   (response) => {
-    //     this.roomSignInForm.reset();
-    //     this.roomSignInForm.markAsUntouched();
-    //     const { data, success } = response;
-    //     if (success) {
-    //       this.auth.saveToken(data);
-    //       this.router.navigate(['/dashboard']);
-    //       return;
-    //     }
-    //     this.isSubmited = true;
-    //     this.responseMessage = data;
-    //     this.responseSuccess = success;
-    //   }
-    // );
+    await this.http.post<RoomSignInDtoModel, ResponseDtoModel<string>, void>(
+      dto,
+      EndpointEnum.roomSignIn,
+      (response) => {
+        this.roomSignInForm.reset();
+        this.roomSignInForm.markAsUntouched();
+        const { data, success } = response;
+        if (success) {
+          console.log(data, success);
+          // this.auth.saveToken(data);
+          // this.router.navigate(['/dashboard']);
+          return;
+        }
+        this.isSubmited = true;
+        this.responseMessage = data;
+        this.responseSuccess = success;
+      }
+    );
   }
 }

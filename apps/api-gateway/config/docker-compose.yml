@@ -23,7 +23,7 @@ services:
       - HTTP_ROUTE_FETCH_ACCOUNT={"method":"POST","url":"/fetch-account","controller":"fetchAccountController"}
       - HTTP_ROUTE_CREATE_ROOM={"method":"POST","url":"/dashboard/create-room","controller":"createRoomController"}
       - HTTP_ROUTE_GET_ROOM={"method":"GET","url":"/get-rooms","controller":"getRoomsController"}
-      - HTTP_ROUTE_ROOM_ACCESS={"method":"GET","url":"/room-access","controller":"roomAccessController"}
+      - HTTP_ROUTE_ROOM_SIGN_IN={"method":"POST","url":"/room-sign-in","controller":"roomSignInController"}
       - MYSQL_HOST=api-gateway_db
       - MYSQL_DATABASE=api-gateway
       - MYSQL_PORT=30020
