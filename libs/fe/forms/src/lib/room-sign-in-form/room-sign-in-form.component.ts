@@ -8,7 +8,7 @@ import { Message } from 'primeng/message';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 
-import { AuthService } from '@distributed-chat-system/fe-system';
+import { RoomTokenService } from '@distributed-chat-system/fe-system';
 import { FlexComponent } from '@distributed-chat-system/fe-controls';
 import {
   ResponseDtoModel,
@@ -44,7 +44,7 @@ export class RoomSignInFormComponent {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly auth: AuthService,
+    private readonly roomToken: RoomTokenService,
     private readonly router: Router,
     private readonly http: HttpUtils
   ) {
@@ -72,9 +72,8 @@ export class RoomSignInFormComponent {
         this.roomSignInForm.markAsUntouched();
         const { data, success } = response;
         if (success) {
-          console.log(data, success);
-          // this.auth.saveToken(data);
-          // this.router.navigate(['/dashboard']);
+          this.roomToken.saveToken(data);
+          this.router.navigate(['dashboard', 'room', name]);
           return;
         }
         this.isSubmited = true;
