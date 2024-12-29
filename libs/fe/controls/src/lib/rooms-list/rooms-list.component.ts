@@ -59,7 +59,7 @@ export class RoomsListComponent implements OnInit, OnDestroy {
     this.socket.disconnect();
   }
 
-  joinRoom(roomName: string) {
-    this.router.navigate(['dashboard', 'room-access', roomName]);
+  joinRoom(name: string) {
+    this.router.navigate(['dashboard', 'room-sign-in', name]);
   }
 }

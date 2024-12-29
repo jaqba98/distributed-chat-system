@@ -10,10 +10,7 @@ import { providePrimeNG } from 'primeng/config';
 import { provideStore } from '@ngrx/store';
 import Lara from '@primeng/themes/lara';
 
-import {
-  accountReducer,
-  roomAccessReducer,
-} from '@distributed-chat-system/fe-store';
+import { accountReducer } from '@distributed-chat-system/fe-store';
 import { appRoutes } from './app.routes';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
@@ -30,7 +27,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideStore({
       account: accountReducer,
-      roomAccess: roomAccessReducer,
     }),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
