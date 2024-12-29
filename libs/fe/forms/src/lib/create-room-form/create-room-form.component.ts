@@ -1,5 +1,5 @@
 // done
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -13,6 +13,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { Store } from '@ngrx/store';
 import { firstValueFrom } from 'rxjs';
+import { io, Socket } from 'socket.io-client';
 
 import { FlexComponent } from '@distributed-chat-system/fe-controls';
 import {
@@ -38,7 +39,7 @@ import { AccountStoreModel } from '@distributed-chat-system/fe-store';
   templateUrl: './create-room-form.component.html',
   styleUrl: './create-room-form.component.scss',
 })
-export class CreateRoomFormComponent {
+export class CreateRoomFormComponent implements OnInit, OnDestroy {
   createRoomForm: FormGroup;
 
   responseMessage: string;
@@ -46,6 +47,8 @@ export class CreateRoomFormComponent {
   responseSuccess: boolean;
 
   isSubmited: boolean;
+
+  private socket!: Socket;
 
   constructor(
     private readonly http: HttpUtils,
@@ -61,6 +64,16 @@ export class CreateRoomFormComponent {
     this.responseMessage = '';
     this.responseSuccess = false;
     this.isSubmited = false;
+  }
+
+  ngOnInit() {
+    this.socket = io('localhost:3003', {
+      transports: ['websocket'],
+    });
+  }
+
+  ngOnDestroy() {
+    this.socket.disconnect();
   }
 
   async onSubmit() {
@@ -82,6 +95,7 @@ export class CreateRoomFormComponent {
       if (response.success) {
         this.createRoomForm.reset();
         this.createRoomForm.markAsUntouched();
+        this.socket.emit('joinRoomsList');
       }
       this.isSubmited = true;
       this.responseMessage = data;
