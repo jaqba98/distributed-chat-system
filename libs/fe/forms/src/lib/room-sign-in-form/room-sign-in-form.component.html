@@ -1,0 +1,30 @@
+<!-- done -->
+<form [formGroup]="roomSignInForm" (ngSubmit)="onSubmit()">
+  <lib-flex gap="1rem">
+    <!-- password input -->
+    <p-floatlabel variant="on">
+      <input
+        pInputText
+        type="password"
+        id="password"
+        formControlName="password"
+        autocomplete="off"
+        pSize="small"
+      />
+      <label for="password">Password</label>
+    </p-floatlabel>
+    <!-- join room button -->
+    <p-button type="submit" size="small" label="Join room"></p-button>
+    <!-- error message -->
+    <ng-container *ngIf="isSubmited && !responseSuccess">
+      <p-message
+        severity="error"
+        icon="pi pi-times-circle"
+        size="small"
+        styles="width: 300px"
+      >
+        {{ responseMessage }}
+      </p-message>
+    </ng-container>
+  </lib-flex>
+</form>

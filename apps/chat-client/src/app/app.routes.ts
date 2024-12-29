@@ -4,8 +4,8 @@ import {
   CreateRoomPageComponent,
   DashboardPageComponent,
   LogoutPageComponent,
-  RoomAccessPageComponent,
   RoomPageComponent,
+  RoomSignInPageComponent,
   RoomsPageComponent,
   SignInPageComponent,
   SignUpPageComponent,
@@ -44,8 +44,8 @@ export const appRoutes: Route[] = [
         canActivate: [ProtectedGuard, FetchAccountGuard],
       },
       {
-        path: 'room-access/:roomName',
-        component: RoomAccessPageComponent,
+        path: 'room-sign-in/:name',
+        component: RoomSignInPageComponent,
         canActivate: [ProtectedGuard, FetchAccountGuard],
       },
       {
