@@ -31,11 +31,9 @@ export class RoomProtectedGuard implements CanActivate {
       boolean
     >(dto, EndpointEnum.roomProtected, (response) => {
       const { success } = response;
-      if (success) {
-        this.router.navigate(['/dashboard']);
-        return false;
-      }
-      return true;
+      if (success) return true;
+      this.router.navigate(['/dashboard']);
+      return false;
     });
   }
 }
