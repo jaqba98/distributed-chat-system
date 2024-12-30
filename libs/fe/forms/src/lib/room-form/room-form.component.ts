@@ -1,54 +1,195 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+// done
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MessageModule } from 'primeng/message';
+import { Properties } from 'csstype';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
+
+import { MessageDtoModel } from '@distributed-chat-system/shared-model';
+import { ResponsiveUtils } from '@distributed-chat-system/fe-utils';
 
 @Component({
   selector: 'lib-room-form',
   standalone: true,
   imports: [
     CommonModule,
+    MessageModule,
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    MessageModule,
   ],
   templateUrl: './room-form.component.html',
   styleUrl: './room-form.component.scss',
 })
-export class RoomFormComponent {
+export class RoomFormComponent implements OnInit, OnDestroy {
   @ViewChild('scrollable') scrollable!: ElementRef;
+
+  id = 1;
+
+  messages: MessageDtoModel[] = [
+    {
+      author: 'Jan Kowalski',
+      accountId: 2,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 1,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 2,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 2,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 1,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 1,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 2,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 1,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 2,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 1,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 1,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 2,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 1,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 2,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+    {
+      author: 'Jan Kowalski',
+      accountId: 2,
+      date: new Date().toDateString(),
+      value:
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, ipsum ratione rem illo fugit suscipit qui necessitatibus sequi, dolorem sed neque, in nobis accusantium! Illum commodi modi corrupti voluptate neque!',
+    },
+  ];
+
+  messageHaderFlexDirection: Properties['flexDirection'];
+
+  size: 'small' | 'large' = 'large';
 
   roomForm: FormGroup;
 
-  messages: string[] = [
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, velmollitia. Accusamus modi repellat pariatur illum aut ad autemveritatis natus. Autem commodi, dolorem eveniet porro deleniti dolore?Similique, aut! Lorem ipsum dolor sit amet consectetur adipisicingelit. Deserunt cumque minus, vel facilis ducimus ratione recusandaevoluptatum possimus autem voluptate tempora nam ex temporibusdoloremque, neque, hic delectus voluptatibus aspernatur? Lorem ipsumdolor sit amet consectetur adipisicing elit. Iste totam qui omniseveniet. Iusto saepe accusamus dolor iste at recusandae, voluptatibusrem quam nesciunt magnam, expedita blanditiis? Sapiente, iste autem.',
-  ];
+  private sub!: Subscription;
 
-  constructor() {
+  constructor(private readonly responsive: ResponsiveUtils) {
     this.roomForm = new FormGroup({
       message: new FormControl(''),
     });
   }
 
+  ngOnInit() {
+    this.sub = this.responsive.getScreenSize().subscribe((size) => {
+      if (size === 'xSmall') {
+        this.messageHaderFlexDirection = 'column';
+        this.size = 'small';
+      } else {
+        this.messageHaderFlexDirection = 'row';
+        this.size = 'large';
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
   onSubmit() {
-    this.messages.push(new Date().toDateString());
+    this.messages.push({
+      author: 'Jan Kowalski',
+      accountId: 1,
+      date: new Date().toDateString(),
+      value: '123',
+    });
     const nativeElement = this.scrollable.nativeElement;
     nativeElement.scrollTop = nativeElement.scrollHeight;
-    console.log('Hello');
+  }
+
+  getSeverity(id: number) {
+    return this.id === id ? 'info' : 'secondary';
+  }
+
+  getPosition(id: number) {
+    return this.id === id ? 'message__right' : 'message__left';
   }
 }
 

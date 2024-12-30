@@ -1,11 +1,30 @@
+<!-- done -->
 <div class="room-form">
-  <div class="room-form__chat">
+  <!-- chat -->
+  <div class="chat">
     <div class="chat__messages" #scrollable>
-      <div class="chat__message" *ngFor="let message of messages">
-        <h3>Jan Kowalski</h3>
-        <p>
-          {{ message }}
-        </p>
+      <div class="chat__messages-content">
+        <ng-container *ngFor="let message of messages">
+          <div class="message" [ngClass]="getPosition(message.accountId)">
+            <div
+              class="message__header"
+              [style]="{ flexDirection: messageHaderFlexDirection }"
+            >
+              <p-message severity="contrast" variant="simple" [size]="size">
+                {{ message.author }}
+              </p-message>
+              <p-message severity="secondary" variant="simple" [size]="size">
+                {{ message.date }}
+              </p-message>
+            </div>
+            <p-message
+              [severity]="getSeverity(message.accountId)"
+              [size]="size"
+            >
+              {{ message.value }}
+            </p-message>
+          </div>
+        </ng-container>
       </div>
     </div>
     <div class="chat__form">

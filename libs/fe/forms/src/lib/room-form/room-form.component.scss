@@ -1,58 +1,88 @@
+// done
 ::ng-deep {
   .room-form {
     height: 100%;
 
-    &__chat {
-      display: flex;
-      flex-direction: column;
+    .chat {
       height: 100%;
-    }
-  }
-
-  .chat {
-    &__messages {
-      flex: 1;
-      padding: 1rem;
+      background-color: white;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      overflow-y: auto;
-    }
 
-    &__message {
-      width: 50%;
-      border: 2px solid black;
-    }
-
-    &__form {
-      height: 50px;
-
-      &-controls {
+      &__messages {
+        width: 100%;
         display: flex;
+        align-items: center;
+        flex-direction: column;
+        flex: 1fr;
+        overflow: auto;
 
-        .p-inputtext {
-          width: 100%;
-          height: 50px;
-          border-radius: 0;
+        &-content {
+          display: flex;
+          flex-direction: column;
+          gap: 3rem;
+          padding: 2rem;
+          max-width: 960px;
         }
 
-        .p-inputtext:enabled:focus {
-          box-shadow: none;
-          outline: none;
-          border: 1px solid var(--p-inputtext-border-color);
-        }
+        .message {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          width: 50%;
 
-        .p-inputtext:enabled:hover {
-          border: 1px solid var(--p-inputtext-border-color);
-        }
+          &__left {
+            align-self: flex-start;
+          }
 
-        p-button {
-          display: contents;
-        }
+          &__right {
+            align-self: flex-end;
+          }
 
-        .p-button {
-          flex: 100px;
-          border-radius: 0;
+          &__header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+          }
+
+          &__text {
+            background-color: blue;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            color: white;
+          }
+        }
+      }
+
+      &__form {
+        flex: 50px;
+        &-controls {
+          display: flex;
+          .p-inputtext {
+            width: 100%;
+            height: 50px;
+            border-radius: 0;
+          }
+
+          .p-inputtext:enabled:focus {
+            box-shadow: none;
+            outline: none;
+            border: 1px solid var(--p-inputtext-border-color);
+          }
+
+          .p-inputtext:enabled:hover {
+            border: 1px solid var(--p-inputtext-border-color);
+          }
+
+          p-button {
+            display: contents;
+          }
+
+          .p-button {
+            flex: 100px;
+            border-radius: 0;
+          }
         }
       }
     }
