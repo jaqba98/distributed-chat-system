@@ -12,19 +12,13 @@
 
       &__messages {
         width: 100%;
+        height: calc(100% - 50px);
         display: flex;
         align-items: center;
         flex-direction: column;
-        flex: 1fr;
         overflow: auto;
-
-        &-content {
-          display: flex;
-          flex-direction: column;
-          gap: 3rem;
-          padding: 2rem;
-          max-width: 960px;
-        }
+        gap: 3rem;
+        padding: 2rem;
 
         .message {
           display: flex;
@@ -52,11 +46,15 @@
             border-radius: 0.5rem;
             color: white;
           }
+
+          .p-message-text {
+            overflow-wrap: anywhere;
+          }
         }
       }
 
       &__form {
-        flex: 50px;
+        height: 50px;
         &-controls {
           display: flex;
           .p-inputtext {

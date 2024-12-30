@@ -125,6 +125,8 @@ export class RoomFormComponent implements OnInit, OnDestroy {
       roomName: this.roomName,
       value: this.roomForm.get('message')?.value,
     };
+    this.roomForm.markAsUntouched();
+    this.roomForm.reset();
     this.socket.emit('message', dto);
   }
 
