@@ -1,4 +1,29 @@
-<form [formGroup]="roomForm" (ngSubmit)="onSubmit()">
-  <input type="text" id="message" formControlName="message" />
-  <button type="submit">Send</button>
-</form>
+<div class="room-form">
+  <div class="room-form__chat">
+    <div class="chat__messages" #scrollable>
+      <div class="chat__message" *ngFor="let message of messages">
+        <h3>Jan Kowalski</h3>
+        <p>
+          {{ message }}
+        </p>
+      </div>
+    </div>
+    <div class="chat__form">
+      <form
+        [formGroup]="roomForm"
+        (ngSubmit)="onSubmit()"
+        class="chat__form-controls"
+      >
+        <input
+          pInputText
+          type="message"
+          id="message"
+          formControlName="message"
+          autocomplete="off"
+          pSize="small"
+        />
+        <p-button type="submit" size="small" label="Send"></p-button>
+      </form>
+    </div>
+  </div>
+</div>
